@@ -1,3 +1,12 @@
+12.3
+周焕祥
+
+      -handler                  微信消息处理 handler
+      -Models/Student           字段添加 openid
+     第三方包
+     1 session
+      已配置好，简单的说就是在路由函数里，都有seq.session.openid 作为当前用户的标识符，可以借此在数据库找到该用户（类似于 Django的request.user）
+
 11.28
 周焕祥
 

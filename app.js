@@ -1,13 +1,16 @@
 var express = require('express');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var url = require('url');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/welearndb');
 mongoose.connection.on('open', function () {
-  console.log('database ok');
+  console.log('Mongodb is connected.');
 });
 // 以下三行处理带文件表单的依赖
 // var multer = require('multer');
@@ -30,11 +33,34 @@ app.use(logger('dev'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.query());
+app.use(session({
+  maxAge: 1800000,
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false },
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
+
+// var Student = require('./Models/Student');
+// Student.remove({}, function () {});
+//
+// Student.find({}, function (err, doc) {
+//   console.log(doc);
+// });
+
+app.use(function (req, res, next) {
+  var openid = req.session.openid;
+  if (! openid){
+    openid = req.session.openid = url.parse(req.url, true).query['openid'];
+  }
+  console.log("new guest: " + req.session.openid);
+  next();
+});
 
 app.use('/wechat', wechat);
 app.use('/student/login', studentLogin);
 app.use('/student/lesson', studentLesson);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
+  openid: {type:String, require:true, trim:true, unique: true},
   studentnumber: {type:String, require:true, trim:true, unique: true},
   realname: {type:String, require:true, trim:true},
   position: {type:String, require:true, trim:true},

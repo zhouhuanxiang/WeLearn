@@ -9,7 +9,7 @@ var urlStudentLogin = function () {
 };
 
 var urlLessonInfo = function () {
-  return getUrl('student/lessons');
+  return getUrl('student/lesson');
 };
 
 var wrapper = {

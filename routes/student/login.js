@@ -10,9 +10,20 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 
 router.get('/', function (req, res, next) {
-  res.render('student/login', {
-    title: '学生登录界面',
-    condition: 'login'
+  Student.findOne({openid: req.session.openid}, function (err, doc) {
+    if (err){
+      next(err);
+      return;
+    }
+    if (doc){
+      res.redirect('/student/lesson');
+    }
+    else{
+      res.render('student/login', {
+        title: '学生登录界面',
+        condition: 'login'
+      });
+    }
   });
 });
 
@@ -34,11 +45,13 @@ router.post('/', urlencodedParser, function (req, res, next) {
     if (response.statusCode === 200){
       body = JSON.parse(body);
       Student.findOne({studentnumber: body.information.studentnumber}, function (err, doc) {
-        if (err) next(err);
-        console.log(body.information.studentnumber);
-        console.log(doc);
+        if (err){
+          next(err);
+          return;
+        }
         if (doc === null) {
           var student = {
+            openid: req.session.openid,
             studentnumber: body.information.studentnumber,
             realname: body.information.realname,
             position: body.information.position,
