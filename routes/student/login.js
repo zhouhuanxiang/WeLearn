@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var utf8 = require('utf8');
 var router = express.Router();
+var Student = require('../../Models/Student');
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -31,9 +32,34 @@ router.post('/', urlencodedParser, function (req, res, next) {
     body: JSON.stringify(requestData)
   }, function (error, response, body) {
     if (response.statusCode === 200){
-      res.render('student/login', {
-        title: '绑定成功',
-        condition: 'loginSuccess'
+      body = JSON.parse(body);
+      Student.findOne({studentnumber: body.information.studentnumber}, function (err, doc) {
+        if (err) next(err);
+        console.log(body.information.studentnumber);
+        console.log(doc);
+        if (doc === null) {
+          var student = {
+            studentnumber: body.information.studentnumber,
+            realname: body.information.realname,
+            position: body.information.position,
+            department: body.information.department,
+            email: body.information.email
+          };
+          var studentObj = new Student(student);
+          studentObj.save(function (err, data) {
+            if (err) res.send(err);
+            res.render('student/login', {
+              title: '绑定成功',
+              condition: 'loginSuccess'
+            });
+          });
+        }
+        else{
+          res.render('student/login', {
+            title: '已绑定',
+            condition: 'loginTwice'
+          });
+        }
       });
     }
     else{
