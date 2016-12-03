@@ -1,0 +1,27 @@
+11.28
+周焕祥
+
+      使用 npm 第三方包 wechat，接入微信
+      -setting.js               环境变量
+      -wrapper.js               类似上次的 get_url
+      -routes/wechat.js         微信消息处理
+      -routes/login.js        学生页面，做了登录功能
+      -Models                   数据模型
+
+     常用的第三方包
+       包名           文档网址
+      简介
+     1 body-parser   https://github.com/expressjs/body-parser
+      只处理 application/x-www-form-urlencoded 信息
+     2 multer        https://github.com/expressjs/multer/blob/master/README.md
+      只处理 multipart/form-data
+     3 request       https://github.com/request/request
+      发起请求，用于爬虫，登录功能就是用这个写的
+     4 mongoose      https://github.com/Automattic/mongoose
+      管理数据库，模型创建参看 Models/Students
+
+      附：
+     1 express 4 中的包和 express 3 很不一样，可以参考 http://jser.me/2014/03/18/express4.x新特性以及如何从3.x升级到4.x.html
+     2 用 console.log 可以在 WebStorm 输出几乎所有东西，调试十分方便
+     3 不出意外的话就用 mongodb 数据库了，需要在系统安装该数据库，运行项目前要先运行数据库，Windows 环境不清楚，配出来之后发篇教程到群里吧
+     4 github 是个好地方

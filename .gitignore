@@ -1,0 +1,28 @@
+# C extensions
+*.so
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+*.log
+
+# JetBrains
+.idea
+
+#myfile
+crawler.js
+
+# node_modules
+node_modules/
