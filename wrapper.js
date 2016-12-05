@@ -12,7 +12,12 @@ var urlLessonInfo = function () {
   return getUrl('student/lesson');
 };
 
+var urlChat = function () {
+	return getUrl('chatSearch');
+}
+
 var wrapper = {
+  urlChat: urlChat,
   urlStudentLogin: urlStudentLogin,
   urlLessonInfo: urlLessonInfo
 };
