@@ -7,14 +7,14 @@
 <body>
     <!--
         {
-            courseName: [], //name list of courses
+            course: [], //name list of courses
         }
      -->
     <h1><%= title %></h1>
     <form method="post" enctype="application/x-www-form-urlencoded">
         <p><select name="select">
         <% for(var i = 0; i < tnum; i++){ %>
-        <option name="<%= courseName[i] %>" value="<%= courseName[i] %>"></option>
+        <option name="<%= course[i] %>" value="<%= course[i] %>"></option>
         <% } %>
         </select></p>
         <p><input type="submit" value="确定"/></p>

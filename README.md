@@ -1,4 +1,19 @@
+
 12.5
+秦堤
+
+    -views/chat.ejs           聊天页面
+      post:
+        name="content"//页面输入的内容
+      get:
+        msg//历史消息的列表 格式： userName: content (time)
+    -views/chatSearch.ejs     选择私信的课程页面
+      get:
+        course//课程的名称列表
+      post:
+        select 
+          name="courseName"//选中的课程名
+
 周焕祥
 
      修改数据库字段会报错，貌似node.js 没有 Django 方便的 migrate，例如修改了 Student 表，需要如下改进
