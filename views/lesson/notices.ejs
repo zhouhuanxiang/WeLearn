@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1><%= title %></h1>
+
+<ul>
+    <% for(var i = 0; i <  notices.notices.length; i++) {%>
+    <li><%= (notices.notices)[i].title %> <%= (notices.notices)[i].publisher %> <%= (notices.notices)[i].publishtime %>
+        <%= (notices.notices)[i].state %> <%= (notices.notices)[i].content %></li>
+    <% } %>
+</ul>
+
+</body>
+</html>
