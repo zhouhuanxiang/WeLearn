@@ -9,12 +9,10 @@ exports.checkSendMessage = function (msg) {
 
 exports.handleSendMessage = function (req, res) {
   Student.findOne({openid: utf8.encode(req.weixin.FromUserName)}, function (err, student) {
-    console.log(req.weixin.FromUserName);
     if (err){
       console.log(err);
       return;
     }
-    console.log(student);
     if (student.position !== 'teacher'){
       res.reply([
         {

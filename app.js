@@ -55,11 +55,13 @@ app.use(session({
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
 // Student.remove({}, function (err, doc) {});
-//Course.remove({}, function (err, doc) {});
+// Course.remove({}, function (err, doc) {});
 // Student.find({}, function (err, doc) {
 //   console.log(doc);
 // });
 Course.find({}, function (err, doc) {
+  // doc[0].message = [];
+  // doc[0].save();
   console.log(doc[0].message);
 });
 
@@ -80,6 +82,7 @@ app.use(function (req, res, next) {
     next(err);
   }
 });
+
 app.use('/student/login', studentLogin);
 
 app.use('/student/schedule', studentSchedule);

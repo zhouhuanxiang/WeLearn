@@ -67,9 +67,9 @@ function updateCourseDb(student) {
               message: []
             };
             if (student.position === 'teacher'){
-              course.teacher.push(student.realname);
+              course.teacher.push({name: student.realname, userid: student.openid});
             }else{
-              course.student.push(student.realname);
+              course.student.push({name: student.realname, userid: student.openid});
             }
             var courseObj = new Course(course);
             courseObj.save();

@@ -8,7 +8,7 @@ var settings = {
   appid: appid,
   appsecret: appSecret,
   siteDomain: siteDomain,
-  textTemplateID: '6gyDoWtIMJKiAzbBp8DquRgSqE0smCEEd3w576VXt7k'
+  textTemplateID: 'VFaqOQ65bMz5_pNoZOz-4zEjeGfHn1nSD9kw1yuvP8w'
 };
 
 module.exports = settings;

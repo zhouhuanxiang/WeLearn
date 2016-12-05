@@ -23,7 +23,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', urlencodedParser, function (req, res, next) {
-  console.log(req.body.courseName);
   Course.findOne({coursename: req.body.courseName}, function (err, course) {
     if (err){
       next(err);
@@ -41,16 +40,16 @@ router.post('/', urlencodedParser, function (req, res, next) {
         msgBody: req.body.msgBody
       });
       course.save();
-      Student.findOne({realname: course.teacher[0]}, function (err, teacher) {
+      Student.findOne({realname: course.teacher[0].name}, function (err, teacher) {
         if (err){
           next(err);
           return;
         }
-        textMessage(teacher.openid, req.body.msgBody);
+        textMessage(teacher.openid, req.body.msgHead, req.body.msgBody);
+        res.redirect('/student/message');
       })
     })
   });
-  res.redirect('/student/message');
 });
 
 module.exports = router;
