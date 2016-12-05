@@ -1,3 +1,12 @@
+12.5
+周焕祥
+
+     修改数据库字段会报错，貌似node.js 没有 Django 方便的 migrate，例如修改了 Student 表，需要如下改进
+    1 删除所有Student数据
+    2 在数据库命令行，依次
+        use welearndb
+        db.students.dropIndexes()
+
 12.3
 周焕祥
 
