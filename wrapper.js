@@ -9,17 +9,22 @@ var urlStudentLogin = function () {
 };
 
 var urlLessonInfo = function () {
-  return getUrl('student/lesson');
+  return getUrl('student/course');
 };
 
-var urlChat = function () {
-	return getUrl('chatSearch');
-}
+var urlStudentMessage = function () {
+  return getUrl('student/message');
+};
+
+var urlTeacherMessage = function () {
+  return getUrl('teacher/message');
+};
 
 var wrapper = {
-  urlChat: urlChat,
   urlStudentLogin: urlStudentLogin,
-  urlLessonInfo: urlLessonInfo
+  urlLessonInfo: urlLessonInfo,
+  urlStudentMessage: urlStudentMessage,
+  urlTeacherMessage: urlTeacherMessage
 };
 
 module.exports = wrapper;

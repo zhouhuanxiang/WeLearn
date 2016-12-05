@@ -19,7 +19,8 @@ mongoose.connection.on('open', function () {
 
 var wechat = require('./routes/wechat');
 var studentLogin = require('./routes/student/login');
-var studentLesson = require('./routes/student/lesson');
+var studentLesson = require('./routes/student/course');
+var studentMessage = require('./routes/student/message');
 
 var app = express();
 
@@ -42,25 +43,39 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-// var Student = require('./Models/Student');
-// Student.remove({}, function () {});
-//
+// var dataInsert = require('./data_insert');
+// dataInsert();
+var Student = require('./Models/Student');
+var Course = require('./Models/Course');
+// Student.remove({}, function (err, doc) {});
+//Course.remove({}, function (err, doc) {});
 // Student.find({}, function (err, doc) {
 //   console.log(doc);
 // });
-
-app.use(function (req, res, next) {
-  var openid = req.session.openid;
-  if (! openid){
-    openid = req.session.openid = url.parse(req.url, true).query['openid'];
-  }
-  console.log("new guest: " + req.session.openid);
-  next();
+Course.find({}, function (err, doc) {
+  console.log(doc[0].message);
 });
 
+
 app.use('/wechat', wechat);
+app.use(function (req, res, next) {
+  var openid = url.parse(req.url, true).query['openid'];
+  if (openid){
+    req.session.openid = url.parse(req.url, true).query['openid'];
+    console.log('');
+    console.log("new guest: " + req.session.openid);
+    next();
+  }else if (req.session.openid){
+    next();
+  }else{
+    var err = new Error('服务不可用');
+    err.status = 503;
+    next(err);
+  }
+});
 app.use('/student/login', studentLogin);
 app.use('/student/lesson', studentLesson);
+app.use('/student/message', studentMessage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -81,4 +96,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-app.listen(80);
+

@@ -1,17 +1,11 @@
 12.5
-秦堤
+周焕祥
 
-      -views/chat.ejs           聊天页面
-        post:
-          name="content"//页面输入的内容
-        get:
-          msg//历史消息的列表 格式： userName: content (time)
-      -views/chatSearch.ejs     选择私信的课程页面
-        get:
-          course//课程的名称列表
-        post:
-          select 
-            name="courseName"//选中的课程名
+     修改数据库字段会报错，貌似node.js 没有 Django 方便的 migrate，例如修改了 Student 表，需要如下改进
+    1 删除所有Student数据
+    2 在数据库命令行，依次
+        use welearndb
+        db.students.dropIndexes()
 
 12.3
 周焕祥
@@ -29,7 +23,7 @@
       -setting.js               环境变量
       -wrapper.js               类似上次的 get_url
       -routes/wechat.js         微信消息处理
-      -routes/login.js          学生页面，做了登录功能
+      -routes/login.js        学生页面，做了登录功能
       -Models                   数据模型
 
      常用的第三方包
@@ -44,7 +38,7 @@
      4 mongoose      https://github.com/Automattic/mongoose
       管理数据库，模型创建参看 Models/Students
 
-    附：
+      附：
      1 express 4 中的包和 express 3 很不一样，可以参考 http://jser.me/2014/03/18/express4.x新特性以及如何从3.x升级到4.x.html
      2 用 console.log 可以在 WebStorm 输出几乎所有东西，调试十分方便
      3 不出意外的话就用 mongodb 数据库了，需要在系统安装该数据库，运行项目前要先运行数据库，Windows 环境不清楚，配出来之后发篇教程到群里吧

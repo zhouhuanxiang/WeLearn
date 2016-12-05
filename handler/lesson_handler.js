@@ -5,12 +5,12 @@ exports.checkListLesson = function (msg) {
     return true;
 };
 
-exports.handleListLesson = function (msg, res) {
+exports.handleListLesson = function (req, res) {
   res.reply([
     {
       title: '课程信息',
       description: '点击即可查看课程信息',
-      url: wrapper.urlLessonInfo() + '?openid=' + msg.FromUserName
+      url: wrapper.urlLessonInfo() + '?openid=' + req.weixin.FromUserName
     }
   ])
 };
