@@ -9,22 +9,12 @@ var urlStudentLogin = function () {
 };
 
 var urlLessonInfo = function () {
-  return getUrl('student/course');
-};
-
-var urlStudentMessage = function () {
-  return getUrl('student/message');
-};
-
-var urlTeacherMessage = function () {
-  return getUrl('teacher/message');
+  return getUrl('student/lesson');
 };
 
 var wrapper = {
   urlStudentLogin: urlStudentLogin,
-  urlLessonInfo: urlLessonInfo,
-  urlStudentMessage: urlStudentMessage,
-  urlTeacherMessage: urlTeacherMessage
+  urlLessonInfo: urlLessonInfo
 };
 
 module.exports = wrapper;

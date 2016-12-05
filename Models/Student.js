@@ -1,14 +1,12 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var Student = new Schema({
+
+var schema = new mongoose.Schema({
   openid: {type:String, require:true, trim:true, unique: true},
-  studentnumber: {type:String, require:true, trim:true}, //应该是unique
+  studentnumber: {type:String, require:true, trim:true, unique: true},
   realname: {type:String, require:true, trim:true},
   position: {type:String, require:true, trim:true},
   department: {type:String, require:true, trim:true},
-  email: {type:String, require:true, trim:true},
-  course: [String]
+  email: {type:String, require:true, trim:true}
 });
 
-
-module.exports = mongoose.model('Student', Student);
+module.exports = mongoose.model('Student', schema);
