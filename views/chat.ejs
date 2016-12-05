@@ -14,7 +14,7 @@
 	-->
     <h1><%= title %></h1>
 	<% for(var i = 0; i < msgNum; i++){ %>
-		<p><% msg[i] %></p>
+		<p><%= msg[i] %></p>
 	<% } %>
     <form method="post" enctype="application/x-www-form-urlencoded">
         <p><input type="text" name="content" placeholder="请输入内容..."/></p>
