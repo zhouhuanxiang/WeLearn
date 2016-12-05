@@ -5,7 +5,10 @@ var request = require('request');
 var utf8 = require('utf8');
 var router = express.Router();
 var Student = require('../../Models/Student');
+<<<<<<< HEAD
+=======
 var Course = require('../../Models/Course');
+>>>>>>> origin/master
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -79,7 +82,7 @@ function updateCourseDb(student) {
 
 router.post('/', urlencodedParser, function (req, res, next) {
   var requestData = {
-    apiKey: "",
+    apikey: "",
     apisecret: "",
     username: utf8.encode(req.body.studentId),
     password: utf8.encode(req.body.password)
@@ -95,6 +98,37 @@ router.post('/', urlencodedParser, function (req, res, next) {
       return;
     }
     if (response.statusCode === 200){
+<<<<<<< HEAD
+      body = JSON.parse(body);
+      Student.findOne({studentnumber: body.information.studentnumber}, function (err, doc) {
+        if (err) next(err);
+        //console.log(body.information.studentnumber);
+        //console.log(doc);
+        if (doc === null) {
+          var student = {
+            studentnumber: body.information.studentnumber,
+            realname: body.information.realname,
+            position: body.information.position,
+            department: body.information.department,
+            email: body.information.email
+          };
+          var studentObj = new Student(student);
+          studentObj.save(function (err, data) {
+            if (err) res.send(err);
+            res.render('student/login', {
+              title: '绑定成功',
+              condition: 'loginSuccess'
+            });
+          });
+        }
+        else{
+          res.render('student/login', {
+            title: '已绑定',
+            condition: 'loginTwice'
+          });
+        }
+
+=======
       var jsonBody = JSON.parse(body);
       var student = {
         openid: req.session.openid,
@@ -120,6 +154,7 @@ router.post('/', urlencodedParser, function (req, res, next) {
           title: '绑定成功',
           condition: 'loginSuccess'
         });
+>>>>>>> origin/master
       });
     } else{
       res.render('student/login', {

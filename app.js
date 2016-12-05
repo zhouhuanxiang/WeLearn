@@ -19,10 +19,17 @@ mongoose.connection.on('open', function () {
 
 var wechat = require('./routes/wechat');
 var studentLogin = require('./routes/student/login');
+
+var studentSchedule = require('./routes/student/schedule');
+var lessonNotice = require('./routes/lesson/notices');
+var lessonDocument = require('./routes/lesson/documents');
+var lessonHomework = require('./routes/lesson/homeworks');
+var librarySeat = require('./routes/library/seat.js');
 var studentLesson = require('./routes/student/course');
 var studentMessage = require('./routes/student/message');
 
 var app = express();
+app.listen(80);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -74,6 +81,12 @@ app.use(function (req, res, next) {
   }
 });
 app.use('/student/login', studentLogin);
+
+app.use('/student/schedule', studentSchedule);
+app.use('/student/lesson/:lesson_id/notices', lessonNotice);
+app.use('/student/lesson/:lesson_id/documents', lessonDocument);
+app.use('/student/lesson/:lesson_id/homeworks', lessonHomework);
+app.use('/library/seat', librarySeat);
 app.use('/student/lesson', studentLesson);
 app.use('/student/message', studentMessage);
 

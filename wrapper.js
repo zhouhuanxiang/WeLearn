@@ -20,11 +20,24 @@ var urlTeacherMessage = function () {
   return getUrl('teacher/message');
 };
 
+var urlScheduleInfo = function(){
+  return getUrl('student/schedule');
+};
+
+var urlLibrarySeatInfo = function () {
+  return getUrl('library/seat');
+}
+
 var wrapper = {
   urlStudentLogin: urlStudentLogin,
   urlLessonInfo: urlLessonInfo,
+<<<<<<< HEAD
+  urlScheduleInfo: urlScheduleInfo,
+  urlLibrarySeatInfo: urlLibrarySeatInfo
+=======
   urlStudentMessage: urlStudentMessage,
   urlTeacherMessage: urlTeacherMessage
+>>>>>>> origin/master
 };
 
 module.exports = wrapper;

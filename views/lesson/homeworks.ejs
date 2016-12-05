@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1><%= title %></h1>
+
+<ul>
+    <% for(var i = 0; i <  assignments.assignments.length; i++) {%>
+    <li><%= (assignments.assignments)[i].title %> <%= (assignments.assignments)[i].detail %> <%= (assignments.assignments)[i].startdate %>
+        <%= (assignments.assignments)[i].duedate %> <%= (assignments.assignments)[i].scored %> <%= (assignments.assignments)[i].evaluatingteacher %>
+        <%= (assignments.assignments)[i].evaluatingdate %> <%= (assignments.assignments)[i].comment %> <%= (assignments.assignments)[i].grade %>
+    </li>
+    <% } %>
+</ul>
+
+</body>
+</html>
