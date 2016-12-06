@@ -24,8 +24,8 @@ post '/student/message'
     status: 'msgSend'
   }
 
-get '/student/message/123456'
-获得 courseid 为 123456 的课程里该用户与老师的所有谈话记录
+get '/student/message/msg_list/123456'
+获得 courseid 为 '123456' 的课程里, 该用户与老师的所有谈话记录
   返回：
   {
     status: 'messages',
@@ -33,11 +33,17 @@ get '/student/message/123456'
                   toTeacher: true,
                   student: 'o3HdVwWHa0uJNuNLQ7u_1Tf0VEng',
                   course: '136947',
-                  msgHead: '234',
-                  msgBody: '1234',
+                  msgHead: '关于一个问题',
+                  msgBody: '老师我想问你一个问题.....',
                   __v: 0,
                   date: 2016-12-06T02:59:41.279Z }]
   }
+
+get '/student/message/course_list'
+ 与 get '/student/message' 相同
+ get '/student/message/course_list'    只返回 json 格式的数据（有用）
+ get '/student/message'                res.render返回
+
 */
 
 var express = require('express');
@@ -86,7 +92,7 @@ router.post('/', urlencodedParser, function (req, res, next) {
   });
 });
 
-router.get('/:courseid', urlencodedParser, function (req, res, next) {
+router.get('/msg_list/:courseid', urlencodedParser, function (req, res, next) {
   Message.find({student: req.session.openid,  course: req.params.courseid}, function (err, messages) {
     if (err){
       next(err);
@@ -95,6 +101,20 @@ router.get('/:courseid', urlencodedParser, function (req, res, next) {
     res.json({
       messages: messages,
       status: 'messages'
+    });
+  });
+});
+
+router.get('/course_list', function (req, res, next) {
+  Student.findOne({openid: req.session.openid}, function (err, doc) {
+    if (err){
+      next(err);
+      return;
+    }
+    var courses = doc? (doc.course) : [];
+    res.json({
+      courses: courses,
+      status: 'courses'
     });
   });
 });
