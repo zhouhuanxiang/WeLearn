@@ -1,3 +1,45 @@
+/**
+接口说明
+ by 周焕祥
+ 2016/12/6
+
+get '/student/message'
+返回实例(课程列表)
+  返回：
+  {
+    status: 'courses'，
+    courses: [{name: '软工3'， courseid: '123456'}]    //课程数组
+  }
+
+post '/student/message'
+发送消息
+  表单输入：
+  {
+    courseid,   //课程 id
+    msgHead,    //消息标题
+    msgBody     //消息内容
+  }
+  返回：
+  {
+    status: 'msgSend'
+  }
+
+get '/student/message/123456'
+获得 courseid 为 123456 的课程里该用户与老师的所有谈话记录
+  返回：
+  {
+    status: 'messages',
+    messages: [{  _id: 5846299d02145b150c349fe0,
+                  toTeacher: true,
+                  student: 'o3HdVwWHa0uJNuNLQ7u_1Tf0VEng',
+                  course: '136947',
+                  msgHead: '234',
+                  msgBody: '1234',
+                  __v: 0,
+                  date: 2016-12-06T02:59:41.279Z }]
+  }
+*/
+
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
