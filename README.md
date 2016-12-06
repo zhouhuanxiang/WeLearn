@@ -1,3 +1,8 @@
+12.6
+杨景
+    1.微信端可处理消息 bind, unbind, lesson, schedule, library seat
+	2.绑定的时候，用学号没有错，用用户名则会出错
+	3.目前课程文件，课程作业api还没有完成
 12.5
 周焕祥
 
