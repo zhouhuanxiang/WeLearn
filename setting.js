@@ -8,7 +8,8 @@ var settings = {
   appid: appid,
   appsecret: appSecret,
   siteDomain: siteDomain,
-  textTemplateID: 'VFaqOQ65bMz5_pNoZOz-4zEjeGfHn1nSD9kw1yuvP8w'
+  teacherTextTemplateID: 'VFaqOQ65bMz5_pNoZOz-4zEjeGfHn1nSD9kw1yuvP8w',
+  studentTextTemplateID: 'gEdzeGRySvRaNSb9WG0Nhm87VMxeroLSiJMwap8I_O4'
 };
 
 module.exports = settings;

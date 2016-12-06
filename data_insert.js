@@ -12,7 +12,10 @@ module.exports = function () {
     position: 'teacher',
     department: '软件学院',
     email: 'zhx14@mails.tsinghua.edu.cn',
-    course: ['三年级男生网球(5)(2016-2017秋季学期)']
+    course: [{
+      name: '三年级男生网球(5)(2016-2017秋季学期)',
+      courseid: '136947'
+    }]
   };
   var studentObj1 = new Student(student1);
   studentObj1.save();
@@ -24,7 +27,10 @@ module.exports = function () {
     position: 'undergraduate',
     department: '软件学院',
     email: 'zhx14@mails.tsinghua.edu.cn',
-    course: ['三年级男生网球(5)(2016-2017秋季学期)']
+    course: [{
+      name: '三年级男生网球(5)(2016-2017秋季学期)',
+      courseid: '136947'
+    }]
   };
   var studentObj2 = new Student(student2);
   studentObj2.save();

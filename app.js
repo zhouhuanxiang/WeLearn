@@ -47,15 +47,19 @@ app.use(session({
 // dataInsert();
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
+var Message = require('./Models/Message');
+
 // Student.remove({}, function (err, doc) {});
 // Course.remove({}, function (err, doc) {});
+// Message.remove({}, function (err, doc) {});
+
 // Student.find({}, function (err, doc) {
 //   console.log(doc);
 // });
-Course.find({}, function (err, doc) {
+Message.find({}, function (err, doc) {
   // doc[0].message = [];
   // doc[0].save();
-  console.log(doc[0].message);
+  console.log(doc);
 });
 
 

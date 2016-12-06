@@ -7,7 +7,10 @@ var Student = new Schema({
   position: {type:String, require:true, trim:true},
   department: {type:String, require:true, trim:true},
   email: {type:String, require:true, trim:true},
-  course: [String]
+  course: [{
+    name: String,
+    courseid: String
+  }]
 });
 
 
