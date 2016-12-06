@@ -1,3 +1,36 @@
+/**
+ * 用例说明
+ * by 周焕祥
+ * 2016/12/6
+ *
+ * get '/student/login'
+ *   若没有登录
+ *   返回
+ *   {
+ *      status: 'login'
+ *   }
+ *   若已经登录(重复登录)
+ *   {
+ *      status: 'loginTwice'
+ *   }
+ *
+ * post '/student/login'
+ *   输入的表单
+ *   {
+ *      username,
+ *      password
+ *   }
+ *   验证成功，返回
+ *   {
+ *      status: 'success'
+ *   }
+ *   验证失败，返回
+ *   {
+ *      status: 'failed'
+ *   }
+ *
+ */
+
 var wrapper = require('../../wrapper');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -16,26 +49,21 @@ router.get('/', function (req, res, next) {
       next(err);
       return;
     }
-    if (doc && doc.studentnumber){
+    if (doc){
       res.render('student/login', {
-        title: '已绑定',
-        condition: 'loginTwice'
+        status: 'loginTwice'
       });
     }
     else{
       res.render('student/login', {
-        title: '学生登录界面',
-        condition: 'login'
+        status: 'login'
       });
     }
   });
 });
 
 function updateCourseDb(student) {
-  var requestData = {
-    apiKey: "",
-    apisecret: ""
-  };
+  var requestData = { apiKey: "", apisecret: ""};
   request({
     method: 'POST',
     url: 'http://se.zhuangty.com:8000/learnhelper/'+ student.studentnumber +'/courses',
@@ -43,25 +71,23 @@ function updateCourseDb(student) {
     body: JSON.stringify(requestData)
   }, function (error, response, body) {
     var courses = JSON.parse(body).courses;
+    var courseNames = [];
     for (var i = 0; i < courses.length; i++){
+      courseNames.push({name: courses[i].coursename, courseid: courses[i].courseid});
       (function (i) {
         Course.findOne({courseid: courses[i].courseid}, function (err, doc) {
           if (err) console.log(err);
           if (doc){
             if (student.position === 'teacher'){
-              doc.teacher.push(student.realname);
+              doc.teacher.push({name: student.realname, userid: student.openid});
               doc.save();
             }else{
-              doc.student.push(student.realname);
+              doc.student.push({name: student.realname, userid: student.openid});
               doc.save();
             }
           }else{
             var course = {
-              courseid: courses[i].courseid,
-              coursename: courses[i].coursename,
-              teacher: [],
-              student: [],
-              message: []
+              courseid: courses[i].courseid, coursename: courses[i].coursename, teacher: [], student: [], message: []
             };
             if (student.position === 'teacher'){
               course.teacher.push({name: student.realname, userid: student.openid});
@@ -74,6 +100,14 @@ function updateCourseDb(student) {
         })
       })(i);
     }
+    Student.findOne({openid: student.openid}, function (err, student) {
+      if (err){
+        console.log(err);
+        return;
+      }
+      student.course = courseNames;
+      student.save();
+    })
   });
 }
 
@@ -116,15 +150,13 @@ router.post('/', urlencodedParser, function (req, res, next) {
           return;
         }
         updateCourseDb(student);
-        res.render('student/login', {
-          title: '绑定成功',
-          condition: 'loginSuccess'
+        res.json({
+          status: 'success'
         });
       });
     } else{
-      res.render('student/login', {
-        title: '学生登录界面',
-        condition: 'loginFail'
+      res.json({
+        status: 'failed'
       });
     }
   });

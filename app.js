@@ -53,14 +53,17 @@ var Message = require('./Models/Message');
 // Course.remove({}, function (err, doc) {});
 // Message.remove({}, function (err, doc) {});
 
-// Student.find({}, function (err, doc) {
-//   console.log(doc);
-// });
-Message.find({}, function (err, doc) {
-  // doc[0].message = [];
-  // doc[0].save();
+Student.find({}, function (err, doc) {
   console.log(doc);
 });
+Course.find({}, function (err, doc) {
+  console.log(doc);
+});
+// Message.find({}, function (err, doc) {
+//   // doc[0].message = [];
+//   // doc[0].save();
+//   console.log(doc);
+// });
 
 
 app.use('/wechat', wechat);

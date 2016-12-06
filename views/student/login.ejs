@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
-    <h1><%= title %></h1>
-    <% if(condition === 'loginFail'){ %>
+    <% if(status === 'loginFail'){ %>
         <p>验证失败</p>
     <% } %>
-    <% if(condition === 'loginFail' || condition === 'login'){ %>
+    <% if(status === 'loginFail' || status === 'login'){ %>
         <form method="post" enctype="application/x-www-form-urlencoded">
             <p><input type="text" name="studentId" placeholder="学号"/></p>
             <p><input type="password" name="password" placeholder="密码"/></p>
