@@ -14,18 +14,26 @@ router.get('/', urlencodedParser, function (req, res, next) {
       apiKey: "",
       apisecret: ""
     };
+    console.log(doc.studentnumber);
     request({
       method: 'POST',
       url: 'http://se.zhuangty.com:8000/learnhelper/'+ doc.studentnumber +'/courses',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(requestData)
     }, function (error, response, body) {
-      var jsonBody = JSON.parse(body);
-      for (var i = 0; i < jsonBody.courses.length; ++i){
-
+      console.log(response.statusCode);
+      if(response.statusCode === 200){
+        var lessons = JSON.parse(body);
+        //console.log(lessons);
+        res.render('student/lessons', {
+          title: '我的课程',
+          lessons: lessons
+        });
       }
+      else{
+        console.log(error);
+      }
+
     });
   })
 });

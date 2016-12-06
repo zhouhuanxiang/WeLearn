@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
         console.log(username);
         request({
             method: 'POST',
-            url: 'http://se.zhuangty.com:8000/learnhelper/2014013412/courses/137928/documents',
+            url: 'http://se.zhuangty.com:8000/learnhelper/' + username + '/courses/' + lesson_id + '/documents',
             headers: {
                 'Content-Type': 'application/json'
             },

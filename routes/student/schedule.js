@@ -14,11 +14,12 @@ router.get('/', urlencodedParser, function (req, res, next) {
         apisecret: ""
     };
 
-    Student.find({}, function(err,docs){
+    Student.findOne({openid: req.session.openid}, function(err,doc){
         if(err) next(err);
-        console.log(docs);
+        //console.log(docs);
 
-        var username = docs[0].studentnumber;
+        var username = doc.studentnumber;
+        console.log(username);
         request({
             method: 'POST',
             url: 'http://se.zhuangty.com:8000/curriculum/' + username,
@@ -28,13 +29,16 @@ router.get('/', urlencodedParser, function (req, res, next) {
             body: JSON.stringify(requestData)
         }, function (error, response, body) {
             if(response.statusCode === 200) {
-                console.log(body);
+                //console.log(body);
                 var schedule = JSON.parse(body);
                 console.log(schedule);
 
                 res.render('student/schedule', {
                     title: '我的课表',
                 });
+            }
+            else{
+                console.log(error);
             }
 
         });

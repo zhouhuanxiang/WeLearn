@@ -31,13 +31,10 @@ var urlLibrarySeatInfo = function () {
 var wrapper = {
   urlStudentLogin: urlStudentLogin,
   urlLessonInfo: urlLessonInfo,
-<<<<<<< HEAD
   urlScheduleInfo: urlScheduleInfo,
-  urlLibrarySeatInfo: urlLibrarySeatInfo
-=======
+  urlLibrarySeatInfo: urlLibrarySeatInfo,
   urlStudentMessage: urlStudentMessage,
   urlTeacherMessage: urlTeacherMessage
->>>>>>> origin/master
 };
 
 module.exports = wrapper;

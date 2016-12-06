@@ -23,10 +23,11 @@ router.get('/', function (req, res, next) {
     }, function (error, response, body) {
         if(response.statusCode === 200) {
             var seats = JSON.parse(body);
-            console.log(seats);
+            //console.log(seats);
 
             res.render('library/seat', {
-                title: '文图座位信息一览表'
+                title: '文图座位信息一览表',
+                seats:seats
             });
         }
         else {

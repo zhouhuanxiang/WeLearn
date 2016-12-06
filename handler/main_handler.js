@@ -1,6 +1,9 @@
 var accountHandler = require('./account_handler');
 var lessonHandler = require('./lesson_handler');
 var messageHandler = require('./message_handler');
+var scheduleHandler = require('./schedule_handler');
+var librarySeatHandler = require('./library_seat_handler');
+var accountUnbindHandler = require('./account_unbind_handler');
 
 var checkEmpty = function (msg) {
   return true;
@@ -12,7 +15,10 @@ var handleEmpty = function (msg, res) {
 
 var pattern = [
   [accountHandler.checkBindAccount,           accountHandler.handleBindAccount],
+  [accountUnbindHandler.checkUnbindAccount,  accountUnbindHandler.handleUnbindAccount],
   [lessonHandler.checkListLesson,             lessonHandler.handleListLesson],
+  [scheduleHandler.checkListSchedule,         scheduleHandler.handleListSchedule],
+  [librarySeatHandler.checkListLibrarySeat,  librarySeatHandler.handleListLibrarySeat],
   [messageHandler.checkSendMessage,           messageHandler.handleSendMessage],
   [checkEmpty,                                handleEmpty]
 ];
