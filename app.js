@@ -20,9 +20,6 @@ mongoose.connection.on('open', function () {
 var wechat = require('./routes/wechat');
 var studentLogin = require('./routes/student/login');
 var studentSchedule = require('./routes/student/schedule');
-var lessonNotice = require('./routes/lesson/notices');
-var lessonDocument = require('./routes/lesson/documents');
-var lessonHomework = require('./routes/lesson/homeworks');
 var librarySeat = require('./routes/library/seat.js');
 var studentLesson = require('./routes/student/course');
 var studentMessage = require('./routes/student/message');
@@ -53,9 +50,14 @@ app.use(session({
 // dataInsert();
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
+var Message = require('./Models/Message');
+
 // Student.remove({}, function (err, doc) {});
 // Course.remove({}, function (err, doc) {});
-// Student.find({}, function (err, doc) {
+// Message.remove({}, function (err, doc) {});
+// Message.find({}, function (err, doc) {
+//   // doc[0].message = [];
+//   // doc[0].save();
 //   console.log(doc);
 // });
 
@@ -80,9 +82,6 @@ app.use(function (req, res, next) {
 app.use('/student/login', studentLogin);
 app.use('/student/course', studentLesson);
 app.use('/student/schedule', studentSchedule);
-app.use('/student/lesson/:lesson_id/notices', lessonNotice);
-app.use('/student/lesson/:lesson_id/documents', lessonDocument);
-app.use('/student/lesson/:lesson_id/homeworks', lessonHomework);
 app.use('/library/seat', librarySeat);
 app.use('/student/message', studentMessage);
 

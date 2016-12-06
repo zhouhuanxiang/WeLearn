@@ -7,7 +7,6 @@ exports.checkUnbindAccount = function (msg) {
 };
 
 exports.handleUnbindAccount = function (req, res) {
-    var openid = req.url.split(/&/)[3].split(/=/)[1];
-    console.log(openid);
+    var openid = req.weixin.FromUserName;
     unbind.unbind(openid, res.reply);
 };

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title>私信老师</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
-    <h1><%= title %></h1>
     <form method="post" enctype="application/x-www-form-urlencoded">
-        <select name="courseName">
+        <select name="courseid">
             <% courses.forEach(function (course) { %>
-            <option value="<%= course%>"><%= course %></option>
+            <option value="<%= course.courseid %>"><%= course.name %></option>
             <% }) %>
         </select>
         <br>
@@ -17,7 +16,7 @@
         <br>
         <textarea name="msgBody"></textarea>
         <br>
-        <p><input type="submit" value="确定"/></p>
+        <input type="submit" value="发送私信"/>
     </form>
 </body>
 </html>
