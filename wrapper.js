@@ -9,12 +9,32 @@ var urlStudentLogin = function () {
 };
 
 var urlLessonInfo = function () {
-  return getUrl('student/lesson');
+  return getUrl('student/course');
+};
+
+var urlStudentMessage = function () {
+  return getUrl('student/message');
+};
+
+var urlTeacherMessage = function () {
+  return getUrl('teacher/message');
+};
+
+var urlStudentNotice = function () {
+  return getUrl('student/notice');
+};
+
+var urlTeacherNotice = function () {
+  return getUrl('teacher/notice');
 };
 
 var wrapper = {
   urlStudentLogin: urlStudentLogin,
-  urlLessonInfo: urlLessonInfo
+  urlLessonInfo: urlLessonInfo,
+  urlStudentMessage: urlStudentMessage,
+  urlTeacherMessage: urlTeacherMessage,
+  urlStudentNotice: urlStudentNotice,
+  urlTeacherNotice: urlTeacherNotice
 };
 
 module.exports = wrapper;
