@@ -32,3 +32,24 @@ exports.handleSendMessage = function (req, res) {
     }
   });
 };
+
+exports.checkSendNotice = function (msg) {
+  if (msg.Content === 'notice')
+    return true;
+};
+
+exports.handleSendNotice = function (req, res) {
+  Student.findOne({openid: utf8.encode(req.weixin.FromUserName)}, function (err, student) {
+    if (student.position !== 'teacher'){
+      res.reply('没有该权限:(');
+      return;
+    }
+    res.reply([
+      {
+        title: '发送图文公告',
+        description: '点击即可发送图文消息给学生',
+        url: wrapper.urlTeacherNotice() + '?openid=' + req.weixin.FromUserName
+      }
+    ]);
+  });
+};

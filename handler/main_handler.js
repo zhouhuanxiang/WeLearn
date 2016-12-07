@@ -12,8 +12,10 @@ var handleEmpty = function (msg, res) {
 
 var pattern = [
   [accountHandler.checkBindAccount,           accountHandler.handleBindAccount],
+  [accountHandler.checkUnbindAccount,         accountHandler.handleUnBindAccount],
   [lessonHandler.checkListLesson,             lessonHandler.handleListLesson],
   [messageHandler.checkSendMessage,           messageHandler.handleSendMessage],
+  [messageHandler.checkSendNotice,            messageHandler.handleSendNotice],
   [checkEmpty,                                handleEmpty]
 ];
 

@@ -20,11 +20,21 @@ var urlTeacherMessage = function () {
   return getUrl('teacher/message');
 };
 
+var urlStudentNotice = function () {
+  return getUrl('student/notice');
+};
+
+var urlTeacherNotice = function () {
+  return getUrl('teacher/notice');
+};
+
 var wrapper = {
   urlStudentLogin: urlStudentLogin,
   urlLessonInfo: urlLessonInfo,
   urlStudentMessage: urlStudentMessage,
-  urlTeacherMessage: urlTeacherMessage
+  urlTeacherMessage: urlTeacherMessage,
+  urlStudentNotice: urlStudentNotice,
+  urlTeacherNotice: urlTeacherNotice
 };
 
 module.exports = wrapper;

@@ -5,7 +5,6 @@ var router = express.Router();
 var wechat = require('wechat');
 var handler = require('../handler/main_handler');
 
-
 var config = {
   token: settings.token,
   appid: settings.appid,
@@ -14,6 +13,7 @@ var config = {
 
 
 router.use('/', wechat(config, function (req, res, next) {
+
   handler(req, res);
 }));
 

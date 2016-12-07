@@ -8,7 +8,7 @@ var schema = new mongoose.Schema({
     openid: String
   }],
   student: [{
-    name: String,
+    name: String, //现暂为 openid，不过 studentnumber 更好
     openid: String
   }]
 });

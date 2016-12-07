@@ -1,5 +1,9 @@
 var wrapper = require('../wrapper');
-
+var Student = require('../Models/Student');
+var Message = require('../Models/Message');
+var Course = require('../Models/Course');
+var utf8 = require('utf8');
+var request = require('request');
 
 exports.checkBindAccount = function (msg) {
   if (msg.Content === 'bind')
@@ -14,4 +18,56 @@ exports.handleBindAccount = function (req, res) {
       url: wrapper.urlStudentLogin() + '?openid=' + req.weixin.FromUserName
     }
   ])
+};
+
+exports.checkUnbindAccount = function (msg) {
+  if (msg.Content === 'unbind')
+    return true;
+};
+
+exports.handleUnBindAccount = function (req, res) {
+  Student.findOne({openid: utf8.encode(req.weixin.FromUserName)}, function (err, student) {
+    if (err){
+      res.reply('出了一些问题:(');
+      return;
+    }
+    if (student === null){
+      res.reply('本微信号未绑定:(');
+      return;
+    }
+    res.reply('已经解除绑定');
+    var courses = student.course;
+    var openid = student.openid;
+    var username = student.username;
+    request({
+      method: 'POST',
+      url: 'http://se.zhuangty.com:8000/students/'+username+'/cancel',
+      headers: {'Content-Type': 'application/json'},
+      body: "{  \"apikey\": \"API Key\",  \"apisecret\": \"API Secret Key\"}"
+    }, function () {
+      student.remove(function () {
+        for(var i = 0; i < courses.length; i++) {
+          (function (i) {
+            Course.findOne({coursename: courses[i]}, function (err, course) {
+              var j;
+              for(j=0; j<course.teacher.length; j++) {
+                if(course.teacher[j].openid === openid) {
+                  course.teacher.splice(j, 1);
+                  course.save();
+                  return;
+                }
+              }
+              for(j=0; j<course.student.length; j++) {
+                if(course.student[j].openid === openid) {
+                  course.student.splice(j, 1);
+                  course.save();
+                  return;
+                }
+              }
+            })
+          })(i);
+        }
+      })
+    });
+  });
 };
