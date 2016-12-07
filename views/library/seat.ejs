@@ -3,15 +3,30 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 <h1><%= title %></h1>
 
-<ul>
+<table class="table table-striped">
     <% for(var i = 0; i < seats.areas.length; i++) {%>
-    <li><%= (seats.areas)[i].name %> <%= (seats.areas)[i].used %> <%= (seats.areas)[i]. left %></li>
-    <% } %>
-</ul>
+    <tr class="row">
+        <td class="col-xs-6 col-sm-4">区域：<%= (seats.areas)[i].name %></td>
+        <td class="col-xs-6 col-sm-4">已使用：<%= (seats.areas)[i].used %></td>
+        <td class="col-xs-6 col-sm-4">未使用：<%= (seats.areas)[i]. left %></td>
+    </tr>
+    <% } %>.
+</table>
 
 </body>
 </html>

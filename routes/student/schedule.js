@@ -38,7 +38,38 @@ var Student = require('../../Models/Student');
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+function getTotalDay(year, month, day){
+    var totalDays = 0;
+    for(var i = 1; i < month; i++){
+        if(i === 1 || i === 3 || i === 5 || i === 7 || i === 8 || i=== 10 || i === 12){
+            totalDays += 31;
+        }
+        else if(i == 4 || i === 6 || i === 9 || i === 11){
+            totalDays += 30;
+        }
+        else if(i === 2){
+            if((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0){
+                totalDays += 29;
+            }
+            else{}
+            totalDays += 28;
+        }
+    }
+    totalDays += day;
+    return totalDays;
+}
+
 router.get('/', urlencodedParser, function (req, res, next) {
+    var startTime = getTotalDay(2016, 9, 12);
+    var sd = require('silly-datetime');
+    var time = sd.format(new Date(), 'YYYY-MM-DD');
+
+    time = time.split(/-/);
+    time = getTotalDay(parseInt(time[0]), parseInt(time[1]), parseInt(time[2]));
+    var week = (parseInt((time - startTime) / 7 + 1));
+    var day = ((time - startTime) % 7 + 1);
+
+
     var requestData = {
         apikey: "",
         apisecret: ""
@@ -63,8 +94,10 @@ router.get('/', urlencodedParser, function (req, res, next) {
                 //console.log(schedule);
 
                 res.render('student/schedule', {
-                    title: '我的课表',
-                    schedule:schedule
+                    title: '今日课表',
+                    classes:schedule.classes,
+                    week:week,
+                    day:day
                 });
             }
             else{
