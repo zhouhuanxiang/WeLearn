@@ -4,9 +4,12 @@ var Message = require('../Models/Message');
 var Course = require('../Models/Course');
 var utf8 = require('utf8');
 var request = require('request');
+var checker = require("./checkRequest");
+//var basicInfo = require("../weixin_basic/settings.js");
+var menutmp=require("./menu_template");
 
 exports.checkBindAccount = function (msg) {
-  if (msg.Content === 'bind')
+  if (msg.Content === 'bind' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['account_bind'])
     return true;
 };
 
@@ -15,13 +18,13 @@ exports.handleBindAccount = function (req, res) {
     {
       title: '登录',
       description: '点击即可进入学生、老师（助教）登录界面',
-      url: wrapper.urlStudentLogin() + '?openid=' + req.weixin.FromUserName
+      url: wrapper.urlStudentLogin() + '?openid=' + msg.FromUserName
     }
   ])
 };
 
 exports.checkUnbindAccount = function (msg) {
-  if (msg.Content === 'unbind')
+  if (msg.Content === 'unbind' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['account_unbind'])
     return true;
 };
 
