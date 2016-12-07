@@ -10,12 +10,12 @@ exports.checkBindAccount = function (msg) {
     return true;
 };
 
-exports.handleBindAccount = function (req, res) {
+exports.handleBindAccount = function (msg, res) {
   res.reply([
     {
       title: '登录',
       description: '点击即可进入学生、老师（助教）登录界面',
-      url: wrapper.urlStudentLogin() + '?openid=' + req.weixin.FromUserName
+      url: wrapper.urlStudentLogin() + '?openid=' + msg.FromUserName
     }
   ])
 };
