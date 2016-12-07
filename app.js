@@ -12,10 +12,6 @@ mongoose.connect('mongodb://localhost/welearndb');
 mongoose.connection.on('open', function () {
   console.log('Mongodb is connected.');
 });
-// 以下三行处理带文件表单的依赖
-// var multer = require('multer');
-// var upload = multer({ dest: 'public/photos/' });
-// var fs = require('fs');
 
 var wechat = require('./routes/wechat');
 var studentLogin = require('./routes/student/login');
@@ -23,6 +19,9 @@ var studentSchedule = require('./routes/student/schedule');
 var librarySeat = require('./routes/library/seat.js');
 var studentLesson = require('./routes/student/course');
 var studentMessage = require('./routes/student/message');
+var teacherMessage = require('./routes/teacher/message');
+var studentNotice = require('./routes/student/notice');
+var teacherNotice = require('./routes/teacher/notice');
 
 var app = express();
 app.listen(80);
@@ -51,10 +50,24 @@ app.use(session({
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
 var Message = require('./Models/Message');
+var Notice = require('./Models/Notice');
 
 // Student.remove({}, function (err, doc) {});
 // Course.remove({}, function (err, doc) {});
 // Message.remove({}, function (err, doc) {});
+// Notice.remove({}, function (err, doc) {});
+
+Student.find({}, function (err, doc) {
+  console.log('---Student---');
+  console.log(doc);
+});
+Course.find({}, function (err, doc) {
+  console.log('---Course---');
+  console.log(doc);
+});
+// Notice.find({}, function (err, doc) {
+//   console.log(doc);
+// });
 // Message.find({}, function (err, doc) {
 //   // doc[0].message = [];
 //   // doc[0].save();
@@ -84,6 +97,9 @@ app.use('/student/course', studentLesson);
 app.use('/student/schedule', studentSchedule);
 app.use('/library/seat', librarySeat);
 app.use('/student/message', studentMessage);
+app.use('/teacher/message', teacherMessage);
+app.use('/student/notice', studentNotice);
+app.use('/teacher/notice', teacherNotice);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

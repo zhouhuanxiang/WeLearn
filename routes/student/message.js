@@ -3,19 +3,19 @@
  by 周焕祥
  2016/12/6
 
-get '/student/message'
+get '/student/message'          （有改动）
 返回实例(课程列表)
   返回：
   {
     status: 'courses'，
-    courses: [{name: '软工3'， courseid: '123456'}]    //课程数组
+    courses: ['软工3（第xx 学期）'，'计网1（第xx 学期）']    //课程数组
   }
 
 post '/student/message'
 发送消息
   表单输入：
   {
-    courseid,   //课程 id
+    course,     //课程名
     msgHead,    //消息标题
     msgBody     //消息内容
   }
@@ -40,7 +40,7 @@ get '/student/message/msg_list/123456'
   }
 
 get '/student/message/course_list'
- 与 get '/student/message' 相同
+ 与 get '/student/message' 相同返回信息
  get '/student/message/course_list'    只返回 json 格式的数据（有用）
  get '/student/message'                res.render返回
 
@@ -54,8 +54,6 @@ var Course = require('../../Models/Course');
 var Message = require('../../Models/Message');
 var textMessage = require('../../handler/text_message');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-var wechat = require('wechat');
 
 router.get('/', function (req, res, next) {
   Student.findOne({openid: req.session.openid}, function (err, doc) {
@@ -73,9 +71,8 @@ router.get('/', function (req, res, next) {
 
 router.post('/', urlencodedParser, function (req, res, next) {
   var message = {
-    toTeacher: true,
     student: req.session.openid,
-    course: req.body.courseid,
+    course: req.body.course,
     msgHead: req.body.msgHead,
     msgBody: req.body.msgBody
   };
@@ -85,15 +82,18 @@ router.post('/', urlencodedParser, function (req, res, next) {
       next(err);
       return;
     }
-    textMessage(true, 'o3HdVwQhhR9vV2MhK0zS6WruOLmE', message);
+    /**
+     * TODO
+    textMessage('o3HdVwQhhR9vV2MhK0zS6WruOLmE', message);
+    */
     res.json({
       status: 'msgSend'
     });
   });
 });
 
-router.get('/msg_list/:courseid', urlencodedParser, function (req, res, next) {
-  Message.find({student: req.session.openid,  course: req.params.courseid}, function (err, messages) {
+router.get('/msg_list/:coursename', urlencodedParser, function (req, res, next) {
+  Message.find({student: req.session.openid,  course: req.params.coursename}, function (err, messages) {
     if (err){
       next(err);
       return;

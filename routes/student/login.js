@@ -73,7 +73,7 @@ function updateCourseDb(student) {
     var courses = JSON.parse(body).courses;
     var courseNames = [];
     for (var i = 0; i < courses.length; i++){
-      courseNames.push({name: courses[i].coursename, courseid: courses[i].courseid});
+      courseNames.push(courses[i].coursename);
       (function (i) {
         Course.findOne({courseid: courses[i].courseid}, function (err, doc) {
           if (err) console.log(err);
