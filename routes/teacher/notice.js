@@ -56,12 +56,22 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', upload.array('photo', 1), function (req, res, next) {
-  var notice = {
-    course:  req.body.course,
-    msgHead: req.body.msgHead,
-    msgBody: req.body.msgBody,
-    photo: req.files[0].filename
-  };
+  var notice;
+  if (req.files[0]){
+    notice = {
+      course:  req.body.course,
+      msgHead: req.body.msgHead,
+      msgBody: req.body.msgBody,
+      photo: req.files[0].filename
+    };
+  }else{
+    notice = {
+      course:  req.body.course,
+      msgHead: req.body.msgHead,
+      msgBody: req.body.msgBody,
+      photo: ''
+    };
+  }
   var noticeObj = new Notice(notice);
   noticeObj.save(function (err, doc) {
     if (err){
