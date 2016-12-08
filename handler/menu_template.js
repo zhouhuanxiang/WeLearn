@@ -18,21 +18,9 @@ exports.WEIXIN_EVENT_KEYS = WEIXIN_EVENT_KEYS;
 var WEIXIN_COSTUM_MENU_TEMPLATE = {
     "button": [
         {
-            "name": "课程信息",
-            "type":"click",
-            "key":WEIXIN_EVENT_KEYS['course_info'] ,
-            "sub_button": [],
-        },
-        {
             "name": "私信",
             "type": "click",
             "key": WEIXIN_EVENT_KEYS['private_conversation'],
-            "sub_button": []
-        },
-        {
-            "name": "课程表",
-            "type": "click",
-            "key": WEIXIN_EVENT_KEYS['course_schedule'],
             "sub_button": []
         },
        {
@@ -51,7 +39,18 @@ var WEIXIN_COSTUM_MENU_TEMPLATE = {
                     "key": WEIXIN_EVENT_KEYS['account_unbind'],
                     "sub_button": []
                 },
-
+                {
+                    "type":"click",
+                    "name": "课程动态信息",
+                    "key":WEIXIN_EVENT_KEYS['course_info'] ,
+                    "sub_button": [],
+                },
+                {
+                    "type": "click",
+                    "name": "今日课程",
+                    "key": WEIXIN_EVENT_KEYS['course_schedule'],
+                    "sub_button": []
+                },
             ]
         }
     ]
