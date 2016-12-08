@@ -23,6 +23,7 @@ var noticeMessage = function (notice, noticeid) {
   /**
    * TODO 调试用，部署时删除
    */
+  url = wrapper.urlStudentNotice()+'/'+noticeid+'?openid='+setting.noticeTemplateID;
   api.sendTemplate(setting.yourOpenid, setting.noticeTemplateID, url, msgData);
   Course.findOne({coursename: notice.course}, function (err, course) {
     var students = course.student;

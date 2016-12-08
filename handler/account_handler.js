@@ -13,12 +13,17 @@ exports.checkBindAccount = function (msg) {
     return true;
 };
 
-exports.handleBindAccount = function (msg, res) {
+exports.handleBindAccount = function (req, res) {
+  Student.findOne({openid: utf8.encode(req.weixin.FromUserName)}, function (err, student) {
+    if (student){
+      res.reply('已经绑定');
+    }
+  });
   res.reply([
     {
       title: '登录',
       description: '点击即可进入学生、老师（助教）登录界面',
-      url: wrapper.urlStudentLogin() + '?openid=' + msg.FromUserName
+      url: wrapper.urlStudentLogin() + '?openid=' + req.weixin.FromUserName
     }
   ]);
 };
@@ -41,10 +46,11 @@ exports.handleUnBindAccount = function (req, res) {
     res.reply('已经解除绑定');
     var courses = student.course;
     var openid = student.openid;
-    var username = student.username;
+    var studentnumber = student.studentnumber;
+    console.log(openid);
     request({
       method: 'POST',
-      url: 'http://se.zhuangty.com:8000/students/'+username+'/cancel',
+      url: 'http://se.zhuangty.com:8000/students/'+studentnumber+'/cancel',
       headers: {'Content-Type': 'application/json'},
       body: "{  \"apikey\": \"API Key\",  \"apisecret\": \"API Secret Key\"}"
     }, function () {
