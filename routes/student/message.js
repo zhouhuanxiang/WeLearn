@@ -53,6 +53,7 @@ var Student = require('../../Models/Student');
 var Course = require('../../Models/Course');
 var Message = require('../../Models/Message');
 var textMessage = require('../../handler/text_message');
+var setting = require('../../setting');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 router.get('/', function (req, res, next) {
@@ -83,9 +84,10 @@ router.post('/', urlencodedParser, function (req, res, next) {
       return;
     }
     /**
-     * TODO
-    textMessage('o3HdVwQhhR9vV2MhK0zS6WruOLmE', message);
-    */
+     * TODO 下面是为了调试，部署时删除
+     */
+    var openid = setting.yourOpenid;
+    textMessage(openid, message);
     res.json({
       status: 'msgSend'
     });

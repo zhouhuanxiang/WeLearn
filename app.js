@@ -15,9 +15,11 @@ mongoose.connection.on('open', function () {
 
 var wechat = require('./routes/wechat');
 var studentLogin = require('./routes/student/login');
+
 var studentSchedule = require('./routes/student/schedule');
 var librarySeat = require('./routes/library/seat.js');
 var studentLesson = require('./routes/student/course');
+
 var studentMessage = require('./routes/student/message');
 var teacherMessage = require('./routes/teacher/message');
 var studentNotice = require('./routes/student/notice');
@@ -57,23 +59,25 @@ var Notice = require('./Models/Notice');
 // Message.remove({}, function (err, doc) {});
 // Notice.remove({}, function (err, doc) {});
 
-Student.find({}, function (err, doc) {
-  console.log('---Student---');
-  console.log(doc);
-});
-Course.find({}, function (err, doc) {
-  console.log('---Course---');
-  console.log(doc);
-});
-// Notice.find({}, function (err, doc) {
+// Student.find({}, function (err, doc) {
+//   console.log('---Student---');
 //   console.log(doc);
 // });
-// Message.find({}, function (err, doc) {
-//   // doc[0].message = [];
-//   // doc[0].save();
+// Course.find({}, function (err, doc) {
+//   console.log('---Course---');
 //   console.log(doc);
 // });
+Notice.find({}, function (err, doc) {
+  console.log('---Notice---');
+  console.log(doc);
+});
+Message.find({}, function (err, doc) {
+  console.log('---Message---');
+  console.log(doc);
+});
 
+var menu = require('./handler/menu_control');
+menu.create_menu();
 
 app.use('/wechat', wechat);
 app.use(function (req, res, next) {
@@ -93,9 +97,11 @@ app.use(function (req, res, next) {
 });
 
 app.use('/student/login', studentLogin);
+
 app.use('/student/course', studentLesson);
 app.use('/student/schedule', studentSchedule);
 app.use('/library/seat', librarySeat);
+
 app.use('/student/message', studentMessage);
 app.use('/teacher/message', teacherMessage);
 app.use('/student/notice', studentNotice);
@@ -120,4 +126,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
