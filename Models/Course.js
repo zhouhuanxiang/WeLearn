@@ -1,16 +1,15 @@
 var mongoose = require('mongoose');
-var Student = require('./Student');
 
 var schema = new mongoose.Schema({
   courseid: {type:String, require:true, trim:true, unique: true},
   coursename: {type:String, require:true, trim:true},
-  teacher: [String],
-  student: [String],
-  message: [{
-    toTeacher: Boolean,
-    student: String,
-    msgHead: String,
-    msgBody: String
+  teacher: [{
+    name: String,
+    openid: String
+  }],
+  student: [{
+    name: String, //现暂为 openid，不过 studentnumber 更好
+    openid: String
   }]
 });
 

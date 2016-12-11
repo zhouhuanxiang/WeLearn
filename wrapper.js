@@ -20,11 +20,31 @@ var urlTeacherMessage = function () {
   return getUrl('teacher/message');
 };
 
+var urlScheduleInfo = function(){
+  return getUrl('student/schedule');
+};
+
+var urlLibrarySeatInfo = function () {
+  return getUrl('library/seat');
+}
+
+var urlStudentNotice = function () {
+  return getUrl('student/notice');
+};
+
+var urlTeacherNotice = function () {
+  return getUrl('teacher/notice');
+};
+
 var wrapper = {
   urlStudentLogin: urlStudentLogin,
   urlLessonInfo: urlLessonInfo,
+  urlScheduleInfo: urlScheduleInfo,
+  urlLibrarySeatInfo: urlLibrarySeatInfo,
   urlStudentMessage: urlStudentMessage,
-  urlTeacherMessage: urlTeacherMessage
+  urlTeacherMessage: urlTeacherMessage,
+  urlStudentNotice: urlStudentNotice,
+  urlTeacherNotice: urlTeacherNotice
 };
 
 module.exports = wrapper;

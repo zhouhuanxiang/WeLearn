@@ -1,26 +1,19 @@
+12.6
+杨景
+    1.微信端可处理消息 bind, unbind, lesson, schedule, library seat
+	2.绑定的时候，用学号没有错，用用户名则会出错
+	3.目前课程文件，课程作业api还没有完成
 
-12.5
-秦堤
+12.5 张诗文
+菜单构造和响应
+首先改settings(当然大家都知道）
+菜单响应的实现都在handler目录下，
+各位如果要修改菜单，请按照以下步骤：
 
-    -views/chat.ejs           聊天页面
-      post:
-        name="content"//页面输入的内容
-      get:
-        msg//历史消息的列表 格式： userName: content (time)
-    -views/chatSearch.ejs     选择私信的课程页面
-      get:
-        course//课程的名称列表
-      post:
-        select 
-          name="courseName"//选中的课程名
-
-周焕祥
-
-     修改数据库字段会报错，貌似node.js 没有 Django 方便的 migrate，例如修改了 Student 表，需要如下改进
-    1 删除所有Student数据
-    2 在数据库命令行，依次
-        use welearndb
-        db.students.dropIndexes()
+菜单的结构在menu_template.js中，注意微信最多只能有三个主菜单（我才知道）
+三个菜单的handler对应着lesson_handler,conversation_handler,schedule_handler,请各位实现每个handler中的第二个函数即可（当然如果想改名
+字的话请不要忘了在main_handler中修改相应的名字，至于修改哪里大家应该一眼就能看出）
+而accesstoken checkrequest menucontrol三个js不需要改动
 
 12.3
 周焕祥

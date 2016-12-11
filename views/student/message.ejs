@@ -1,23 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title>私信老师</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
-    <h1><%= title %></h1>
-    <form method="post" enctype="application/x-www-form-urlencoded">
-        <select name="courseName">
-            <% courses.forEach(function (course) { %>
-            <option value="<%= course%>"><%= course %></option>
-            <% }) %>
-        </select>
-        <br>
-        <input name="msgHead">
-        <br>
-        <textarea name="msgBody"></textarea>
-        <br>
-        <p><input type="submit" value="确定"/></p>
-    </form>
+    <header></header>
+    <div class="mainbody" id="mainbody"> </div>
+    <script src="/3rd/jquery.js"></script>
+    <script src="/3rd/swig.js"></script>
+    <script src="/js/base.js"></script>
+    <script>
+    var msg = {};
+    var status = 0;
+    var courseName;
+    function clearPage(){
+        $('header').html('');
+        $('#mainbody').html('');
+    };
+    function clickget(){
+        courseName = $('select').val();
+        //console.log(courseName);
+        //console.log('http://59.66.138.50/student/message/msg_list/'+courseName+'?'+urlParam.openid);
+        var url = '/student/message/msg_list/' + courseName;
+        console.log(url);
+        $.get(url, {openid: urlParam.openid}, function (data){
+            msg = data.messages;
+            //console.log(data);
+            console.log(msg);
+            clearPage();
+            $('select').val(courseName);//default choose present course
+            $('header').html(courseName+"课程私信");
+            $('#mainbody').append('<div>');
+            for(var i = 0; i < msg.length; i++){
+                if (msg[i].student == urlParam.openid){
+                    $('#mainbody').append('<p>Me: '+msg[i].date+'<br>'+msg[i].msgBody+'</p>');
+                }
+                else{
+                    $('#mainbody').append('<p>Teacher: '+msg[i].date+'<br>'+msg[i].msgBody+'</p>');
+                }
+            }
+            $('#mainbody').append('</div>');
+            status = 1;
+            showForm();
+        });
+        
+    };
+    function clickpost(){
+        var url = '/student/message';
+        var message = $('#msgBody').val();
+        console.log(courseName);
+        $.post(url, {course: courseName,
+            msgBody: message,
+            openid: urlParam.openid
+        }, function (result){
+            clearPage();
+            url = '/student/message/msg_list/' + courseName;
+            $.get(url, {openid: urlParam.openid}, function (data){
+                msg = data.messages;
+                //console.log(data);
+                console.log(msg);
+                clearPage();
+                $('select').val(courseName);//default choose present course
+                $('header').html(courseName+"课程私信");
+                $('#mainbody').append('<div>');
+                for(var i = 0; i < msg.length; i++){
+                    if (msg[i].student == urlParam.openid){
+                        $('#mainbody').append('<p>Me: '+msg[i].date+'<br>'+msg[i].msgBody+'</p>');
+                    }
+                    else{
+                        $('#mainbody').append('<p>Teacher: '+msg[i].date+'<br>'+msg[i].msgBody+'</p>');
+                    }
+                }
+                $('#mainbody').append('</div>');
+                showForm();
+            });
+        });
+    };
+
+    function showForm(){
+        $('#mainbody').append('<input type="text" id="msgBody" /><button onclick="clickpost();">确定</button>');
+    };
+    function showChoose(){
+        $('#mainbody').append('<select name="courseName" id="select"><% for (var i = 0; i < courses.length; i++) { %><option value="<%= courses[i] %>"><%= courses[i] %></option><% } %></select><button onclick="clickget();">确定</button>');
+    };
+
+    clearPage();
+    showChoose();
+    </script>
+
 </body>
 </html>
