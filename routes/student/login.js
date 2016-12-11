@@ -42,13 +42,13 @@ var Course = require('../../Models/Course');
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-
 router.get('/', function (req, res, next) {
   Student.findOne({openid: req.session.openid}, function (err, doc) {
     if (err){
       next(err);
       return;
     }
+      console.log(res.reply);
     if (doc){
       res.render('student/login', {
         status: 'loginTwice'

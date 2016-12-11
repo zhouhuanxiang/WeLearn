@@ -1,9 +1,12 @@
 var wrapper = require('../wrapper');
 var utf8 = require('utf8');
 var Student = require('../Models/Student');
+var checker = require("./checkRequest");
+//var basicInfo = require("../weixin_basic/settings.js");
+var menutmp=require("./menu_template");
 
 exports.checkSendMessage = function (msg) {
-  if (msg.Content === 'msg')
+  if (msg.Content === 'msg' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['private_conversation'])
     return true;
 };
 

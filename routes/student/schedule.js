@@ -2,7 +2,6 @@
  接口说明
  by 杨景
  2016/12/6
-
  get '/student/schdule'
  返回实例(课程动态信息)
  返回：
@@ -35,40 +34,26 @@ var request = require('request');
 var utf8 = require('utf8');
 var router = express.Router();
 var Student = require('../../Models/Student');
+var getDay = require('./getTotalDay');
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-function getTotalDay(year, month, day){
-    var totalDays = 0;
-    for(var i = 1; i < month; i++){
-        if(i === 1 || i === 3 || i === 5 || i === 7 || i === 8 || i=== 10 || i === 12){
-            totalDays += 31;
-        }
-        else if(i == 4 || i === 6 || i === 9 || i === 11){
-            totalDays += 30;
-        }
-        else if(i === 2){
-            if((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0){
-                totalDays += 29;
-            }
-            else{}
-            totalDays += 28;
-        }
-    }
-    totalDays += day;
-    return totalDays;
-}
-
 router.get('/', urlencodedParser, function (req, res, next) {
-    var startTime = getTotalDay(2016, 9, 12);
+    var startTime = getDay.getTotalDay(2016, 9, 12);
+
     var sd = require('silly-datetime');
     var time = sd.format(new Date(), 'YYYY-MM-DD');
-
     time = time.split(/-/);
-    time = getTotalDay(parseInt(time[0]), parseInt(time[1]), parseInt(time[2]));
-    var week = (parseInt((time - startTime) / 7 + 1));
-    var day = ((time - startTime) % 7 + 1);
-
+    var totalTime = 0;
+    var year = parseInt(time[0]);
+    for(var i = 0; i < year - 2016; i++){
+        totalTime += getDay.getTotalDay(2016 + i, 12, 31);
+    }
+    totalTime += getDay.getTotalDay(year, parseInt(time[1]), parseInt(time[2]));
+    var week = (parseInt((totalTime - startTime) / 7 + 1));
+    var day = ((totalTime - startTime) % 7 + 1);
+    //console.log(week);
+    //console.log(day);
 
     var requestData = {
         apikey: "",

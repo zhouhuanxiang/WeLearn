@@ -1,4 +1,4 @@
-var siteDomain = 'http://101.5.110.94';
+var siteDomain = 'http://59.66.138.61';
 var token = 'RYhopG1zq6oan1toNtiHfcq96KHinZ90gpuKt8pEx3mEQPmz7T';
 var appid = 'wxf0cb75c245008b64';
 var appSecret = '91e15fb902a7081ca1a2002b1fe71da9';
@@ -18,12 +18,12 @@ var settings = {
   appid: appid,
   appsecret: appSecret,
   siteDomain: siteDomain,
-  noticeTemplateID: 'QHaABmPXr8d0_XXH6IYhnOSw6S_YzrWz3nLNRKp13u4',
-  teacherTextTemplateID: 'VFaqOQ65bMz5_pNoZOz-4zEjeGfHn1nSD9kw1yuvP8w',
-  studentTextTemplateID: 'k75GY_pOzjTWVkJtCPnS6fotrcDb3LHRApKKXgu4PXg',
-  yourOpenid: 'o3HdVwQhhR9vV2MhK0zS6WruOLmE',
-  studentOpenid: 'o3HdVwWHa0uJNuNLQ7u_1Tf0VEng',
-  teacherOpenid: 'o3HdVwQhhR9vV2MhK0zS6WruOLmE'
+  noticeTemplateID: '6lQZOtEAQclvHlXRpWXxNoYtwsbjFB0uUGWjEefXoOw',
+  teacherTextTemplateID: 'PnH0eplbIqPYfUBvbWNqWntDISa2w4ikBylZicl9X3U',
+  studentTextTemplateID: 'PnH0eplbIqPYfUBvbWNqWntDISa2w4ikBylZicl9X3U',
+  yourOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E',
+  studentOpenid: 'oBu1dv5_0wvgk7U686jTHfs2oTsE',
+  teacherOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E'
 };
 
 module.exports = settings;

@@ -7,6 +7,7 @@ var logger = require('morgan');
 var url = require('url');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
+
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/welearndb');
 mongoose.connection.on('open', function () {
@@ -17,7 +18,6 @@ var wechat = require('./routes/wechat');
 var studentLogin = require('./routes/student/login');
 
 var studentSchedule = require('./routes/student/schedule');
-var librarySeat = require('./routes/library/seat.js');
 var studentLesson = require('./routes/student/course');
 
 var studentMessage = require('./routes/student/message');
@@ -47,8 +47,8 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-// var dataInsert = require('./data_insert');
-// dataInsert();
+//var dataInsert = require('./data_insert');
+//dataInsert();
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
 var Message = require('./Models/Message');
@@ -76,8 +76,13 @@ Message.find({}, function (err, doc) {
   console.log(doc);
 });
 
+/*
 var menu = require('./handler/menu_control');
-menu.create_menu();
+var access_token = require('./handler/access_token');
+access_token.getAccessToken(function(token){
+  menu.create_menu(token);
+});
+*/
 
 app.use('/wechat', wechat);
 app.use(function (req, res, next) {
@@ -98,9 +103,8 @@ app.use(function (req, res, next) {
 
 app.use('/student/login', studentLogin);
 
-app.use('/student/course', studentLesson);
 app.use('/student/schedule', studentSchedule);
-app.use('/library/seat', librarySeat);
+app.use('/student/course', studentLesson);
 
 app.use('/student/message', studentMessage);
 app.use('/teacher/message', teacherMessage);

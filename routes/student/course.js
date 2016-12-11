@@ -69,7 +69,7 @@ router.get('/', urlencodedParser, function (req, res, next) {
       apiKey: "",
       apisecret: ""
     };
-    console.log(doc.studentnumber);
+    //console.log(doc.studentnumber);
     request({
       method: 'POST',
       url: 'http://se.zhuangty.com:8000/learnhelper/'+ doc.studentnumber +'/courses',

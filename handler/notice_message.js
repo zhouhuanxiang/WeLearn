@@ -20,9 +20,14 @@ var noticeMessage = function (notice, noticeid) {
       color: '#771523'
     }
   };
+
+  api.sendTemplate(setting.yourOpenid, setting.noticeTemplateID, url, msgData);
+
   /**
    * TODO 调试用，部署时删除
    */
+  /*
+  url = wrapper.urlStudentNotice()+'/'+noticeid+'?openid='+setting.yourOpenid;
   api.sendTemplate(setting.yourOpenid, setting.noticeTemplateID, url, msgData);
   Course.findOne({coursename: notice.course}, function (err, course) {
     var students = course.student;
@@ -39,6 +44,7 @@ var noticeMessage = function (notice, noticeid) {
       })(i);
     }
   });
+    */
 };
 
 module.exports = noticeMessage;
