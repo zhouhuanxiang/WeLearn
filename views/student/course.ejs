@@ -22,29 +22,62 @@
         <% for(var i = 0; i < lessons.courses.length; i++) {%>
         <div class="row">
             <div class="col-xs-6"><%= (lessons.courses)[i].coursename %></div>
-            <div class="col-xs-6"><a href=<%= "/student/course/" + (lessons.courses)[i].courseid + "/notices" %>>点击查看课程公告</a></div>
         </div>
         <div class="row">
             <table class="table table-striped">
-                <td>未交作业：<%= (lessons.courses)[i].unsubmittedoperations %></td>
-                <td>未读公告：<%= (lessons.courses)[i].unreadnotice %></td>
-                <td>新文件：<%= (lessons.courses)[i].newfile %></td>
+                <td><a href=<%= "/student/course/" + (lessons.courses)[i].courseid + "/assignments" %>>未交作业：</a><%= (lessons.courses)[i].unsubmittedoperations %></td>
+                <td><a href=<%= "/student/course/" + (lessons.courses)[i].courseid + "/notices" %>>未读公告：</a><%= (lessons.courses)[i].unreadnotice %></td>
+                <td><a href=<%= "/student/course/" + (lessons.courses)[i].courseid + "/documents" %>>新文件：</a><%= (lessons.courses)[i].newfile %></td>
             </table>
         </div>
         <% } %>
-<%}else{%>
-<% for(var j = 0; j < notices.notices.length; j++) {%>
-<div>
-    <ul>
-        <li>公告名：<%= (notices.notices)[j].title %></li>
-        <li>发布者：<%= (notices.notices)[j].publisher %></li>
-        <li>发布时间：<%= (notices.notices)[j].publishtime %></li>
-        <li>内容：<%= (notices.notices)[j].content %></li>
-    </ul>
-    <hr/>
-</div>
-<% } %>
-
 <%}%>
+
+<% if (title === '未读公告') {%>
+    <% for(var j = 0; j < notices.notices.length; j++) {%>
+        <% if ((notices.notices)[j].state === 'unread') {%>
+            <div>
+                <ul>
+                    <li>公告名：<%= (notices.notices)[j].title %></li>
+                    <li>发布者：<%= (notices.notices)[j].publisher %></li>
+                    <li>发布时间：<%= (notices.notices)[j].publishtime %></li>
+                    <li>内容：<%= (notices.notices)[j].content %></li>
+                </ul>
+                <hr/>
+            </div>
+        <%}%>
+    <% } %>
+<%}%>
+
+<% if (title === '新文件') {%>
+<% for(var j = 0; j < documents.documents.length; j++) {%>
+    <% if ((documents.documents)[j].state === 'new') {%>
+        <div>
+            <ul>
+                <li>文件名：<%= (documents.documents)[j].title %></li>
+                <li>文件内容：<%= (documents.documents)[j].explanation %></li>
+                <li>上传时间：<%= (documents.documents)[j].updatingtime %></li>
+            </ul>
+            <hr/>
+        </div>
+    <%}%>
+<% } %>
+<%}%>
+
+<% if (title === '未交作业') {%>
+<% for(var j = 0; j < assignments.assignments.length; j++) {%>
+    <% if ((assignments.assignments)[j].state === '尚未提交') {%>
+        <div>
+            <ul>
+                <li>作业标题：<%= (assignments.assignments)[j].title %></li>
+                <li>详情：<%= (assignments.assignments)[j].detail %></li>
+                <li>deadline：<%= (assignments.assignments)[j].duedate %></li>
+            </ul>
+            <hr/>
+        </div>
+    <%}%>
+<% } %>
+<%}%>
+
 </body>
 </html>

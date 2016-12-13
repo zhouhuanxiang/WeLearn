@@ -13,6 +13,8 @@ var menutmp=require("./menu_template");
 var i = 0, courseName;
 var setTime = false;    //是否开始定时判定是否绑定
 var  reminder;    //提醒功能的实现
+var reminderSet = false;    //是否已经开始提醒功能
+var bind = false;
 
 var firstGet = true;
 var oldHomeWork = {}, oldNotice = {}, oldDocument = {}, notice = {};
@@ -24,13 +26,18 @@ exports.checkBindAccount = function (msg) {
 };
 
 exports.handleBindAccount = function (req, res) {
-  res.reply([
-    {
-      title: '登录',
-      description: '点击即可进入学生、老师（助教）登录界面',
-      url: wrapper.urlStudentLogin() + '?openid=' + req.weixin.FromUserName
-    }
-  ]);
+  if(bind){
+      res.reply("已经绑定成功!");
+  }
+  else{
+      res.reply([
+          {
+              title: '登录',
+              description: '点击即可进入学生、老师（助教）登录界面',
+              url: wrapper.urlStudentLogin() + '?openid=' + req.weixin.FromUserName
+          }
+      ]);
+  }
 
   //开始定时判别是否绑定成功
   if(!setTime){
@@ -39,6 +46,7 @@ exports.handleBindAccount = function (req, res) {
          Student.findOne({openid: req.weixin.FromUserName}, function (err, doc) {
                 if (err) next(err);
                 if (doc) {
+                    bind = true;
                     //定时查看课程动态
                     var rule = new schedule.RecurrenceRule();
                     rule.minute = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
@@ -51,6 +59,7 @@ exports.handleBindAccount = function (req, res) {
                     rule.second = times;
                     */
                     reminder = schedule.scheduleJob(rule, function () {
+                        reminderSet = true;
                         var requestData = {
                             apiKey: "",
                             apisecret: ""
@@ -155,7 +164,13 @@ exports.handleUnBindAccount = function (req, res) {
 
     res.reply('已经解除绑定');
     //将定时提醒取消 并且恢复一些初始值
-    reminder.cancel();
+
+    if(reminderSet){
+        reminder.cancel();
+        reminderSet = false;
+    }
+
+    bind = false;
     setTime = false;
     firstGet = true;
     oldHomeWork = {}, oldNotice = {}, oldDocument = {}, notice = {};
@@ -212,7 +227,7 @@ var deadlineInform = function(studentnumber, courseid, coursename, requestData, 
                     var interv = (parseInt((assignments.assignments)[num].duedate) - parseInt(timestamp)) / 1000 / 60 / 60 / 24;
                     var len = deadline_have_informed.length;
                     if(len === 0){
-                        if(parseInt(interv) <= 3){
+                        if(parseInt(interv) <= 1){
                             deadline_have_informed.push({assid: (assignments.assignments)[num].assignmentid, date: (assignments.assignments)[num].duedate});
                             notice['course'] = "" + coursename;
                             notice['msgHead'] = "deadline 提醒";
@@ -226,7 +241,7 @@ var deadlineInform = function(studentnumber, courseid, coursename, requestData, 
                                 break;
                             }
                             if(i === len - 1){
-                                if(parseInt(interv) <= 3){
+                                if(parseInt(interv) <= 1){
                                     deadline_have_informed.push({assid: (assignments.assignments)[num].assignmentid, date: (assignments.assignments)[num].duedate});
                                     notice['course'] = "" + coursename;
                                     notice['msgHead'] = "deadline 提醒";

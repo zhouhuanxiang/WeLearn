@@ -1,4 +1,4 @@
-//以2016年 为基准
+//当年到此时的天数
 exports.getTotalDay = function(year, month, day){
     var totalDays = 0;
     for(var i = 1; i < month; i++){
