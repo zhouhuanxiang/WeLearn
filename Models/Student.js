@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+
 var Schema = mongoose.Schema;
 var Student = new Schema({
   openid: {type:String, require:true, trim:true},
@@ -9,6 +10,5 @@ var Student = new Schema({
   email: {type:String, require:true, trim:true},
   course: [String]  //coursename
 });
-
 
 module.exports = mongoose.model('Student', Student);

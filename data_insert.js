@@ -4,13 +4,14 @@
 
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
+var setting = require('./setting');
 
 module.exports = function () {
   Student.remove({}, function (err, doc) {});
   Course.remove({}, function (err, doc) {});
 
   var student1 = {
-    openid: 'o3HdVwWHa0uJNuNLQ7u_1Tf0VEng',
+    openid: setting.teacherOpenid,
     studentnumber: '2014011909',
     realname: '王老师',
     position: 'teacher',
@@ -22,7 +23,7 @@ module.exports = function () {
   studentObj1.save();
 
   var student2 = {
-    openid: 'o3HdVwQhhR9vV2MhK0zS6WruOLmE',
+    openid: setting.studentOpenid,
     studentnumber: '2014011909',
     realname: '李同学',
     position: 'undergraduate',

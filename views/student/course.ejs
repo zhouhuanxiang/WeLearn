@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<h1><%= title %></h1>
+
+<% if (title === '我的课程') {%>
+        <% for(var i = 0; i < lessons.courses.length; i++) {%>
+        <div class="row">
+            <div class="col-xs-6"><%= (lessons.courses)[i].coursename %></div>
+            <div class="col-xs-6"><a href=<%= "/student/course/" + (lessons.courses)[i].courseid + "/notices" %>>点击查看课程公告</a></div>
+        </div>
+        <div class="row">
+            <table class="table table-striped">
+                <td>未交作业：<%= (lessons.courses)[i]. unsubmittedoperations %></td>
+                <td>未读公告：<%= (lessons.courses)[i].unreadnotice %></td>
+                <td>新文件：<%= (lessons.courses)[i].newfile %></td>
+            </table>
+        </div>
+        <% } %>
+<%}else{%>
+<% for(var j = 0; j < notices.notices.length; j++) {%>
+<div>
+    <ul>
+        <li>公告名：<%= (notices.notices)[j].title %></li>
+        <li>发布者：<%= (notices.notices)[j].publisher %></li>
+        <li>发布时间：<%= (notices.notices)[j].publishtime %></li>
+        <li>内容：<%= (notices.notices)[j].content %></li>
+    </ul>
+    <hr/>
+</div>
+<% } %>
+
+<%}%>
+</body>
+</html>

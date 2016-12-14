@@ -18,7 +18,7 @@ exports.handleSendMessage = function (req, res) {
         {
           title: '发消息给老师',
           description: '点击即可选择课程，并发送消息给老师',
-          url: wrapper.urlStudentMessage() + '?openid=' + req.weixin.FromUserName
+          url: wrapper.urlStudentMessage()
         }
       ]);
     }else{
@@ -26,7 +26,7 @@ exports.handleSendMessage = function (req, res) {
         {
           title: '查看消息记录',
           description: '点击即可查看来自学生的消息',
-          url: wrapper.urlTeacherMessage() + '?openid=' + req.weixin.FromUserName
+          url: wrapper.urlTeacherMessage()
         }
       ]);
     }
@@ -48,7 +48,7 @@ exports.handleSendNotice = function (req, res) {
       {
         title: '发送图文公告',
         description: '点击即可发送图文消息给学生',
-        url: wrapper.urlTeacherNotice() + '?openid=' + req.weixin.FromUserName
+        url: wrapper.urlTeacherNotice()
       }
     ]);
   });
