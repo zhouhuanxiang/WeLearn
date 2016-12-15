@@ -36,7 +36,6 @@ var noticeMessage = function (notice, noticeid) {
             console.log(err);
           }
         });
-        console.log(msgData);
       })(i);
     }
   });

@@ -45,38 +45,28 @@ router.get('/', function (req, res, next) {
   Student.findOne({openid: req.session.openid}, function (err, doc) {
     if (err){
       next(err);
-      return;
+    }else{
+      var courses = doc? (doc.course) : [];
+      res.render('teacher/notice', {
+        courses: courses,
+        status: 'courses'
+      })
     }
-    var courses = doc? (doc.course) : [];
-    res.render('teacher/notice', {
-      courses: courses,
-      status: 'courses'
-    })
   });
 });
 
 router.post('/', upload.array('photo', 1), function (req, res, next) {
   var notice;
-  if (req.files[0]){
-    notice = {
-      course:  req.body.course,
-      msgHead: req.body.msgHead,
-      msgBody: req.body.msgBody,
-      photo: req.files[0].filename
-    };
-  }else{
-    notice = {
-      course:  req.body.course,
-      msgHead: req.body.msgHead,
-      msgBody: req.body.msgBody,
-      photo: ''
-    };
-  }
+  notice = {
+    course:  req.body.course,
+    msgHead: req.body.msgHead,
+    msgBody: req.body.msgBody,
+    photo: (req.files[0])? req.files[0].filename : ''
+  };
   var noticeObj = new Notice(notice);
   noticeObj.save(function (err, doc) {
     if (err){
       next(err);
-      return;
     }
     noticeMessage(notice, doc._id);
     res.json({

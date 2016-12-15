@@ -25,18 +25,18 @@ var Course = require('../../Models/Course');
 var Notice = require('../../Models/Notice');
 
 router.get('/:noticeid', function (req, res, next) {
-  console.log(req.params.noticeid);
+  //console.log(req.params.noticeid);
   Notice.findOne({_id: req.params.noticeid}, function (err, notice) {
     if(err){
       next(err);
-      return;
+    }else{
+      res.render('student/notice', {
+        course: notice.course,
+        msgHead: notice.msgHead,
+        msgBody: notice.msgBody,
+        photo: '/photos/' + notice.photo
+      });
     }
-    res.render('student/notice', {
-      course: notice.course,
-      msgHead: notice.msgHead,
-      msgBody: notice.msgBody,
-      photo: '/photos/' + notice.photo
-    });
   })
 });
 

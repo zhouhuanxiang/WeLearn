@@ -77,21 +77,23 @@ var Notice = require('./Models/Notice');
 //   console.log(doc);
 // });
 
-// var menu = require('./handler/menu_control');
-// menu.create_menu();
 
 app.use(function (req, res, next) {
-  var code = url.parse(req.url, true).query['code'];
-  if (code){
-    oauth.client.getAccessToken(code, function (err, result) {
-      req.session.openid = result.data.openid;
-      console.log('---New Guest---');
-      console.log(req.session.openid);
-      next();
-    });
-  }else{
-    req.session.openid = 'invalid';
+  if (req.session.openid){
     next();
+  }else{
+    var code = url.parse(req.url, true).query['code'];
+    if (code){
+      oauth.client.getAccessToken(code, function (err, result) {
+        req.session.openid = result.data.openid;
+        console.log('---New Guest---');
+        console.log(req.session.openid);
+        next();
+      });
+    }else{
+      req.session.openid = 'invalid';
+      next();
+    }
   }
 });
 

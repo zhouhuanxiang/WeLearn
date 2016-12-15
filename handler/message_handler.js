@@ -1,17 +1,16 @@
 var wrapper = require('../wrapper');
 var utf8 = require('utf8');
 var Student = require('../Models/Student');
+var setting = require('../setting');
 
 exports.checkSendMessage = function (msg) {
-  if (msg.Content === 'msg')
-    return true;
+  return msg.Content === setting.messageContent;
 };
 
 exports.handleSendMessage = function (req, res) {
   Student.findOne({openid: utf8.encode(req.weixin.FromUserName)}, function (err, student) {
     if (err){
-      console.log(err);
-      return;
+      res.reply('抱歉，出了点问题');
     }
     if (student.position !== 'teacher'){
       res.reply([
@@ -34,22 +33,24 @@ exports.handleSendMessage = function (req, res) {
 };
 
 exports.checkSendNotice = function (msg) {
-  if (msg.Content === 'notice')
+  if (msg.Content === setting.noticeContent)
     return true;
 };
 
 exports.handleSendNotice = function (req, res) {
   Student.findOne({openid: utf8.encode(req.weixin.FromUserName)}, function (err, student) {
-    if (student.position !== 'teacher'){
+    if (err) {
+      res.reply('抱歉，出了点问题');
+    } else if (student.position !== 'teacher'){
       res.reply('没有该权限:(');
-      return;
+    } else{
+      res.reply([
+        {
+          title: '发送图文公告',
+          description: '点击即可发送图文消息给学生',
+          url: wrapper.urlTeacherNotice()
+        }
+      ]);
     }
-    res.reply([
-      {
-        title: '发送图文公告',
-        description: '点击即可发送图文消息给学生',
-        url: wrapper.urlTeacherNotice()
-      }
-    ]);
   });
 };
