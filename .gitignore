@@ -26,3 +26,8 @@ crawler.js
 
 # node_modules
 node_modules/
+
+routes/coverage/
+routes/public/photos/
+
+handler/coverage

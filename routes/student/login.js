@@ -150,14 +150,10 @@ router.post('/', urlencodedParser, function (req, res, next) {
           return;
         }
         updateCourseDb(student);
-        res.json({
-          status: 'success'
-        });
       });
-    } else{
-      res.json({
-        status: 'failed'
-      });
+      res.json({ status: 'success' });
+    } else {
+      res.json({ status: 'failed' });
     }
   });
 });

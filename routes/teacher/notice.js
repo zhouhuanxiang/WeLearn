@@ -56,8 +56,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', upload.array('photo', 1), function (req, res, next) {
-  var notice;
-  notice = {
+  var notice = {
     course:  req.body.course,
     msgHead: req.body.msgHead,
     msgBody: req.body.msgBody,
