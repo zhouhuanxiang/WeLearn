@@ -48,7 +48,7 @@ router.get('/', function (req, res, next) {
       next(err);
       return;
     }
-      console.log(res.reply);
+
     if (doc){
       res.render('student/login', {
         status: 'loginTwice'

@@ -17,8 +17,8 @@ mongoose.connection.on('open', function () {
 var wechat = require('./routes/wechat');
 var studentLogin = require('./routes/student/login');
 
+var studentSchedule = require('./routes/student/schedule');
 var studentLesson = require('./routes/student/course');
-
 var studentMessage = require('./routes/student/message');
 var teacherMessage = require('./routes/teacher/message');
 var studentNotice = require('./routes/student/notice');
@@ -102,6 +102,7 @@ app.use(function (req, res, next) {
 
 app.use('/student/login', studentLogin);
 
+app.use('/student/schedule', studentSchedule);
 app.use('/student/course', studentLesson);
 
 app.use('/student/message', studentMessage);

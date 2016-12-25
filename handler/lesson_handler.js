@@ -7,15 +7,12 @@ var menutmp=require("./menu_template");
 exports.checkListLesson = function (msg) {
   if (msg.Content === 'lesson' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['course_info'])
     return true;
-
-  return false;
 };
 
 exports.handleListLesson = function (req, res) {
   Student.findOne({openid: req.weixin.FromUserName}, function(err,doc){
     if(!doc){
       res.reply("请先进行绑定");
-      return;
     }
     else{
       res.reply([

@@ -2,16 +2,15 @@ var wrapper = require('../wrapper');
 var Student = require('../Models/Student');
 var checker = require("./checkRequest");
 var menutmp = require("./menu_template");
-var getDay = require('../routes/student/getTotalDay');
-var sd = require('silly-datetime');
-var request = require('request');
+//var getDay = require('../routes/student/getTotalDay');
+//var sd = require('silly-datetime');
+//var request = require('request');
 
-var startTime = getDay.getTotalDay(2016, 9, 12);
+//var startTime = getDay.getTotalDay(2016, 9, 12);
 
 exports.checkListSchedule = function (msg) {
     if(msg.Content === 'schedule' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['course_schedule'])
         return true;
-    return false;
 };
 
 exports.handleListSchedule = function (req, res) {
@@ -20,6 +19,14 @@ exports.handleListSchedule = function (req, res) {
             res.reply("请先进行绑定");
         }
         else {
+            res.reply([
+                {
+                    title: '今日课程',
+                    description: '点击即可查看今日课程',
+                    url: wrapper.urlScheduleInfo() + '?openid=' + req.weixin.FromUserName
+                }
+            ]);
+            /*
             var time = sd.format(new Date(), 'YYYY-MM-DD');
             time = time.split(/-/);
             var totalTime = 0;
@@ -103,7 +110,7 @@ exports.handleListSchedule = function (req, res) {
                 }
 
             });
-
+            */
         }
     });
 };

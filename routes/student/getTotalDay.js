@@ -12,8 +12,8 @@ exports.getTotalDay = function(year, month, day){
             if((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0){
                 totalDays += 29;
             }
-            else{}
-            totalDays += 28;
+            else
+                totalDays += 28;
         }
     }
     totalDays += day;

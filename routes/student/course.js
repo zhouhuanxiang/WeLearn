@@ -61,9 +61,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 router.get('/', urlencodedParser, function (req, res, next) {
   Student.findOne({openid: req.session.openid}, function (err, doc) {
-    if (err) next(err);
-    if(!doc){
-        res.reply("请先进行绑定");
+    if (err) {
+        next(err);
         return;
     }
     var requestData = {
@@ -105,7 +104,11 @@ router.get('/:lesson_id/notices', urlencodedParser, function (req, res, next) {
   };
 
   Student.findOne({openid: req.session.openid}, function(err,doc){
-    if(err) next(err);
+    if(err) {
+        next(err);
+        return;
+    }
+
     //console.log(docs);
 
     var username = doc.studentnumber;
@@ -140,7 +143,10 @@ router.get('/:lesson_id/documents', urlencodedParser, function (req, res, next) 
     };
 
     Student.findOne({openid: req.session.openid}, function(err,doc){
-        if(err) next(err);
+        if(err){
+            next(err);
+            return;
+        }
         //console.log(docs);
 
         var username = doc.studentnumber;
@@ -175,7 +181,10 @@ router.get('/:lesson_id/assignments', urlencodedParser, function (req, res, next
     };
 
     Student.findOne({openid: req.session.openid}, function(err,doc){
-        if(err) next(err);
+        if(err){
+            next(err);
+            return;
+        }
         //console.log(docs);
 
         var username = doc.studentnumber;
