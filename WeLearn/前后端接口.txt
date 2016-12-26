@@ -1,0 +1,64 @@
+实例
+https://github.com/ThssSE/WeChatTicket/blob/master/static/a/activity/detail/index.html
+
+
+
+message -- 私信
+    1.学生给老师发私信
+    已经做完
+    接口说明见 /route/student/message 注释，有一处地方有改动
+
+    学生发起私信，流程如下：
+        1. 进入页面，默认 get '/student/message'，加载出选择课程名数组，前端元素假设为 A（选择框之类）
+        2. 前端收到 A 被选择的事件，ajax 发送 get '/student/message/msg_list/123456'，返回之前的谈话记录
+        3. 显示谈话记录，显示表单
+        4. 表单确认，post '/student/message'
+    学生回复私信，流程如下
+        1. 进入页面 get '/student/message/msg_list/123456'，这时因为没有执行上面的第一步，可以通过前端维持status 全局变量发现
+        2. ajax 发送 get '/student/message/course_list'，获取课程名数组
+        3. 填表单，发送
+
+    2.老师给学生回复
+    和前端的衔接已经做完
+    接口说明见 /route/teacher/message 注释
+
+    流程比上面略简单，请看注释
+
+
+
+notice -- 公告
+    1. 老师发公告
+    /route/teacher/route
+    由于有文件上传，表单一定要用 '<form method="post" enctype="multipart/form-data">'
+
+    2. 学生接受公告
+    /route/student/notice
+    显示出接收到的消息（包含图片）
+
+
+
+/handler/account_handler.js
+         lesson_handler.js
+         message_handler.js
+         notice_handler.js      有微信端的输入消息，比如输入'msg'，公众号返回相应链接
+
+
+
+/Model 是数据库的各个表
+data_insert.js 里的函数直接向数据插入数据，不用每次登陆，按需修改，修改完后 app.js 45-70 行找到该函数运行一遍后即可（完毕后注释掉）
+45-70行 还有数据库的输出、删除函数，自己修改
+
+刚刚将 Student 的所有字段都设置为可重复，所以可以做到相同学号、微信号的两个数据（一个学生、一个老师）都插入到数据库，方便调试
+修改数据库字段会报错，貌似node.js 没有 Django 方便的 migrate，例如修改了 Student 表，需要如下改进
+1 删除所有Student数据
+2 在数据库命令行，依次
+       use welearndb
+       db.students.dropIndexes()
+
+
+
+模板消息要在测试号页面申请，见 '模板消息.png',申请完依次填入 setting.js
+
+
+
+

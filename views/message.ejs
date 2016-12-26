@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>回复私信</title>
+    <title>私信老师</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
+
     <header></header>
     <div class="mainbody" id="mainbody"> </div>
     <script src="/3rd/jquery.js"></script>
-    <script src="/3rd/swig.js"></script>
-    <script src="/js/base.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="/js/base.js"></script>
     <script>
-    var msg = {};
-    var status = 0;
-    function clearPage(){
-        $('header').html('');
-        $('#mainbody').html('');
-    };
+
+    var userName = urlParam.openid;
+    //var socket = io.connect('http://localhost:3000');
+    var socket = io('http://localhost:3000');
+
+    socket.on('connect', function(){
+        socket.emit('join', {openid: urlParam.openid, course: urlParam.course});
+        //console.log('join ' + urlParam.openid + urlParam.course);
+        
+    });
+
+    socket.on('msg', function(user, msg){
+        console.log(user);
+        console.log(msg);
+        $('#msgBody').before('<p>'+msg+'</p>');
+        $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
+    });
 
     Date.prototype.Format = function (fmt) {
         var o = {
@@ -35,25 +46,43 @@
         return fmt;
     };
 
+    function clearPage(){
+        $('header').html('');
+        $('#mainbody').html('');
+    };
+
+    function postMsg(){
+        var url = '/student/message';
+        var message = $('#msgBody').val();
+        console.log(message);
+        console.log(urlParam.course);
+        $.post(url, {course: urlParam.course,
+            msgHead: '',
+            msgBody: message,
+            openid: urlParam.openid
+        });
+    };
+
     function getHistory(){
         //console.log(urlParam.course);
         //console.log('http://59.66.138.43/student/message/msg_list/'+urlParam.course+'?'+urlParam.openid);
-        var url = '/teacher/message/' + urlParam.course + '/' + urlParam.studentid;
+        var url = '/student/message/msg_list/' + urlParam.course;
         //console.log(url);
         $.get(url, {openid: urlParam.openid}, function (data){
             msg = data.messages;
-            console.log(data);
-            console.log(msg);
+            //console.log(data);
+            //console.log(msg);
+            clearPage();
             $('header').html(urlParam.course+"课程私信");
             $('#mainbody').append('<div id="msgBox" style="height:80%;overflow:auto;">');
             for(var i = 0; i < msg.length; i++){
                 var temp = msg[i].date.split('.')[0].split('T');
                 var date = temp[0] + ' ' + temp[1];
-                if (msg[i].toTeacher == false){
-                    $('#msgBox').append('<p>Me:'+date+'<br>'+msg[i].msgBody+'</p>');
+                if (msg[i].toTeacher == true){
+                    $('#msgBox').append('<p>Me: '+date+'<br>'+msg[i].msgBody+'</p>');
                 }
                 else{
-                    $('#msgBox').append('<p> '+date+'<br>'+msg[i].msgBody+'</p>');
+                    $('#msgBox').append('<p>'+date+'<br>'+msg[i].msgBody+'</p>');
                 }
             }
             $('#msgBox').append('</div>');
@@ -65,7 +94,7 @@
                 if (e.which === 13){//Enter
                     e.preventDefault();
                     var _msg = $('#msgBody').val();
-                    //console.log(_msg); 
+                    //console.log(_msg);
                     if(_msg){
                         postMsg();
                        var date = new Date().Format("yyyy-MM-dd hh:mm:ss");
@@ -93,41 +122,7 @@
             });
         });        
     };
-
     getHistory();
-    var userName = urlParam.openid;
-    //var socket = io.connect('http://localhost:3000');
-    var socket = io('http://localhost:3000');
-
-    socket.on('connect', function(){
-        socket.emit('join', {openid: urlParam.studentid, course: urlParam.course});
-        //console.log('join ' + urlParam.openid + urlParam.course);
-        
-    });
-
-    socket.on('msg', function(user, msg){
-        console.log(user);
-        console.log(msg);
-        $('#msgBody').before('<p>'+msg+'</p>');
-        $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
-    });
-
-
-    function postMsg(){
-        var url = '/teacher/message';
-        var message = $('#msgBody').val();
-        console.log(message);
-        console.log(urlParam.course);
-        $.post(url, {course: urlParam.course,
-            msgHead: '',
-            msgBody: message,
-            openid: urlParam.openid,
-            student: urlParam.studentid
-        }, function(result){
-
-        });
-    };
-
     </script>
+
 </body>
-</html>
