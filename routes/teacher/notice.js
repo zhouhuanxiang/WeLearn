@@ -47,7 +47,9 @@ router.get('/', function (req, res, next) {
     if (err){
       next(err);
     }else{
-      var courses = doc? (doc.course) : [];
+      //TODO
+      //var courses = doc? (doc.course) : [];
+      var courses = doc.course;
       res.render('teacher/notice', {
         courses: courses,
         status: 'courses'

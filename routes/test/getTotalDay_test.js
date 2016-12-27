@@ -29,4 +29,4 @@ describe('getTotalDay.js test', function () {
     });
 });
 
-getTotalDay.getTotalDay()
+getTotalDay.getTotalDay();

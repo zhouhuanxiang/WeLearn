@@ -121,10 +121,8 @@ var deadlineInform = function(studentnumber, courseid, coursename, requestData, 
                             }
                         }
                     }
-
                 }
             }
-
         }
     });
-}
+};

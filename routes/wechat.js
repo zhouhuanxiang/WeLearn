@@ -7,7 +7,7 @@ var handler = require('../handler/main_handler');
 
 var config = {
   token: settings.token,
-  appid: settings.appid,
+  appid: settings.appid
   //appsecret: settings.appsecret
 };
 
