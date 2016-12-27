@@ -3,7 +3,6 @@
 <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-
     <!-- 最新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
 
@@ -17,45 +16,18 @@
     <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<div class="center-block" style="background-color:#ccc;">
-    <table class="table">
-        <caption><h1><%= title %></h1></caption>
-        <thead>
-        <tr>
-            <th>上课时间</th>
-            <th>课程名</th>
-            <th>上课老师</th>
-            <th>上课地点</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% for(var j = 1; j < 7; j++) {%>
-        <% var find = false %>
-        <% for(var i = 0; i < classes.length; i++) {%>
-        <% if (classes[i].time[1] === j && classes[i].time[0] === day && classes[i].week[week - 1] === 1) {%>
-        <tr class="active">
-            <td>第<%= j %>大节</td>
-            <td><%= classes[i].coursename %></td>
-            <td><%= classes[i].teacher %></td>
-            <td><%= classes[i].classroom %></td>
-        </tr>
-        <% find = true %>
-        <% } %>
-        <% }%>
-        <% if(find === false) {%>
-        <tr class="success">
-            <td>第<%= j %>大节</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+<h1><%= title %></h1>
+<% for (var i = 1; i < 7; i++) {%>
+    <% for(var j = 0; j < schedule.classes.length; j++) {%>
+        <% if ((schedule.classes)[j].time[0] == day && (schedule.classes)[j].week[week - 1] == 1 && (schedule.classes)[j].time[1] == i) {%>
+            <ul>
+                <li>课程名：<%= (schedule.classes)[j].coursename %></li>
+                <li>教师：<%= (schedule.classes)[j].teacher %></li>
+                <li>教室：<%= (schedule.classes)[j].classroom %></li>
+            </ul>
         <%}%>
-        <% }%>
-
-        </tbody>
-    </table>
-</div>
-
+    <% } %>
+<% } %>
 </body>
 </html>
+

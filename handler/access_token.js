@@ -23,5 +23,5 @@ exports.getAccessToken = function getAccessToken(callback){
             console.error(e);
         });
     }
-};
+}
 
