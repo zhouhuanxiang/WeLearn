@@ -2,7 +2,7 @@ var wrapper = require('../wrapper');
 var Student = require('../Models/Student');
 var checker = require("./checkRequest");
 //var basicInfo = require("../weixin_basic/settings.js");
-var menutmp=require("./menu_template");
+var menutmp=require("./menu_control");
 
 exports.checkListLesson = function (msg) {
   if (msg.Content === 'lesson' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['course_info'])

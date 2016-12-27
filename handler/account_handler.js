@@ -6,7 +6,7 @@ var utf8 = require('utf8');
 var request = require('request');
 var checker = require("./checkRequest");
 //var basicInfo = require("../weixin_basic/settings.js");
-var menutmp=require("./menu_template");
+var menutmp=require("./menu_control");
 
 exports.checkBindAccount = function (msg) {
   if (msg.Content === 'bind' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['account_bind'])

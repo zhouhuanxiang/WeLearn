@@ -76,12 +76,9 @@ var Notice = require('./Models/Notice');
 //   console.log(doc);
 // });
 
-// //设置 menu
-// var menu = require('./handler/menu_control');
-// var access_token = require('./handler/access_token.js');
-// access_token.getAccessToken(function (token) {
-//   menu.create_menu(token);
-// });
+//设置 menu
+// var menu_control = require('./handler/menu_control');
+// menu_control.update_menu();
 
 app.use(function (req, res, next) {
   if (req.session.openid){

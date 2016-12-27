@@ -1,7 +1,7 @@
 var wrapper = require('../wrapper');
 var Student = require('../Models/Student');
 var checker = require("./checkRequest");
-var menutmp=require("./menu_template");
+var menutmp=require("./menu_control");
 
 exports.checkListSchedule = function (msg) {
     if (msg.Content === 'schedule' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['course_schedule'])

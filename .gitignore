@@ -13,6 +13,8 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+*.log
+.idea
 
 # Windows shortcuts
 *.lnk
@@ -50,3 +52,7 @@ Temporary Items
 .apdisk
 
 .gitattributes
+
+node_modules/
+npm-debug.log
+
