@@ -66,17 +66,19 @@ router.get('/', function (req, res, next) {
     res.render('student/message', {
       courses: courses,
       status: 'courses'
-    })
+    });
   });
 });
 
 router.post('/', urlencodedParser, function (req, res, next) {
   var message = {
+    toTeacher: true,
     student: req.session.openid,
     course: req.body.course,
     msgHead: req.body.msgHead,
     msgBody: req.body.msgBody
   };
+  console.log(message);
   var messageObj = new Message(message);
   messageObj.save(function (err, doc) {
     if (err){
@@ -86,8 +88,8 @@ router.post('/', urlencodedParser, function (req, res, next) {
     /**
      * TODO 下面是为了调试，部署时删除
      */
-    var openid = setting.yourOpenid;
-    textMessage(openid, message);
+    //var openid = setting.yourOpenid;
+    //textMessage(openid, message);
     res.json({
       status: 'msgSend'
     });
