@@ -1,7 +1,8 @@
 var wrapper = require('../wrapper');
 var utf8 = require('utf8');
-var checker = require("./checkRequest");
 var Student = require('../Models/Student');
+var checker = require("./checkRequest");
+//var basicInfo = require("../weixin_basic/settings.js");
 var menutmp=require("./menu_template");
 
 exports.checkSendMessage = function (msg) {

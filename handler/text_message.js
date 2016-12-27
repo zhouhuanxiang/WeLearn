@@ -16,18 +16,15 @@ var textMessage = function (openid, message) {
     }
   };
   if (message.toTeacher){
-    /**
-     * TODO
-     */
     url = wrapper.urlTeacherMessage()+'/'+message.course+'/'+message.student+'?openid='+openid;
-    api.sendTemplate('o3HdVwQhhR9vV2MhK0zS6WruOLmE', setting.teacherTextTemplateID, url, msgData, function (err) {
+    api.sendTemplate(openid, setting.teacherTextTemplateID, url, msgData, function (err) {
       if (err){
         console.log(err);
       }
     });
   }else{
     url = wrapper.urlStudentMessage()+'/msg_list/'+message.course+'?openid='+openid;
-    api.sendTemplate('o3HdVwQhhR9vV2MhK0zS6WruOLmE', setting.studentTextTemplateID, url, msgData, function (err) {
+    api.sendTemplate(openid, setting.studentTextTemplateID, url, msgData, function (err) {
       if (err){
         console.log(err);
       }

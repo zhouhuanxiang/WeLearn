@@ -48,11 +48,12 @@ get '/student/message/course_list'
 
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
 var Student = require('../../Models/Student');
 var Course = require('../../Models/Course');
 var Message = require('../../Models/Message');
 var textMessage = require('../../handler/text_message');
-var bodyParser = require('body-parser');
+var setting = require('../../setting');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 router.get('/', function (req, res, next) {
@@ -65,7 +66,7 @@ router.get('/', function (req, res, next) {
     res.render('student/message', {
       courses: courses,
       status: 'courses'
-    })
+    });
   });
 });
 
@@ -77,9 +78,7 @@ router.post('/', urlencodedParser, function (req, res, next) {
     msgHead: req.body.msgHead,
     msgBody: req.body.msgBody
   };
-  console.log(req.body.msgBody);
-  console.log(req.body.msgHead);
-  
+  console.log(message);
   var messageObj = new Message(message);
   messageObj.save(function (err, doc) {
     if (err){
@@ -87,9 +86,10 @@ router.post('/', urlencodedParser, function (req, res, next) {
       return;
     }
     /**
-     * TODO
-    textMessage('o3HdVwQhhR9vV2MhK0zS6WruOLmE', message);
-    */
+     * TODO 下面是为了调试，部署时删除
+     */
+    //var openid = setting.yourOpenid;
+    //textMessage(openid, message);
     res.json({
       status: 'msgSend'
     });

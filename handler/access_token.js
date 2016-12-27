@@ -1,6 +1,5 @@
 var set = require("./menu_template");
 var https = require('https');
-var setting = require('../setting');
 
 var ACCESS_TOKEN;
 var AT_UPDATE_TIME;
@@ -13,7 +12,7 @@ exports.getAccessToken = function getAccessToken(callback){
     }
     else{
     	var at_tmp = ACCESS_TOKEN;
-    	https.get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+setting.appid+"&secret="+setting.appsecret, function (response) {
+    	https.get("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+set.WEIXIN_APPID+"&secret="+set.WEIXIN_SECRET, function (response) {
             response.on('data', function(d) {
    	            var obj = JSON.parse(d);
    	            ACCESS_TOKEN = obj.access_token;

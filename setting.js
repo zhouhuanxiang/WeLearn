@@ -1,10 +1,9 @@
-var path = require('path');
-var siteDomain = 'http://101.5.161.96';
+var siteDomain = 'http://101.5.212.21';
 var token = 'ThisIsAWeChatTokenWhichCanBeARandomString';
 var appid = 'wx8d7a006090c3ae66';
 var appSecret = '85b8c974f08b5e62e38a8d8beec962bf';
 
-/**
+/*
  * token
  * appid
  * appsecret
@@ -19,9 +18,15 @@ var settings = {
   appid: appid,
   appsecret: appSecret,
   siteDomain: siteDomain,
-  noticeTemplateID: 'QHaABmPXr8d0_XXH6IYhnOSw6S_YzrWz3nLNRKp13u4',
-  teacherTextTemplateID: 'VFaqOQ65bMz5_pNoZOz-4zEjeGfHn1nSD9kw1yuvP8w',
-  studentTextTemplateID: 'k75GY_pOzjTWVkJtCPnS6fotrcDb3LHRApKKXgu4PXg'
+  noticeTemplateID: '6lQZOtEAQclvHlXRpWXxNoYtwsbjFB0uUGWjEefXoOw',
+  teacherTextTemplateID: 'PnH0eplbIqPYfUBvbWNqWntDISa2w4ikBylZicl9X3U',
+  studentTextTemplateID: 'PnH0eplbIqPYfUBvbWNqWntDISa2w4ikBylZicl9X3U'
+  // yourOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E',
+  // studentOpenid: 'oBu1dv5_0wvgk7U686jTHfs2oTsE',
+  // teacherOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E'
 };
 
 module.exports = settings;
+
+//o3HdVwQhhR9vV2MhK0zS6WruOLmE
+//o3HdVwWHa0uJNuNLQ7u_1Tf0VEng

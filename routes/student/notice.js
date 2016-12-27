@@ -13,6 +13,7 @@
     msgHead: '这是公告开头'，
     msgBody: '这是公告内容',
     photo: '这是图片，引用图片的方法可以看本项目中的 /views/student/notice.ejs'
+            如果是没有图片，则 photo 字段 '/photos/'
   }
  */
 

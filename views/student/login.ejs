@@ -5,22 +5,15 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
-    <% if(status === 'failed'){ %>
-            <p>验证失败</p>
-        <% } %>
-        <% if(status === 'loginTwice') { %>
-            <div> 您已经绑定过了！ </div>
-        <% } %>
-        <% if(status === 'success') { %>
-            <div> 绑定成功！ </div>
-        <% } %>
-        <% if(status === 'failed' || status === 'login'){ %>
-            <form method="post" enctype="application/x-www-form-urlencoded">
-                <p><input type="text" name="studentId" placeholder="学号"/></p>
-                <p><input type="password" name="password" placeholder="密码"/></p>
-                <p><input type="submit" value="确定"/></p>
-            </form>
-        <% } %>
-        
+    <% if(status === 'loginFail'){ %>
+        <p>验证失败</p>
+    <% } %>
+    <% if(status === 'loginFail' || status === 'login'){ %>
+        <form method="post" enctype="application/x-www-form-urlencoded">
+            <p><input type="text" name="studentId" placeholder="学号"/></p>
+            <p><input type="password" name="password" placeholder="密码"/></p>
+            <p><input type="submit" value="确定"/></p>
+        </form>
+    <% } %>
 </body>
 </html>
