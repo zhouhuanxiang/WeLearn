@@ -61,8 +61,8 @@ exports.handleBindAccount = function (req, res) {
                     reminder = schedule.scheduleJob(rule, function () {
                         reminderSet = true;
                         var requestData = {
-                            apiKey: "",
-                            apisecret: ""
+                            apiKey: "camustest",
+                            apisecret: "camustest"
                         };
                         request({
                             method: 'POST',
@@ -179,11 +179,16 @@ exports.handleUnBindAccount = function (req, res) {
     var courses = student.course;
     var openid = student.openid;
     var username = student.username;
+    var requestData = {
+        apiKey: "camustest",
+        apisecret: "camustest"
+    };
+
     request({
       method: 'POST',
       url: 'http://se.zhuangty.com:8000/students/'+username+'/cancel',
       headers: {'Content-Type': 'application/json'},
-      body: "{  \"apikey\": \"API Key\",  \"apisecret\": \"API Secret Key\"}"
+      body: JSON.stringify(requestData)
     }, function () {
       student.remove(function () {
         for(var i = 0; i < courses.length; i++) {

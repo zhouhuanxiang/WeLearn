@@ -63,7 +63,7 @@ router.get('/', function (req, res, next) {
 });
 
 function updateCourseDb(student) {
-  var requestData = { apiKey: "", apisecret: ""};
+  var requestData = { apiKey: "camustest", apisecret: "camustest"};
   request({
     method: 'POST',
     url: 'http://se.zhuangty.com:8000/learnhelper/'+ student.studentnumber +'/courses',
@@ -113,8 +113,8 @@ function updateCourseDb(student) {
 
 router.post('/', urlencodedParser, function (req, res, next) {
   var requestData = {
-    apikey: "",
-    apisecret: "",
+    apikey: "camustest",
+    apisecret: "camustest",
     username: utf8.encode(req.body.studentId),
     password: utf8.encode(req.body.password)
   };
