@@ -53,6 +53,10 @@ Temporary Items
 
 .gitattributes
 
-node_modules/
 npm-debug.log
+
+routes/coverage/*
+handler/coverage/*
+
+public/photos/*
 

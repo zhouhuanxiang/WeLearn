@@ -38,7 +38,8 @@ var Notice = require('../../Models/Notice');
 var noticeMessage = require('../../handler/notice_message');
 //以下三行处理带文件表单的依赖
 var multer = require('multer');
-var upload = multer({ dest: 'public/photos/' });
+var path = require('path');
+var upload = multer({ dest: path.join(__dirname, '../../public/photos') });
 var fs = require('fs');
 
 router.get('/', function (req, res, next) {

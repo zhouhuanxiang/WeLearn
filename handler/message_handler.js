@@ -2,15 +2,19 @@ var wrapper = require('../wrapper');
 var utf8 = require('utf8');
 var Student = require('../Models/Student');
 var setting = require('../setting');
+var checker = require("./checkRequest");
+var menutmp=require("./menu_control");
 
 exports.checkSendMessage = function (msg) {
-  return msg.Content === setting.messageContent;
+  return (msg.Content === setting.messageContent ||
+    checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['private_conversation']);
 };
 
 exports.handleSendMessage = function (req, res) {
   Student.findOne({openid: utf8.encode(req.weixin.FromUserName)}, function (err, student) {
-    if (err){
-      res.reply('抱歉，出了点问题');
+    if(!student){
+      res.reply("请先进行绑定");
+      return;
     }
     if (student.position !== 'teacher'){
       res.reply([
