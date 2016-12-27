@@ -58,30 +58,25 @@ var Notice = require('./Models/Notice');
 // Message.remove({}, function (err, doc) {});
 // Notice.remove({}, function (err, doc) {});
 
-// Student.find({}, function (err, doc) {
-//   console.log('---Student---');
-//   console.log(doc);
-// });
-// Course.find({}, function (err, doc) {
-//   console.log('---Course---');
-//   console.log(doc);
-// });
-Notice.find({}, function (err, doc) {
-  console.log('---Notice---');
+Student.find({}, function (err, doc) {
+  console.log('---Student---');
   console.log(doc);
 });
-Message.find({}, function (err, doc) {
-  console.log('---Message---');
+Course.find({}, function (err, doc) {
+  console.log('---Course---');
   console.log(doc);
 });
+// Notice.find({}, function (err, doc) {
+//   console.log('---Notice---');
+//   console.log(doc);
+// });
+// Message.find({}, function (err, doc) {
+//   console.log('---Message---');
+//   console.log(doc);
+// });
 
-/*
-var menu = require('./handler/menu_control');
-var access_token = require('./handler/access_token');
-access_token.getAccessToken(function(token){
-  menu.create_menu(token);
-});
-*/
+// var menu = require('./handler/menu_control');
+// menu.create_menu();
 
 app.use('/wechat', wechat);
 app.use(function (req, res, next) {
@@ -92,6 +87,7 @@ app.use(function (req, res, next) {
     console.log("new guest: " + req.session.openid);
     next();
   }else if (req.session.openid){
+    console.log("new guest: " + req.session.openid);
     next();
   }else{
     var err = new Error('服务不可用');
@@ -102,8 +98,8 @@ app.use(function (req, res, next) {
 
 app.use('/student/login', studentLogin);
 
-app.use('/student/schedule', studentSchedule);
 app.use('/student/course', studentLesson);
+app.use('/student/schedule', studentSchedule);
 
 app.use('/student/message', studentMessage);
 app.use('/teacher/message', teacherMessage);

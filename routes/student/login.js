@@ -140,8 +140,8 @@ router.post('/', urlencodedParser, function (req, res, next) {
         course: []
       };
       //TODO
-      if (student.openid === 'o3HdVwWHa0uJNuNLQ7u_1Tf0VEng')
-        student.position = 'teacher';
+      //if (student.openid === 'o3HdVwWHa0uJNuNLQ7u_1Tf0VEng')
+      //  student.position = 'teacher';
       //
       var studentObj = new Student(student);
       studentObj.save(function (err) {
