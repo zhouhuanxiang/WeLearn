@@ -1,9 +1,9 @@
-var siteDomain = 'http://101.5.212.21';
+var siteDomain = 'http://101.5.210.250';
 var token = 'ThisIsAWeChatTokenWhichCanBeARandomString';
 var appid = 'wx8d7a006090c3ae66';
 var appSecret = '85b8c974f08b5e62e38a8d8beec962bf';
 
-/*
+/**
  * token
  * appid
  * appsecret
@@ -18,12 +18,17 @@ var settings = {
   appid: appid,
   appsecret: appSecret,
   siteDomain: siteDomain,
-  noticeTemplateID: '6lQZOtEAQclvHlXRpWXxNoYtwsbjFB0uUGWjEefXoOw',
-  teacherTextTemplateID: 'PnH0eplbIqPYfUBvbWNqWntDISa2w4ikBylZicl9X3U',
-  studentTextTemplateID: 'PnH0eplbIqPYfUBvbWNqWntDISa2w4ikBylZicl9X3U'
-  // yourOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E',
-  // studentOpenid: 'oBu1dv5_0wvgk7U686jTHfs2oTsE',
-  // teacherOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E'
+  noticeTemplateID: 'QHaABmPXr8d0_XXH6IYhnOSw6S_YzrWz3nLNRKp13u4',
+  teacherTextTemplateID: 'AMx-DhYdngumTKUMRwgEPu6XG_F-YPgt6eTR3knWfUU',
+  studentTextTemplateID: 'WLYiKCaSFMaet3vLJiQsjg430SUQkGjcEx04nOmEwyM',
+  teacherMessageID: 'R_c_YYACNNO5P9ccoQg-FTt4jz9mUUfyQdcRWhDsC1c',
+  studentMessageID: 'oZrLU__lg568RKc3txLK0Z8Fxv2ZKTKrerg5DYNXxic',
+  yourOpenid: 'oVP35wC1bsdlsEmcBPVzbe5FkdrI',
+  studentOpenid: 'oVP35wC1bsdlsEmcBPVzbe5FkdrI',
+  teacherOpenid: 'oVP35wBPxW4z4nFlnsAsIw_NwaQA',
+
+  messageContent: 'msg',
+  noticeContent: 'notice'
 };
 
 module.exports = settings;

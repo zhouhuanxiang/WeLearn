@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<% if(status === 'loginFail'){ %>
+<p>验证失败</p>
+<% } %>
+<% if(status === 'loginFail' || status === 'login'){ %>
+<form method="post" enctype="application/x-www-form-urlencoded">
+    <p><input type="text" name="name" placeholder="账号"/></p>
+    <p><input type="password" name="passwors" placeholder="密码"/></p>
+    <p><input type="submit" value="确定"/></p>
+</form>
+<% } %>
+</body>
+</html>

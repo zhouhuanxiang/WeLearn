@@ -56,7 +56,7 @@ var textMessage = require('../../handler/text_message');
 var setting = require('../../setting');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-router.get('/', function (req, res, next) {
+router.get('/', urlencodedParser, function (req, res, next) {
   Student.findOne({openid: req.session.openid}, function (err, doc) {
     if (err){
       next(err);
@@ -71,27 +71,40 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', urlencodedParser, function (req, res, next) {
-  var message = {
-    toTeacher: true,
-    student: req.session.openid,
-    course: req.body.course,
-    msgHead: req.body.msgHead,
-    msgBody: req.body.msgBody
-  };
-  console.log(message);
-  var messageObj = new Message(message);
-  messageObj.save(function (err, doc) {
+  Student.findOne({openid:req.session.openid}, function (err, doc){
     if (err){
       next(err);
       return;
     }
-    /**
-     * TODO 下面是为了调试，部署时删除
-     */
-    //var openid = setting.yourOpenid;
-    //textMessage(openid, message);
-    res.json({
-      status: 'msgSend'
+    var message = {
+      toTeacher: true,
+      student: doc.openid,
+      course: req.body.course,
+      msgHead: doc.realname,
+      msgBody: req.body.msgBody
+    };
+    var msg = {
+      toTeacher: true,
+      student: doc.openid,
+      course: req.body.course,
+      msgHead: doc.realname
+    };
+    //console.log(message);
+    var messageObj = new Message(message);
+    messageObj.save(function (errr, docc) {
+      if (errr){
+        next(errr);
+        return;
+      }
+      /*
+        TODO 下面是为了调试，部署时删除
+       */
+      //var openid = setting.yourOpenid;
+      //console.log(doc);
+      textMessage(doc.openid, msg);
+      res.json({
+        status: 'msgSend'
+      });
     });
   });
 });

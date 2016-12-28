@@ -18,4 +18,4 @@ exports.getTotalDay = function(year, month, day){
     }
     totalDays += day;
     return totalDays;
-}
+};

@@ -15,7 +15,7 @@
 
     var userName = urlParam.openid;
     //var socket = io.connect('http://localhost:3000');
-    var socket = io('http://localhost:3000');
+    var socket = io.connect('http://101.5.210.250:3000');
 
     socket.on('connect', function(){
         socket.emit('join', {openid: urlParam.openid, course: urlParam.course});
@@ -58,8 +58,7 @@
         console.log(urlParam.course);
         $.post(url, {course: urlParam.course,
             msgHead: '',
-            msgBody: message,
-            openid: urlParam.openid
+            msgBody: message
         });
     };
 

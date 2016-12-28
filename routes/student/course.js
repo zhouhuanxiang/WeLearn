@@ -66,8 +66,8 @@ router.get('/', urlencodedParser, function (req, res, next) {
         return;
     }
     var requestData = {
-      apiKey: "",
-      apisecret: ""
+      apiKey: "camustest",
+      apisecret: "camustest"
     };
     //console.log(doc.studentnumber);
     request({
@@ -99,8 +99,8 @@ router.get('/:lesson_id/notices', urlencodedParser, function (req, res, next) {
   //console.log(req.params.lesson_id);
   var lesson_id = req.params.lesson_id;
   var requestData = {
-    apikey: "",
-    apisecret: ""
+    apikey: "camustest",
+    apisecret: "camustest"
   };
 
   Student.findOne({openid: req.session.openid}, function(err,doc){
@@ -138,8 +138,8 @@ router.get('/:lesson_id/documents', urlencodedParser, function (req, res, next) 
     //console.log(req.params.lesson_id);
     var lesson_id = req.params.lesson_id;
     var requestData = {
-        apikey: "",
-        apisecret: ""
+        apikey: "camustest",
+        apisecret: "camustest"
     };
 
     Student.findOne({openid: req.session.openid}, function(err,doc){
@@ -176,8 +176,8 @@ router.get('/:lesson_id/assignments', urlencodedParser, function (req, res, next
     //console.log(req.params.lesson_id);
     var lesson_id = req.params.lesson_id;
     var requestData = {
-        apikey: "",
-        apisecret: ""
+        apikey: "camustest",
+        apisecret: "camustest"
     };
 
     Student.findOne({openid: req.session.openid}, function(err,doc){

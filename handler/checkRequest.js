@@ -5,13 +5,12 @@ exports.checkMenuClick=function(msg)
     {
         if (msg.Event==="CLICK")
         {
-
             return msg.EventKey;
         }
     }
 
     return "Attention, it cannot be pattern-matched anyway.";
-}
+};
 exports.checkSubscribe=function(msg)
 {
 
@@ -21,4 +20,4 @@ exports.checkSubscribe=function(msg)
             return true;
         }
     return false;
-}
+};

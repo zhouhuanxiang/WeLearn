@@ -1,19 +1,28 @@
 var settings = require('./setting');
+var oauth = require('./handler/oauth_handler');
 
 var getUrl = function (path) {
   return settings.siteDomain + '/' + path;
 };
 
 var urlStudentLogin = function () {
-  return getUrl('student/login');
+  return oauth.getAuthorizeURL(getUrl('student/login'));
 };
 
 var urlLessonInfo = function () {
-  return getUrl('student/course');
+  return oauth.getAuthorizeURL(getUrl('student/course'));
 };
 
 var urlStudentMessage = function () {
-  return getUrl('student/message');
+  return oauth.getAuthorizeURL(getUrl('student/message'));
+};
+
+var urlStudentMessage1 = function() {
+  return oauth.getAuthorizeURL(getUrl('student/message'));
+};
+
+var urlMessage = function () {
+  return getUrl('message');
 };
 
 var urlTeacherMessage = function () {
@@ -21,19 +30,19 @@ var urlTeacherMessage = function () {
 };
 
 var urlScheduleInfo = function(){
-  return getUrl('student/schedule');
+  return oauth.getAuthorizeURL(getUrl('student/schedule'));
 };
 
 var urlLibrarySeatInfo = function () {
-  return getUrl('library/seat');
-}
+  return oauth.getAuthorizeURL(getUrl('library/seat'));
+};
 
-var urlStudentNotice = function () {
-  return getUrl('student/notice');
+var urlStudentNotice = function (noticeid) {
+  return oauth.getAuthorizeURL(getUrl('student/notice') + '/' + noticeid);
 };
 
 var urlTeacherNotice = function () {
-  return getUrl('teacher/notice');
+  return oauth.getAuthorizeURL(getUrl('teacher/notice'));
 };
 
 var wrapper = {
@@ -44,7 +53,8 @@ var wrapper = {
   urlStudentMessage: urlStudentMessage,
   urlTeacherMessage: urlTeacherMessage,
   urlStudentNotice: urlStudentNotice,
-  urlTeacherNotice: urlTeacherNotice
+  urlTeacherNotice: urlTeacherNotice,
+  urlMessage: urlMessage
 };
 
 module.exports = wrapper;

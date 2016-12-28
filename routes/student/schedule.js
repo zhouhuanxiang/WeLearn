@@ -32,8 +32,8 @@ router.get('/', urlencodedParser, function (req, res, next) {
         //console.log(day);
 
         var requestData = {
-            apikey: "",
-            apisecret: ""
+            apikey: "camustest",
+            apisecret: "camustest"
         };
 
         var username = doc.studentnumber;

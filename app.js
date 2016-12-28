@@ -6,6 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var url = require('url');
 var cookieParser = require('cookie-parser');
+var oauth = require('./handler/oauth_handler');
 var mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -23,9 +24,13 @@ var studentMessage = require('./routes/student/message');
 var teacherMessage = require('./routes/teacher/message');
 var studentNotice = require('./routes/student/notice');
 var teacherNotice = require('./routes/teacher/notice');
+
 var message = require('./routes/message');
+var getName = require('./routes/name');
 
 var app = express();
+// app.listen(80);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -45,8 +50,8 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-//var dataInsert = require('./data_insert');
-//dataInsert();
+var dataInsert = require('./data_insert');
+dataInsert();
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
 var Message = require('./Models/Message');
@@ -74,42 +79,43 @@ var Notice = require('./Models/Notice');
 //   console.log(doc);
 // });
 
-/*
-var menu = require('./handler/menu_control');
-var access_token = require('./handler/access_token');
-access_token.getAccessToken(function(token){
-  menu.create_menu(token);
-});
-*/
+//设置 menu
+// var menu_control = require('./handler/menu_control');
+// menu_control.update_menu();
 
-app.use('/wechat', wechat);
 app.use(function (req, res, next) {
-  var openid = url.parse(req.url, true).query['openid'];
-  if (openid){
-    req.session.openid = url.parse(req.url, true).query['openid'];
-    console.log('');
-    console.log("new guest: " + req.session.openid);
-    next();
-  }else if (req.session.openid){
+  if (req.session.openid){
     next();
   }else{
-    var err = new Error('服务不可用');
-    err.status = 503;
-    next(err);
+    var code = url.parse(req.url, true).query['code'];
+    if (code){
+      oauth.client.getAccessToken(code, function (err, result) {
+        req.session.openid = result.data.openid;
+        console.log('---New Guest---');
+        console.log(req.session.openid);
+        next();
+      });
+    }else{
+      req.session.openid = 'invalid';
+      next();
+    }
   }
 });
 
+app.use('/wechat', wechat);
+app.use('/name', getName);
 app.use('/message', message);
 
 app.use('/student/login', studentLogin);
 
-app.use('/student/schedule', studentSchedule);
 app.use('/student/course', studentLesson);
+app.use('/student/schedule', studentSchedule);
 
 app.use('/student/message', studentMessage);
 app.use('/teacher/message', teacherMessage);
 app.use('/student/notice', studentNotice);
 app.use('/teacher/notice', teacherNotice);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

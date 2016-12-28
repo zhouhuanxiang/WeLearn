@@ -13,6 +13,8 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+*.log
+.idea
 
 # Windows shortcuts
 *.lnk
@@ -21,6 +23,13 @@ $RECYCLE.BIN/
 # Operating System Files
 # =========================
 
+# node_modules
+node_modules/
+
+routes/coverage/
+routes/public/photos/
+
+handler/coverage
 # OSX
 # =========================
 
@@ -41,3 +50,13 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+.gitattributes
+
+npm-debug.log
+
+routes/coverage/*
+handler/coverage/*
+
+public/photos/*
+

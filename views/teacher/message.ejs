@@ -34,16 +34,31 @@
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     };
+    
+    function postMsg(){
+        var url = '/teacher/message';
+        var message = $('#msgBody').val();
+        console.log(message);
+        console.log(urlParam.course);
+        $.post(url, {course: urlParam.course,
+            //msgHead: '',
+            msgBody: message,
+            openid: urlParam.openid,
+            student: urlParam.studentid
+        }, function(result){
+
+        });
+    };
 
     function getHistory(){
         //console.log(urlParam.course);
         //console.log('http://59.66.138.43/student/message/msg_list/'+urlParam.course+'?'+urlParam.openid);
         var url = '/teacher/message/' + urlParam.course + '/' + urlParam.studentid;
         //console.log(url);
-        $.get(url, {openid: urlParam.openid}, function (data){
+        $.get(url, {}, function (data){
             msg = data.messages;
-            console.log(data);
-            console.log(msg);
+            //console.log(data);
+            //console.log(msg);
             $('header').html(urlParam.course+"课程私信");
             $('#mainbody').append('<div id="msgBox" style="height:80%;overflow:auto;">');
             for(var i = 0; i < msg.length; i++){
@@ -97,7 +112,7 @@
     getHistory();
     var userName = urlParam.openid;
     //var socket = io.connect('http://localhost:3000');
-    var socket = io('http://localhost:3000');
+    var socket = io.connect('http://101.5.210.250:3000');
 
     socket.on('connect', function(){
         socket.emit('join', {openid: urlParam.studentid, course: urlParam.course});
@@ -111,22 +126,6 @@
         $('#msgBody').before('<p>'+msg+'</p>');
         $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
     });
-
-
-    function postMsg(){
-        var url = '/teacher/message';
-        var message = $('#msgBody').val();
-        console.log(message);
-        console.log(urlParam.course);
-        $.post(url, {course: urlParam.course,
-            msgHead: '',
-            msgBody: message,
-            openid: urlParam.openid,
-            student: urlParam.studentid
-        }, function(result){
-
-        });
-    };
 
     </script>
 </body>
