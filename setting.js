@@ -1,7 +1,7 @@
-var siteDomain = 'http://101.5.208.92';
-var token = 'RYhopG1zq6oan1toNtiHfcq96KHinZ90gpuKt8pEx3mEQPmz7T';
-var appid = 'wxf0cb75c245008b64';
-var appSecret = '91e15fb902a7081ca1a2002b1fe71da9';
+var siteDomain = 'http://59.66.138.21';
+var token = 'ThisIsAWeChatTokenWhichCanBeARandomString';
+var appid = 'wx8d7a006090c3ae66';
+var appSecret = '85b8c974f08b5e62e38a8d8beec962bf';
 
 /**
  * token
@@ -22,16 +22,15 @@ var settings = {
   appid: appid,
   appsecret: appSecret,
   siteDomain: siteDomain,
-  noticeTemplateID: '6lQZOtEAQclvHlXRpWXxNoYtwsbjFB0uUGWjEefXoOw',
-  teacherTextTemplateID: 'PnH0eplbIqPYfUBvbWNqWntDISa2w4ikBylZicl9X3U',
-  studentTextTemplateID: 'PnH0eplbIqPYfUBvbWNqWntDISa2w4ikBylZicl9X3U',
-  deadlineInformID: 'M_wnadJiO2lXxy6zGhXQfphDsjTkDbjiiM98Amu8sQs',
-  newDocumentID: '4JF7CyK7wwuAvR6qC6vLNXtimHezrQuDIbQok75zVRE',
-  newNoticeID: 'dncgMmX7Yk47anzgJlEKdl7WqPW7BlfhRXaiDgiw68Y',
-  newAssignmentID: '4FMzeSzSxpOArHk8OrzvLHlJwIKXn3ZgDlKQUtjwYfE',
-  yourOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E',
-  studentOpenid: 'oBu1dv5_0wvgk7U686jTHfs2oTsE',
-  teacherOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E',
+  noticeTemplateID: 'QHaABmPXr8d0_XXH6IYhnOSw6S_YzrWz3nLNRKp13u4',
+  teacherTextTemplateID: 'AMx-DhYdngumTKUMRwgEPu6XG_F-YPgt6eTR3knWfUU',
+  studentTextTemplateID: 'WLYiKCaSFMaet3vLJiQsjg430SUQkGjcEx04nOmEwyM',
+  teacherMessageID: 'R_c_YYACNNO5P9ccoQg-FTt4jz9mUUfyQdcRWhDsC1c',
+  studentMessageID: 'oZrLU__lg568RKc3txLK0Z8Fxv2ZKTKrerg5DYNXxic',
+  yourOpenid: 'oVP35wC1bsdlsEmcBPVzbe5FkdrI',
+  studentOpenid: 'oVP35wC1bsdlsEmcBPVzbe5FkdrI',
+  teacherOpenid: 'oVP35wBPxW4z4nFlnsAsIw_NwaQA',
+
   messageContent: 'msg',
   noticeContent: 'notice'
 };

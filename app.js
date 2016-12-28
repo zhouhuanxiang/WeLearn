@@ -26,6 +26,9 @@ var studentNotice = require('./routes/student/notice');
 var remindSettings = require('./routes/student/remindSettings');
 var teacherNotice = require('./routes/teacher/notice');
 
+var message = require('./routes/message');
+var getName = require('./routes/name');
+
 var app = express();
 app.listen(80);
 
@@ -50,6 +53,7 @@ app.use(session({
 
 // var dataInsert = require('./data_insert');
 // dataInsert();
+
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
 var Message = require('./Models/Message');
@@ -107,6 +111,8 @@ app.use(function(req,res,next){
 */
 
 app.use('/wechat', wechat);
+app.use('/name', getName);
+app.use('/message', message);
 
 app.use('/student/login', studentLogin);
 
@@ -118,6 +124,7 @@ app.use('/teacher/message', teacherMessage);
 app.use('/student/notice', studentNotice);
 app.use('/student/remindSettings', remindSettings);
 app.use('/teacher/notice', teacherNotice);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

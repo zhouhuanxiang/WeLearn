@@ -2,11 +2,39 @@
 <html>
 <head>
     <title>私信老师</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <header></header>
-    <div class="mainbody" id="mainbody"> </div>
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/tsinghua.png" class="img-thumbnail">
+        </div>
+    </div>
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/line.png" class="img-thumbnail">
+        </div>
+    </div>
+        
+        <div id="title" class="widget-title"></div>
+        <hr>
+        <div class="mainbody" id="mainbody" class="widget-middle">
+        </div>
+        
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/line.png" class="img-thumbnail">
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <p>版权所有 © WeLearn</p>
+    </div>
     <script src="/3rd/jquery.js"></script>
     <script src="/3rd/swig.js"></script>
     <script src="/js/base.js"></script>
@@ -15,12 +43,13 @@
     var status = 0;
     var courseName;
     function clearPage(){
-        $('header').html('');
+        $('#title').html('');
         $('#mainbody').html('');
     };
 
     function showChoose(){
-        $('#mainbody').append('<select name="courseName" id="select"><% for (var i = 0; i < courses.length; i++) { %><option value="<%= courses[i] %>"><%= courses[i] %></option><% } %></select><button onclick="clickt();">确定</button>');
+        $('#title').append('<h3>选择要私信的课程</h3>')
+        $('#mainbody').append('<select name="courseName" id="select" style="width=70%;"><% for (var i = 0; i < courses.length; i++) { %><option value="<%= courses[i] %>"><%= courses[i] %></option><% } %></select><button style="margin-right:30px;" onclick="clickt();">确定</button>');
     };
     function clickt(){
         courseName = $('select').val();

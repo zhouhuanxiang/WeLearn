@@ -13,7 +13,6 @@ get '/teacher/message/:courseid/:studentOpenid'
                   toTeacher: true,
                   student: 'o3HdVwWHa0uJNuNLQ7u_1Tf0VEng',
                   course: '136947',
-                  msgHead: '关于一个问题',
                   msgBody: '老师我想问你一个问题.....',
                   __v: 0,
                   date: 2016-12-06T02:59:41.279Z }]
@@ -32,30 +31,26 @@ var Message = require('../../Models/Message');
 var textMessage = require('../../handler/text_message');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-router.get('/:courseid/:studentOpenid', function (req, res, next) {
+router.get('/:courseid/:studentOpenid', urlencodedParser, function (req, res, next) {
   Message.find({course: req.params.courseid, student: req.params.studentOpenid}, function (err, messages) {
     if (err){
       next(err);
       return;
     }
-    Student.findOne({openid: req.params.studentOpenid}, function (err, student) {
-      var stu = {
-        openid: student.openid,
-        realname: student.realname
-      };
+    Student.findOne({openid: req.params.studentOpenid}, function (err, stu){
       res.json({
         messages: messages,
-        student: stu,
+        student: stu.realname,
         status: 'messages'
-      })
+      });
     });
-  })
+  });
 });
 
-router.get('/', function (req, res, next){
+router.get('/', urlencodedParser, function (req, res, next){
   var roomID = req.session.studenid + req.session.course;
-  console.log(req.session.studentid);
-  console.log(req.session.course);
+  //console.log(req.session.studentid);
+  //console.log(req.session.course);
   res.render('teacher/message', {
     roomID: roomID
   });
@@ -70,7 +65,7 @@ router.post('/', urlencodedParser, function (req, res, next) {
     toTeacher: false,
     student: req.body.student,
     course: req.body.course,
-    msgHead: req.body.msgHead,
+    //msgHead: req.body.msgHead,
     msgBody: req.body.msgBody
   };
   var messageObj = new Message(message);
