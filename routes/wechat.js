@@ -12,7 +12,7 @@ var config = {
 };
 
 router.use('/', wechat(config, function (req, res, next) {
-    handler(req, res);
+  handler(req, res);
 }));
 
 module.exports = router;

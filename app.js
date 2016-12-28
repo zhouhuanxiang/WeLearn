@@ -81,7 +81,6 @@ var Notice = require('./Models/Notice');
 // var menu_control = require('./handler/menu_control');
 // menu_control.update_menu();
 
-/*
 app.use(function (req, res, next) {
   if (req.session.openid){
     next();
@@ -99,11 +98,13 @@ app.use(function (req, res, next) {
       next();
     }
   }
-});*/
+});
+/*
 app.use(function(req,res,next){
   req.session.openid = "oBu1dv0TCi_9UEIHwqY4F0IbfX6E";
   next();
 });
+*/
 
 app.use('/wechat', wechat);
 

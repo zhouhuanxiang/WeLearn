@@ -6,12 +6,12 @@ var getUrl = function (path) {
 };
 
 var urlStudentLogin = function () {
-  //return oauth.getAuthorizeURL(getUrl('student/login'));
-  return getUrl('student/login?openid=oBu1dv0TCi_9UEIHwqY4F0IbfX6E');
+  return oauth.getAuthorizeURL(getUrl('student/login'));
 };
 
 var urlLessonInfo = function () {
   return oauth.getAuthorizeURL(getUrl('student/course'));
+  //return getUrl('student/course?openid=o3HdVwQhhR9vV2MhK0zS6WruOLmE');
 };
 
 var urlStudentMessage = function () {
@@ -24,6 +24,7 @@ var urlTeacherMessage = function () {
 
 var urlScheduleInfo = function(){
   return oauth.getAuthorizeURL(getUrl('student/schedule'));
+  //return getUrl('student/schedule?openid=o3HdVwQhhR9vV2MhK0zS6WruOLmE');
 };
 
 var urlLibrarySeatInfo = function () {
@@ -39,19 +40,20 @@ var urlTeacherNotice = function () {
 };
 
 var urlRemindSettings = function(){
-  return getUrl('student/remindSettings?openid=oBu1dv0TCi_9UEIHwqY4F0IbfX6E');
+  return oauth.getAuthorizeURL(getUrl('student/remindSettings'));
+  //return getUrl('student/remindSettings?openid=oBu1dv0TCi_9UEIHwqY4F0IbfX6E');
 };
 
-var urlCourseNewNotices = function () {
-  return getUrl('/student/course/:lesson_id/notices');
+var urlCourseNewNotices = function (courseid) {
+  return oauth.getAuthorizeURL(getUrl('student/course/'+ courseid +'/notices'));
 };
 
-var urlCourseNewDocuments = function () {
-  return getUrl('/student/course/:lesson_id/documents');
+var urlCourseNewDocuments = function (courseid) {
+  return oauth.getAuthorizeURL(getUrl('student/course/' + courseid + '/documents'));
 };
 
-var urlCourseNewAssignments = function () {
-  return getUrl('/student/course/:lesson_id/assignments');
+var urlCourseNewAssignments = function (courseid) {
+  return oauth.getAuthorizeURL(getUrl('student/course/' + courseid + '/assignments'));
 };
 
 var wrapper = {

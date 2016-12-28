@@ -56,6 +56,7 @@ var utf8 = require('utf8');
 var router = express.Router();
 var Student = require('../../Models/Student');
 var sd = require('silly-datetime');
+var wrapper = require('../../wrapper');
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -205,7 +206,6 @@ router.get('/:lesson_id/assignments', urlencodedParser, function (req, res, next
             else {
                 console.log(error);
             }
-
         });
     });
 });
@@ -304,6 +304,30 @@ function remove(notices, len, res, type){
             break;
     }
 }
+
+router.post('/notice/redirect',urlencodedParser,function (req, res){
+    var url = wrapper.urlCourseNewNotices(req.body.courseid);
+    //console.log(url);
+    res.json({
+        url: url
+    });
+});
+
+router.post('/document/redirect',urlencodedParser,function (req, res){
+    var url = wrapper.urlCourseNewDocuments(req.body.courseid);
+    //console.log(url);
+    res.json({
+        url: url
+    });
+});
+
+router.post('/homework/redirect',urlencodedParser,function (req, res){
+    var url = wrapper.urlCourseNewAssignments(req.body.courseid);
+    //console.log(url);
+    res.json({
+        url: url
+    });
+});
 
 module.exports = router;
 
