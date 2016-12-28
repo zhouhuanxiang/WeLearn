@@ -36,6 +36,22 @@ var urlTeacherNotice = function () {
   return getUrl('teacher/notice');
 };
 
+var urlRemindSettings = function(){
+  return getUrl('student/remindSettings');
+};
+
+var urlCourseNewNotices = function () {
+  return getUrl('/student/course/:lesson_id/notices');
+};
+
+var urlCourseNewDocuments = function () {
+  return getUrl('/student/course/:lesson_id/documents');
+};
+
+var urlCourseNewAssignments = function () {
+  return getUrl('/student/course/:lesson_id/assignments');
+};
+
 var wrapper = {
   urlStudentLogin: urlStudentLogin,
   urlLessonInfo: urlLessonInfo,
@@ -44,7 +60,11 @@ var wrapper = {
   urlStudentMessage: urlStudentMessage,
   urlTeacherMessage: urlTeacherMessage,
   urlStudentNotice: urlStudentNotice,
-  urlTeacherNotice: urlTeacherNotice
+  urlTeacherNotice: urlTeacherNotice,
+  urlRemindSettings: urlRemindSettings,
+  urlCourseNewNotices: urlCourseNewNotices,
+  urlCourseNewDocuments: urlCourseNewDocuments,
+  urlCourseNewAssignments: urlCourseNewAssignments
 };
 
 module.exports = wrapper;

@@ -137,7 +137,11 @@ router.post('/', urlencodedParser, function (req, res, next) {
         position: jsonBody.information.position,
         department: jsonBody.information.department,
         email: jsonBody.information.email,
-        course: []
+        course: [],
+        no_ddl: [],
+        no_document: [],
+        no_notice: [],
+        no_hwk: []
       };
       //TODO
       //if (student.openid === 'o3HdVwWHa0uJNuNLQ7u_1Tf0VEng')

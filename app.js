@@ -22,6 +22,7 @@ var studentLesson = require('./routes/student/course');
 var studentMessage = require('./routes/student/message');
 var teacherMessage = require('./routes/teacher/message');
 var studentNotice = require('./routes/student/notice');
+var remindSettings = require('./routes/student/remindSettings');
 var teacherNotice = require('./routes/teacher/notice');
 
 var app = express();
@@ -104,6 +105,7 @@ app.use('/student/schedule', studentSchedule);
 app.use('/student/message', studentMessage);
 app.use('/teacher/message', teacherMessage);
 app.use('/student/notice', studentNotice);
+app.use('/student/remindSettings', remindSettings);
 app.use('/teacher/notice', teacherNotice);
 
 // catch 404 and forward to error handler
