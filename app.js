@@ -81,24 +81,26 @@ var Notice = require('./Models/Notice');
 // var menu_control = require('./handler/menu_control');
 // menu_control.update_menu();
 
-app.use(function (req, res, next) {
-  if (req.session.openid){
-    next();
-  }else{
-    var code = url.parse(req.url, true).query['code'];
-    if (code){
-      oauth.client.getAccessToken(code, function (err, result) {
-        req.session.openid = result.data.openid;
-        console.log('---New Guest---');
-        console.log(req.session.openid);
-        next();
-      });
-    }else{
-      req.session.openid = 'invalid';
-      next();
-    }
-  }
-});
+// app.use(function (req, res, next) {
+//   if (req.session.openid){
+//     next();
+//   }else{
+//     var code = url.parse(req.url, true).query['code'];
+//     if (code){
+//       oauth.client.getAccessToken(code, function (err, result) {
+//         req.session.openid = result.data.openid;
+//         console.log('---New Guest---');
+//         console.log(req.session.openid);
+//         next();
+//       });
+//     }else{
+//       req.session.openid = 'invalid';
+//       next();
+//     }
+//   }
+// });
+
+app.use(function (req, res, next) { req.session.openid = 'o3HdVwQhhR9vV2MhK0zS6WruOLmE'; next(); });
 
 app.use('/wechat', wechat);
 

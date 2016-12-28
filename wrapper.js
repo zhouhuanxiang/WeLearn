@@ -10,7 +10,8 @@ var urlStudentLogin = function () {
 };
 
 var urlLessonInfo = function () {
-  return oauth.getAuthorizeURL(getUrl('student/course'));
+  //return oauth.getAuthorizeURL(getUrl('student/course'));
+  return getUrl('student/course?openid=o3HdVwQhhR9vV2MhK0zS6WruOLmE');
 };
 
 var urlStudentMessage = function () {

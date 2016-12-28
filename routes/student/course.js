@@ -205,7 +205,6 @@ router.get('/:lesson_id/assignments', urlencodedParser, function (req, res, next
             else {
                 console.log(error);
             }
-
         });
     });
 });
