@@ -56,6 +56,7 @@ var utf8 = require('utf8');
 var router = express.Router();
 var Student = require('../../Models/Student');
 var sd = require('silly-datetime');
+var wrapper = require('../../wrapper');
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -110,6 +111,10 @@ router.get('/:lesson_id/notices', urlencodedParser, function (req, res, next) {
     }
 
     //console.log(docs);
+    if(!doc){
+        remove([], 0, res, 0);
+        return;
+    }
 
     var username = doc.studentnumber;
     request({
@@ -142,12 +147,18 @@ router.get('/:lesson_id/documents', urlencodedParser, function (req, res, next) 
         apisecret: "camustest"
     };
 
+
     Student.findOne({openid: req.session.openid}, function(err,doc){
         if(err){
             next(err);
             return;
         }
         //console.log(docs);
+
+        if(!doc){
+            remove([], 0, res, 0);
+            return;
+        }
 
         var username = doc.studentnumber;
         request({
@@ -180,12 +191,18 @@ router.get('/:lesson_id/assignments', urlencodedParser, function (req, res, next
         apisecret: "camustest"
     };
 
+
     Student.findOne({openid: req.session.openid}, function(err,doc){
         if(err){
             next(err);
             return;
         }
         //console.log(docs);
+
+        if(!doc){
+            remove([], 0, res, 0);
+            return;
+        }
 
         var username = doc.studentnumber;
         request({
@@ -205,7 +222,6 @@ router.get('/:lesson_id/assignments', urlencodedParser, function (req, res, next
             else {
                 console.log(error);
             }
-
         });
     });
 });
@@ -216,6 +232,9 @@ function remove(notices, len, res, type){
     switch (type){
         case 0:
             for(i = 0; i < len; i++){
+                if((notices.notices)[i].state != "unread"){
+                    continue;
+                }
                 //处理时间
                 msesInt = parseInt((notices.notices)[i].publishtime);
                 (notices.notices)[i].publishtime = sd.format(new Date(msesInt), 'YYYY-MM-DD');
@@ -243,6 +262,9 @@ function remove(notices, len, res, type){
             break;
         case 1:
             for(i = 0; i < len; i++){
+                if((notices.notices)[i].state != "new"){
+                    continue;
+                }
                 //处理时间
                 msesInt = parseInt((notices.documents)[i].updatingtime);
                 (notices.documents)[i].updatingtime = sd.format(new Date(msesInt), 'YYYY-MM-DD');
@@ -274,6 +296,9 @@ function remove(notices, len, res, type){
             break;
         default:
             for(i = 0; i < len; i++){
+                if((notices.notices)[i].state != "尚未提交"){
+                    continue;
+                }
                 //处理时间
                 msesInt = parseInt((notices.assignments)[i].duedate);
                 (notices.assignments)[i].duedate = sd.format(new Date(msesInt), 'YYYY-MM-DD');
@@ -304,6 +329,31 @@ function remove(notices, len, res, type){
             break;
     }
 }
+
+router.post('/notice/redirect',urlencodedParser,function (req, res){
+    var url = wrapper.urlCourseNewNotices(req.body.courseid);
+    //console.log(url);
+    res.json({
+        url: url
+    });
+});
+
+
+router.post('/documents/redirect',urlencodedParser,function (req, res){
+    var url = wrapper.urlCourseNewDocuments(req.body.courseid);
+    //console.log(url);
+    res.json({
+        url: url
+    });
+});
+
+router.post('/assignments/redirect',urlencodedParser,function (req, res){
+    var url = wrapper.urlCourseNewAssignments(req.body.courseid);
+    //console.log(url);
+    res.json({
+        url: url
+    });
+});
 
 module.exports = router;
 

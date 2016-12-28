@@ -40,5 +40,4 @@ var noticeMessage = function (notice, noticeid) {
     }
   });
 };
-
 module.exports = noticeMessage;

@@ -7,6 +7,7 @@ var request = require('request');
 var checker = require("./checkRequest");
 var schedule = require("node-schedule");
 var noticeMessage = require('./notice_message');
+var inform = require('./inform.js');
 //var basicInfo = require("../weixin_basic/settings.js");
 var menutmp=require("./menu_template");
 
@@ -17,7 +18,7 @@ var reminderSet = false;    //是否已经开始提醒功能
 var bind = false;
 
 var firstGet = true;
-var oldHomeWork = {}, oldNotice = {}, oldDocument = {}, notice = {};
+var oldHomeWork = {}, oldNotice = {}, oldDocument = {};
 var deadline_have_informed = [];
 
 exports.checkBindAccount = function (msg) {
@@ -49,7 +50,7 @@ exports.handleBindAccount = function (req, res) {
                     bind = true;
                     //定时查看课程动态
                     var rule = new schedule.RecurrenceRule();
-                    rule.minute = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+                    rule.minute = [0, 10, 20, 30, 40, 50];
                     /*
                     var times = [];
                     for (i = 0; i < 60; ) {
@@ -86,34 +87,37 @@ exports.handleBindAccount = function (req, res) {
                                     }
                                 }
                                 else {
+                                    var message;
                                     for (i = 0; i < lessons.courses.length; i++) {
                                         (lessons.courses)[i].coursename = (lessons.courses)[i].coursename.substring(0, (lessons.courses)[i].coursename.length - 15);
                                         courseName = (lessons.courses)[i].coursename;
 
                                         if ((lessons.courses)[i].unsubmittedoperations > oldHomeWork[courseName]) {
-                                            notice['course'] = "" + courseName;
-                                            notice['msgHead'] = "刚刚发布一个新作业";
-                                            notice['msgBody'] = "无";
-                                            noticeMessage(notice, (lessons.courses)[i].courseid);
+                                            if(doc.no_hwk.indexOf(courseName) === -1){
+                                                message = "" + courseName + "刚刚发布一个新作业";
+                                                inform.newAssignmentInform(message);
+                                            }
                                             oldHomeWork[courseName] = (lessons.courses)[i].unsubmittedoperations;
                                         }
                                         if ((lessons.courses)[i].unreadnotice > oldNotice[courseName]) {
-                                            notice['course'] = "" + courseName;
-                                            notice['msgHead'] = "刚刚发布一个新公告";
-                                            notice['msgBody'] = "无";
-                                            noticeMessage(notice, (lessons.courses)[i].courseid);
+                                            if(doc.no_notice.indexOf(courseName) === -1){
+                                                 message = "" + courseName + "刚刚发布一个新公告";
+                                                 inform.newNoticeInform(message);
+                                            }
                                             oldHomeWork[courseName] = (lessons.courses)[i].unsubmittedoperations;
                                         }
                                         if ((lessons.courses)[i].newfile > oldDocument[courseName]) {
-                                            notice['course'] = "" + courseName;
-                                            notice['msgHead'] = "刚刚发布一个新文件";
-                                            notice['msgBody'] = "无";
-                                            noticeMessage(notice, (lessons.courses)[i].courseid);
+                                            if(doc.no_document.indexOf(courseName) === -1){
+                                                message = "" + courseName + "刚刚发布一个新文件";
+                                                inform.newDocumentInform(message);
+                                            }
                                             oldDocument[courseName] = (lessons.courses)[i].newfile;
                                         }
 
                                         //deadline
-                                        deadlineInform(doc.studentnumber, (lessons.courses)[i].courseid, courseName, requestData, timestamp, deadline_have_informed);
+                                        if(doc.no_ddl.indexOf(courseName) === -1){
+                                            deadlineInform(doc.studentnumber, (lessons.courses)[i].courseid, courseName, requestData, timestamp);
+                                        }
                                     }
                                 }
 
@@ -173,17 +177,23 @@ exports.handleUnBindAccount = function (req, res) {
     bind = false;
     setTime = false;
     firstGet = true;
-    oldHomeWork = {}, oldNotice = {}, oldDocument = {}, notice = {};
+    oldHomeWork = {}, oldNotice = {}, oldDocument = {};
     deadline_have_informed = [];
 
     var courses = student.course;
     var openid = student.openid;
+
+    var requestData = {
+        apiKey: "camustest",
+        apisecret: "camustest"
+    };
+
     var username = student.username;
     request({
       method: 'POST',
       url: 'http://se.zhuangty.com:8000/students/'+username+'/cancel',
       headers: {'Content-Type': 'application/json'},
-      body: "{  \"apikey\": \"API Key\",  \"apisecret\": \"API Secret Key\"}"
+      body: JSON.stringify(requestData)
     }, function () {
       student.remove(function () {
         for(var i = 0; i < courses.length; i++) {
@@ -212,8 +222,8 @@ exports.handleUnBindAccount = function (req, res) {
   });
 };
 
-var deadlineInform = function(studentnumber, courseid, coursename, requestData, timestamp, deadline_have_informed){
-    var notice = {};
+var deadlineInform = function(studentnumber, courseid, coursename, requestData, timestamp){
+    var message;
     request({
         method: 'POST',
         url: 'http://se.zhuangty.com:8000/learnhelper/' + studentnumber + '/courses/' + courseid + '/assignments',
@@ -229,10 +239,8 @@ var deadlineInform = function(studentnumber, courseid, coursename, requestData, 
                     if(len === 0){
                         if(parseInt(interv) <= 1){
                             deadline_have_informed.push({assid: (assignments.assignments)[num].assignmentid, date: (assignments.assignments)[num].duedate});
-                            notice['course'] = "" + coursename;
-                            notice['msgHead'] = "deadline 提醒";
-                            notice['msgBody'] = "SOS! 作业: " + (assignments.assignments)[num].title + "dealine只剩下1天左右";
-                            noticeMessage(notice, (assignments.assignments)[num].assignmentid);
+                            message = "SOS! " + coursename + " 作业: " + (assignments.assignments)[num].title + "dealine只剩下1天左右";
+                            inform.deadlineInform(message);
                         }
                     }
                     else{
@@ -243,10 +251,8 @@ var deadlineInform = function(studentnumber, courseid, coursename, requestData, 
                             if(i === len - 1){
                                 if(parseInt(interv) <= 1){
                                     deadline_have_informed.push({assid: (assignments.assignments)[num].assignmentid, date: (assignments.assignments)[num].duedate});
-                                    notice['course'] = "" + coursename;
-                                    notice['msgHead'] = "deadline 提醒";
-                                    notice['msgBody'] = "SOS! 作业: " + (assignments.assignments)[num].title + "dealine只剩下1天左右";
-                                    noticeMessage(notice, (assignments.assignments)[num].assignmentid);
+                                    message = "SOS! " + coursename + "作业: " + (assignments.assignments)[num].title + "dealine只剩下1天左右";
+                                    inform.deadlineInform(message);
                                 }
                             }
                         }

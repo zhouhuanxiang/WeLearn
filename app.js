@@ -23,13 +23,14 @@ var studentLesson = require('./routes/student/course');
 var studentMessage = require('./routes/student/message');
 var teacherMessage = require('./routes/teacher/message');
 var studentNotice = require('./routes/student/notice');
+var remindSettings = require('./routes/student/remindSettings');
 var teacherNotice = require('./routes/teacher/notice');
 
 var message = require('./routes/message');
 var getName = require('./routes/name');
 
 var app = express();
-// app.listen(80);
+app.listen(80);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -50,8 +51,9 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-var dataInsert = require('./data_insert');
-dataInsert();
+// var dataInsert = require('./data_insert');
+// dataInsert();
+
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
 var Message = require('./Models/Message');
@@ -101,6 +103,12 @@ app.use(function (req, res, next) {
     }
   }
 });
+/*
+app.use(function(req,res,next){
+  req.session.openid = "oBu1dv0TCi_9UEIHwqY4F0IbfX6E";
+  next();
+});
+*/
 
 app.use('/wechat', wechat);
 app.use('/name', getName);
@@ -114,6 +122,7 @@ app.use('/student/schedule', studentSchedule);
 app.use('/student/message', studentMessage);
 app.use('/teacher/message', teacherMessage);
 app.use('/student/notice', studentNotice);
+app.use('/student/remindSettings', remindSettings);
 app.use('/teacher/notice', teacherNotice);
 
 
@@ -136,4 +145,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-app.listen(80);
+

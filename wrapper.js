@@ -11,6 +11,8 @@ var urlStudentLogin = function () {
 
 var urlLessonInfo = function () {
   return oauth.getAuthorizeURL(getUrl('student/course'));
+  //return getUrl('student/course?openid=o3HdVwQhhR9vV2MhK0zS6WruOLmE');
+
 };
 
 var urlStudentMessage = function () {
@@ -18,11 +20,12 @@ var urlStudentMessage = function () {
 };
 
 var urlStudentMessage1 = function() {
-  return oauth.getAuthorizeURL(getUrl('student/message'));
+  return getUrl('student/message');
 };
 
 var urlMessage = function () {
   return getUrl('message');
+
 };
 
 var urlTeacherMessage = function () {
@@ -31,6 +34,8 @@ var urlTeacherMessage = function () {
 
 var urlScheduleInfo = function(){
   return oauth.getAuthorizeURL(getUrl('student/schedule'));
+  //return getUrl('student/schedule?openid=o3HdVwQhhR9vV2MhK0zS6WruOLmE');
+
 };
 
 var urlLibrarySeatInfo = function () {
@@ -45,6 +50,24 @@ var urlTeacherNotice = function () {
   return oauth.getAuthorizeURL(getUrl('teacher/notice'));
 };
 
+var urlRemindSettings = function(){
+  return oauth.getAuthorizeURL(getUrl('student/remindSettings'));
+  //return getUrl('student/remindSettings?openid=oBu1dv0TCi_9UEIHwqY4F0IbfX6E');
+};
+
+var urlCourseNewNotices = function (courseid) {
+  return oauth.getAuthorizeURL(getUrl('student/course/'+ courseid +'/notices'));
+};
+
+var urlCourseNewDocuments = function (courseid) {
+  return oauth.getAuthorizeURL(getUrl('student/course/' + courseid + '/documents'));
+};
+
+var urlCourseNewAssignments = function (courseid) {
+  return oauth.getAuthorizeURL(getUrl('student/course/' + courseid + '/assignments'));
+
+};
+
 var wrapper = {
   urlStudentLogin: urlStudentLogin,
   urlLessonInfo: urlLessonInfo,
@@ -54,7 +77,12 @@ var wrapper = {
   urlTeacherMessage: urlTeacherMessage,
   urlStudentNotice: urlStudentNotice,
   urlTeacherNotice: urlTeacherNotice,
-  urlMessage: urlMessage
+  urlMessage: urlMessage,
+  urlRemindSettings: urlRemindSettings,
+  urlCourseNewNotices: urlCourseNewNotices,
+  urlCourseNewDocuments: urlCourseNewDocuments,
+  urlCourseNewAssignments: urlCourseNewAssignments
+
 };
 
 module.exports = wrapper;
