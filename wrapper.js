@@ -6,7 +6,8 @@ var getUrl = function (path) {
 };
 
 var urlStudentLogin = function () {
-  return oauth.getAuthorizeURL(getUrl('student/login'));
+  //return oauth.getAuthorizeURL(getUrl('student/login'));
+  return getUrl('student/login?openid=o3HdVwQhhR9vV2MhK0zS6WruOLmE');
 };
 
 var urlLessonInfo = function () {
@@ -23,7 +24,8 @@ var urlTeacherMessage = function () {
 };
 
 var urlScheduleInfo = function(){
-  return oauth.getAuthorizeURL(getUrl('student/schedule'));
+  //return oauth.getAuthorizeURL(getUrl('student/schedule'));
+  return getUrl('student/schedule?openid=o3HdVwQhhR9vV2MhK0zS6WruOLmE');
 };
 
 var urlLibrarySeatInfo = function () {

@@ -12,7 +12,6 @@ var config = {
 };
 
 router.use('/', wechat(config, function (req, res, next) {
-  console.log("cwcwwrrw");
   handler(req, res);
 }));
 

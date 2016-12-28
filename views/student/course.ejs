@@ -2,6 +2,7 @@
 <html>
 <head>
     <title><%= title %></title>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
     <link type="text/css" rel="stylesheet" href="/stylesheets/style-course.css" />
     <!-- 最新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
@@ -10,6 +11,7 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <div class="row">
     <div id="banner" class="widget-content">
@@ -93,9 +95,17 @@
     <div class="widget-title">
         <li><p><%= (assignments.assignments)[j].title %></p></li>
     </div>
-    <div class="widget-text">
-        <li><p><%= (assignments.assignments)[j].detail %></p></li>
+    <div class="widget-middle">
         <li><p><%= (assignments.assignments)[j].duedate %></p></li>
+    </div>
+    <div class="widget-text">
+        <li>
+            <p>
+                <abbr title="<%= (assignments.assignments)[j].detail%>">
+                    <%= (assignments.assignments)[j].detail %>
+                </abbr>
+            </p>
+        </li>
     </div>
 </div>
 <%}%>

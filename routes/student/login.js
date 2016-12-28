@@ -155,9 +155,14 @@ router.post('/', urlencodedParser, function (req, res, next) {
         }
         updateCourseDb(student);
       });
-      res.json({ status: 'success' });
+      // res.render('student/login', {
+      //   status: 'success's
+      // });
+      res.redirect(wrapper.urlLessonInfo());
     } else {
-      res.json({ status: 'failed' });
+      res.render('student/login', {
+        status: 'failed'
+      });
     }
   });
 });
