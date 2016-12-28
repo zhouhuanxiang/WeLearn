@@ -34,8 +34,8 @@
     <li class="widget-text">
         <table class="table table-striped">
             <td>
-                <a href=<%= "/student/course/" + (lessons.courses)[i].courseid + "/assignments" %>>
-                    <p>未交作业：<%= (lessons.courses)[i]. unsubmittedoperations %></p>
+                <a class="assignments" id="<%= (lessons.courses)[i].courseid %>">
+                    <p>未读公告：<%= (lessons.courses)[i]. unsubmittedoperations %></p>
                 </a>
             </td>
             <nobr></nobr>
@@ -45,7 +45,7 @@
                 </a>
             </td>
             <td>
-                <a href=<%= "/student/course/" + (lessons.courses)[i].courseid + "/documents" %>>
+                <a class="documents" id="<%= (lessons.courses)[i].courseid %>">
                     <p>新文件：<%= (lessons.courses)[i]. newfile %></p>
                 </a>
             </td>
@@ -130,17 +130,27 @@
                //alert(data.url);
                window.location.href = data.url;
            });
-
-           $.post('/student/course/document/redirect',{courseid: temp},function (data) {
-               //alert(data.url);
-               window.location.href = data.url;
-           });
-
-           $.post('/student/course/homework/redirect',{courseid: temp},function (data) {
-               //alert(data.url);
-               window.location.href = data.url;
-           });
        }) ;
+    });
+
+    $('.assignments').each(function (){
+        $(this).click(function (){
+            var temp = $(this).attr('id');
+            $.post('/student/course/assignments/redirect',{courseid: temp},function (data) {
+                //alert(data.url);
+                window.location.href = data.url;
+            });
+        }) ;
+    });
+
+    $('.documents').each(function (){
+        $(this).click(function (){
+            var temp = $(this).attr('id');
+            $.post('/student/course/documents/redirect',{courseid: temp},function (data) {
+                //alert(data.url);
+                window.location.href = data.url;
+            });
+        }) ;
     });
 </script>
 

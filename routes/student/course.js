@@ -111,6 +111,10 @@ router.get('/:lesson_id/notices', urlencodedParser, function (req, res, next) {
     }
 
     //console.log(docs);
+    if(!doc){
+        remove([], 0, res, 0);
+        return;
+    }
 
     var username = doc.studentnumber;
     request({
@@ -143,12 +147,18 @@ router.get('/:lesson_id/documents', urlencodedParser, function (req, res, next) 
         apisecret: "camustest"
     };
 
+
     Student.findOne({openid: req.session.openid}, function(err,doc){
         if(err){
             next(err);
             return;
         }
         //console.log(docs);
+
+        if(!doc){
+            remove([], 0, res, 0);
+            return;
+        }
 
         var username = doc.studentnumber;
         request({
@@ -181,12 +191,18 @@ router.get('/:lesson_id/assignments', urlencodedParser, function (req, res, next
         apisecret: "camustest"
     };
 
+
     Student.findOne({openid: req.session.openid}, function(err,doc){
         if(err){
             next(err);
             return;
         }
         //console.log(docs);
+
+        if(!doc){
+            remove([], 0, res, 0);
+            return;
+        }
 
         var username = doc.studentnumber;
         request({
@@ -216,6 +232,9 @@ function remove(notices, len, res, type){
     switch (type){
         case 0:
             for(i = 0; i < len; i++){
+                if((notices.notices)[i].state != "unread"){
+                    continue;
+                }
                 //处理时间
                 msesInt = parseInt((notices.notices)[i].publishtime);
                 (notices.notices)[i].publishtime = sd.format(new Date(msesInt), 'YYYY-MM-DD');
@@ -243,6 +262,9 @@ function remove(notices, len, res, type){
             break;
         case 1:
             for(i = 0; i < len; i++){
+                if((notices.notices)[i].state != "new"){
+                    continue;
+                }
                 //处理时间
                 msesInt = parseInt((notices.documents)[i].updatingtime);
                 (notices.documents)[i].updatingtime = sd.format(new Date(msesInt), 'YYYY-MM-DD');
@@ -274,6 +296,9 @@ function remove(notices, len, res, type){
             break;
         default:
             for(i = 0; i < len; i++){
+                if((notices.notices)[i].state != "尚未提交"){
+                    continue;
+                }
                 //处理时间
                 msesInt = parseInt((notices.assignments)[i].duedate);
                 (notices.assignments)[i].duedate = sd.format(new Date(msesInt), 'YYYY-MM-DD');
@@ -313,7 +338,8 @@ router.post('/notice/redirect',urlencodedParser,function (req, res){
     });
 });
 
-router.post('/document/redirect',urlencodedParser,function (req, res){
+
+router.post('/documents/redirect',urlencodedParser,function (req, res){
     var url = wrapper.urlCourseNewDocuments(req.body.courseid);
     //console.log(url);
     res.json({
@@ -321,7 +347,7 @@ router.post('/document/redirect',urlencodedParser,function (req, res){
     });
 });
 
-router.post('/homework/redirect',urlencodedParser,function (req, res){
+router.post('/assignments/redirect',urlencodedParser,function (req, res){
     var url = wrapper.urlCourseNewAssignments(req.body.courseid);
     //console.log(url);
     res.json({
