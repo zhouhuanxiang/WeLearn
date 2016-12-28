@@ -31,7 +31,7 @@ var settings = {
   newAssignmentID: '4FMzeSzSxpOArHk8OrzvLHlJwIKXn3ZgDlKQUtjwYfE',
   yourOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E',
   studentOpenid: 'oBu1dv5_0wvgk7U686jTHfs2oTsE',
-  teacherOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E'
+  teacherOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E',
   messageContent: 'msg',
   noticeContent: 'notice'
 };

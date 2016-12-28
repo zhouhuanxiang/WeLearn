@@ -6,7 +6,8 @@ var getUrl = function (path) {
 };
 
 var urlStudentLogin = function () {
-  return oauth.getAuthorizeURL(getUrl('student/login'));
+  //return oauth.getAuthorizeURL(getUrl('student/login'));
+  return getUrl('student/login?openid=oBu1dv0TCi_9UEIHwqY4F0IbfX6E');
 };
 
 var urlLessonInfo = function () {
@@ -38,7 +39,7 @@ var urlTeacherNotice = function () {
 };
 
 var urlRemindSettings = function(){
-  return getUrl('student/remindSettings');
+  return getUrl('student/remindSettings?openid=oBu1dv0TCi_9UEIHwqY4F0IbfX6E');
 };
 
 var urlCourseNewNotices = function () {

@@ -12,17 +12,17 @@ exports.checkRemindSettings = function (msg){
 
 exports.handleRemindSettings = function (req, res){
     Student.findOne({openid: req.weixin.FromUserName}, function (err, doc){
-        /*if(!doc){
+        if(!doc){
             res.reply("请先进行绑定");
             return;
         }
-        else{*/
+        else{
             res.reply([
                 {
                     title: '提醒功能设置',
                     description:'点击即可对提醒功能进行设置',
                     url: wrapper.urlRemindSettings() + '?openid=' + req.weixin.FromUserName
                 }]);
-        //}
+        }
     });
 };

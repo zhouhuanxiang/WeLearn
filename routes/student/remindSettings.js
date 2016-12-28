@@ -60,13 +60,64 @@ router.get('/', function (req, res, next){
 });
 
 router.post('/', urlencodedParser, function(req, res, next) {
-    console.log(req.body);
-    var ddls = req.body.ddls;
-    var documents = req.body.documents;
-    var notices = req.body.notices;
-    var hwks = req.body.hwks;
+    //console.log(req.body);
+    var ddls = req.body['ddls[]'];
+    var documents = req.body['documents[]'];
+    var notices = req.body['notices[]'];
+    var hwks = req.body['hwks[]'];
+    console.log(hwks);
+    console.log(documents);
 
-    Student.update({openid: seq.session.openid},{$set:{ 'no_ddl': ddls,'no_document': documents,'no_notice': notices, 'no_hwk': hwks}});
+    var ddlObj = [];
+
+    if (typeof ddls === "object"){
+        //console.log("ob");
+        Student.update({openid: req.session.openid},{$set:{ 'no_ddl': ddls}},  function(error, bars){});
+    }
+    else if (typeof ddls === "string"){
+        //console.log("str");
+        ddlObj = [];
+        ddlObj.push(ddls);
+        //console.log(ddlObj);
+        Student.update({openid: req.session.openid},{$set:{ 'no_ddl': ddlObj}},  function(error, bars){});
+    }
+
+    if (typeof documents === "object"){
+        //console.log("ob");
+        Student.update({openid: req.session.openid},{$set:{ 'no_document': documents}},  function(error, bars){});
+    }
+    else if (typeof documents === "string"){
+        //console.log("str");
+        ddlObj = [];
+        ddlObj.push(documents);
+        //console.log(ddlObj);
+        Student.update({openid: req.session.openid},{$set:{ 'no_document': ddlObj}},  function(error, bars){});
+    }
+
+    if (typeof notices === "object"){
+        //console.log("ob");
+        Student.update({openid: req.session.openid},{$set:{ 'no_notice': notices}},  function(error, bars){});
+    }
+    else if (typeof notices === "string"){
+        //console.log("str");
+        ddlObj = [];
+        ddlObj.push(notices);
+        //console.log(ddlObj);
+        Student.update({openid: req.session.openid},{$set:{ 'no_notice': ddlObj}},  function(error, bars){});
+    }
+
+    if (typeof hwks === "object"){
+        //console.log("ob");
+        Student.update({openid: req.session.openid},{$set:{ 'no_hwk': hwks}},  function(error, bars){});
+    }
+    else if (typeof hwks === "string"){
+        //console.log("str");
+        ddlObj = [];
+        ddlObj.push(hwks);
+        //console.log(ddlObj);
+        Student.update({openid: req.session.openid},{$set:{ 'no_hwk': ddlObj}},  function(error, bars){});
+    }
+    //Student.update({openid: req.session.openid},{$set:{ 'no_ddl': ddls,'no_document': documents,'no_notice': notices, 'no_hwk': hwks}});
     res.json({
         status: 'seted'
     });

@@ -11,78 +11,87 @@
         <% for (var i = 0; i < courses.length; i++){ %>
             <div class="<%= courses[i] %>" id="<%= courses[i] %>">
                 <h4><%= courses[i] %></h4>
-
-                <% if (ddls.indexOf(courses[i]) === -1) { %>
-                <label><input name="ddl" value="<%= courses[i] %>" type="checkbox"  checked="checked" />作业ddl</label>
-                <% }else { %>
                 <label><input name="ddl" value="<%= courses[i] %>" type="checkbox" />作业ddl</label>
-                <% } %>
 
-                <% if (notices.indexOf(courses[i]) === -1) { %>
-                <label><input name="notice" value="<%= courses[i] %>" type="checkbox"  checked="checked" />新公告</label>
-                <% } else { %>
                 <label><input name="notice" value="<%= courses[i] %>" type="checkbox" />新公告</label>
-                <% } %>
 
-                <% if (documents.indexOf(courses[i]) === -1) { %>
-                <label><input name="file" value="<%= courses[i] %>" type="checkbox"  checked="checked" />新文件</label>
-                <% } else { %>
-                <label><input name="file" value="<%= courses[i] %>" type="checkbox" />新文件</label>
-                <% } %>
+                <label><input name="document" value="<%= courses[i] %>" type="checkbox" />新文件</label>
 
-                <% if (hwks.indexOf(courses[i]) === -1) { %>
-                <label><input name="homework" value="<%= courses[i] %>" type="checkbox"  checked="checked" />新作业</label>
-                <% } else { %>
                 <label><input name="homework" value="<%= courses[i] %>" type="checkbox" />新作业</label>
-                <% } %>
+
             </div>
         <hr/>
     <% } %>
-    <button id="submit" onclick="choosed()">确定</button>
+    <button id="submit">确定</button>
     <% } %>
 
-    <% if (status === "seted") { %>
-    <div class="seted" id="seted">
-        设置成功!
-    </div>
-    <% } %>
-
-
+    <div class="bottom" id="bottom"></div>
 </div>
 
 <script src="/3rd/jquery.js"></script>
 <script src="/3rd/swig.js"></script>
 <script src="/js/base.js"></script>
 <script>
-    function choosed(){
-        console.log(1);
-        var ddls = [], documents = [], notices = [], hwks = [];
+    $(document).ready(function(){
+        var no_ddl = '<%=ddls%>', no_docu = '<%=documents%>', no_noti = '<%=notices%>', no_hwk = '<%=hwks%>';
         $('input[name="ddl"]').each(function (){
-            if(!$(this).attr('checked')){
-                ddls.push($(this).val());
+            if(no_ddl.indexOf($(this).val()) === -1){
+                $(this).attr('checked', true);
+            }
+        });
+
+        $('input[name="document"]').each(function (){
+            if(no_docu.indexOf($(this).val()) === -1){
+                $(this).attr('checked', true);
             }
         });
 
         $('input[name="notice"]').each(function (){
-            if(!$(this).attr('checked')){
+            if(no_noti.indexOf($(this).val()) === -1){
+                $(this).attr('checked', true);
+            }
+        });
+
+        $('input[name="homework"]').each(function (){
+            if(no_hwk.indexOf($(this).val()) === -1){
+                $(this).attr('checked', true);
+            }
+        });
+    });
+
+    $('#submit').click( function (){
+        var ddls = [], documents = [], notices = [], hwks = [];
+        $('input[name="ddl"]').each(function (){
+            if(!$(this).is(':checked')){
+                ddls.push($(this).val());
+            }
+        });
+        //console.log(ddls);
+        $('input[name="notice"]').each(function (){
+            if(!$(this).is(':checked')){
                 notices.push($(this).val());
             }
         });
 
-        $('input[name="file"]').each(function (){
-            if(!$(this).attr('checked')){
+        $('input[name="document"]').each(function (){
+            if(!$(this).is(':checked')){
                 documents.push($(this).val());
             }
         });
 
         $('input[name="homework"]').each(function (){
-            if(!$(this).attr('checked')){
+            if(!$(this).is(':checked')){
                 hwks.push($(this).val());
             }
         });
 
-        $.post('/student/remindSettings?openid=' + openid, {ddls: ddls, documents: documents, notices: notices, hwks: hwks});
-    }
+        $.post('/student/remindSettings', {ddls: ddls, documents: documents, notices: notices, hwks: hwks}, function(msg){
+            if (msg.status === "seted"){
+                $('#bottom').html('设置成功!');
+            }
+        });
+
+    });
 
 </script>
 </body>

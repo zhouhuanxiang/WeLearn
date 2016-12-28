@@ -50,7 +50,7 @@ exports.handleBindAccount = function (req, res) {
                     bind = true;
                     //定时查看课程动态
                     var rule = new schedule.RecurrenceRule();
-                    rule.minute = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+                    rule.minute = [0, 10, 20, 30, 40, 50];
                     /*
                     var times = [];
                     for (i = 0; i < 60; ) {
