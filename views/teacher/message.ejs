@@ -2,15 +2,42 @@
 <html>
 <head>
     <title>回复私信</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <header></header>
-    <div class="mainbody" id="mainbody"> </div>
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/tsinghua.png" class="img-thumbnail">
+        </div>
+    </div>
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/line.png" class="img-thumbnail">
+        </div>
+    </div>
+        <ul class="widget-content">
+        <div id="title" class="widget-title"></div>
+        <hr>
+        <div class="mainbody" id="mainbody" class="widget-middle">
+        </div>
+        </ul>
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/line.png" class="img-thumbnail">
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <p>版权所有 © WeLearn</p>
+    </div>
     <script src="/3rd/jquery.js"></script>
-    <script src="/3rd/swig.js"></script>
-    <script src="/js/base.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="/js/base.js"></script>
     <script>
     var msg = {};
     var status = 0;
@@ -38,8 +65,8 @@
     function postMsg(){
         var url = '/teacher/message';
         var message = $('#msgBody').val();
-        console.log(message);
-        console.log(urlParam.course);
+        //console.log(message);
+        //console.log(urlParam.course);
         $.post(url, {course: urlParam.course,
             //msgHead: '',
             msgBody: message,
@@ -56,25 +83,49 @@
         var url = '/teacher/message/' + urlParam.course + '/' + urlParam.studentid;
         //console.log(url);
         $.get(url, {}, function (data){
-            msg = data.messages;
+            var msg = data.messages;
+            var name = data.student;
             //console.log(data);
             //console.log(msg);
-            $('header').html(urlParam.course+"课程私信");
-            $('#mainbody').append('<div id="msgBox" style="height:80%;overflow:auto;">');
-            for(var i = 0; i < msg.length; i++){
+            clearPage();
+            $('#title').html('<h3>'+urlParam.course+"课程私信"+'</h3>');
+            $('#mainbody').append('<div id="msgBox" class="widget-text">');
+            $('#msgBox').append('<div id="loadMsg" style="color: #6495ED"align="center">点击加载更多消息</div>');
+            var l;
+            for(i = msg.length - 1, l = 0; i >= 0 && l < 10; i--, l++){
                 var temp = msg[i].date.split('.')[0].split('T');
                 var date = temp[0] + ' ' + temp[1];
-                if (msg[i].toTeacher == false){
-                    $('#msgBox').append('<p>Me:'+date+'<br>'+msg[i].msgBody+'</p>');
+                if (msg[i].toTeacher == true){
+                    $('#loadMsg').after('<p>Me:       ' + date + '<br>' + msg[i].msgBody + '</p>');
                 }
                 else{
-                    $('#msgBox').append('<p> '+date+'<br>'+msg[i].msgBody+'</p>');
+                    $('#loadMsg').after('<p>'+ name + ':    ' + date + '<br>' + msg[i].msgBody+'</p>');
+                }
+                if(i == 0){
+                    $('#loadMsg').html('没有啦！')
                 }
             }
             $('#msgBox').append('</div>');
             //console.log('his');
 
-            $('#mainbody').append('<textarea id="msgBody" ></textarea><button id="send">确定</button>');
+            $('#mainbody').append('<textarea id="msgBody" style="resize:none;width:80%;height:27px;"></textarea><button id="send">确定</button>');
+            //console.log('show');
+            $('#loadMsg').click(function(){
+                l = 0;
+                for(; i >= 0 && l < 10;l++, i--){
+                    var temp = msg[i].date.split('.')[0].split('T');
+                    var date = temp[0] + ' ' + temp[1];
+                    if (msg[i].toTeacher == true){
+                        $('#msgBox').after('<p>Me:       '+date+'<br>'+msg[i].msgBody+'</p>');
+                    }
+                    else{
+                        $('#msgBox').after('<p>'+ name + ':    ' +date+'<br>'+msg[i].msgBody+'</p>');
+                    }
+                    if(i == 0){
+                        $('#loadMsg').html('没有啦！');
+                    }
+                }
+            });
             //console.log('show');
             $('#msgBody').keydown(function(e){
                 if (e.which === 13){//Enter

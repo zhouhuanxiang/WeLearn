@@ -37,11 +37,13 @@ router.get('/:courseid/:studentOpenid', urlencodedParser, function (req, res, ne
       next(err);
       return;
     }
-    res.json({
-      messages: messages,
-      student: req.params.studentOpenid,
-      status: 'messages'
-    })
+    Student.findOne({openid: req.params.studentOpenid}, function (err, stu){
+      res.json({
+        messages: messages,
+        student: stu.realname,
+        status: 'messages'
+      });
+    });
   });
 });
 
