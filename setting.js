@@ -32,6 +32,8 @@ var settings = {
   yourOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E',
   studentOpenid: 'oBu1dv5_0wvgk7U686jTHfs2oTsE',
   teacherOpenid: 'oBu1dv0TCi_9UEIHwqY4F0IbfX6E'
+  messageContent: 'msg',
+  noticeContent: 'notice'
 };
 
 module.exports = settings;

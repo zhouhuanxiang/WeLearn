@@ -6,6 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var url = require('url');
 var cookieParser = require('cookie-parser');
+var oauth = require('./handler/oauth_handler');
 var mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -26,7 +27,7 @@ var remindSettings = require('./routes/student/remindSettings');
 var teacherNotice = require('./routes/teacher/notice');
 
 var app = express();
-app.listen(80);
+//app.listen(80);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,8 +48,8 @@ app.use(session({
   store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-//var dataInsert = require('./data_insert');
-//dataInsert();
+// var dataInsert = require('./data_insert');
+// dataInsert();
 var Student = require('./Models/Student');
 var Course = require('./Models/Course');
 var Message = require('./Models/Message');
@@ -59,14 +60,14 @@ var Notice = require('./Models/Notice');
 // Message.remove({}, function (err, doc) {});
 // Notice.remove({}, function (err, doc) {});
 
-Student.find({}, function (err, doc) {
-  console.log('---Student---');
-  console.log(doc);
-});
-Course.find({}, function (err, doc) {
-  console.log('---Course---');
-  console.log(doc);
-});
+// Student.find({}, function (err, doc) {
+//   console.log('---Student---');
+//   console.log(doc);
+// });
+// Course.find({}, function (err, doc) {
+//   console.log('---Course---');
+//   console.log(doc);
+// });
 // Notice.find({}, function (err, doc) {
 //   console.log('---Notice---');
 //   console.log(doc);
@@ -76,26 +77,30 @@ Course.find({}, function (err, doc) {
 //   console.log(doc);
 // });
 
-// var menu = require('./handler/menu_control');
-// menu.create_menu();
+//设置 menu
+// var menu_control = require('./handler/menu_control');
+// menu_control.update_menu();
 
-app.use('/wechat', wechat);
 app.use(function (req, res, next) {
-  var openid = url.parse(req.url, true).query['openid'];
-  if (openid){
-    req.session.openid = url.parse(req.url, true).query['openid'];
-    console.log('');
-    console.log("new guest: " + req.session.openid);
-    next();
-  }else if (req.session.openid){
-    console.log("new guest: " + req.session.openid);
+  if (req.session.openid){
     next();
   }else{
-    var err = new Error('服务不可用');
-    err.status = 503;
-    next(err);
+    var code = url.parse(req.url, true).query['code'];
+    if (code){
+      oauth.client.getAccessToken(code, function (err, result) {
+        req.session.openid = result.data.openid;
+        console.log('---New Guest---');
+        console.log(req.session.openid);
+        next();
+      });
+    }else{
+      req.session.openid = 'invalid';
+      next();
+    }
   }
 });
+
+app.use('/wechat', wechat);
 
 app.use('/student/login', studentLogin);
 
@@ -127,3 +132,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+

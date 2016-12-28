@@ -5,7 +5,7 @@
 
  老师（总是接受并回复，不会主动发起一个私信，所以不选择课程）
 
- get '/teacher/message/:courseid/:studentOpenid'
+get '/teacher/message/:courseid/:studentOpenid'
   返回数据
   {
     status: 'messages',
@@ -43,13 +43,22 @@ router.get('/:courseid/:studentOpenid', function (req, res, next) {
         openid: student.openid,
         realname: student.realname
       };
-      res.render('teacher/message', {
+      res.json({
         messages: messages,
         student: stu,
         status: 'messages'
       })
     });
   })
+});
+
+router.get('/', function (req, res, next){
+  var roomID = req.session.studenid + req.session.course;
+  console.log(req.session.studentid);
+  console.log(req.session.course);
+  res.render('teacher/message', {
+    roomID: roomID
+  });
 });
 
 router.post('/', urlencodedParser, function (req, res, next) {
@@ -59,7 +68,7 @@ router.post('/', urlencodedParser, function (req, res, next) {
    */
   var message = {
     toTeacher: false,
-    student: '',
+    student: req.body.student,
     course: req.body.course,
     msgHead: req.body.msgHead,
     msgBody: req.body.msgBody

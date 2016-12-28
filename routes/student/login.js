@@ -42,13 +42,13 @@ var Course = require('../../Models/Course');
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+
 router.get('/', function (req, res, next) {
   Student.findOne({openid: req.session.openid}, function (err, doc) {
     if (err){
       next(err);
       return;
     }
-
     if (doc){
       res.render('student/login', {
         status: 'loginTwice'
@@ -63,7 +63,7 @@ router.get('/', function (req, res, next) {
 });
 
 function updateCourseDb(student) {
-  var requestData = { apiKey: "camustest", apisecret: "camustest"};
+  var requestData = { apiKey: "", apisecret: ""};
   request({
     method: 'POST',
     url: 'http://se.zhuangty.com:8000/learnhelper/'+ student.studentnumber +'/courses',
@@ -113,8 +113,8 @@ function updateCourseDb(student) {
 
 router.post('/', urlencodedParser, function (req, res, next) {
   var requestData = {
-    apikey: "camustest",
-    apisecret: "camustest",
+    apikey: "",
+    apisecret: "",
     username: utf8.encode(req.body.studentId),
     password: utf8.encode(req.body.password)
   };
@@ -154,14 +154,10 @@ router.post('/', urlencodedParser, function (req, res, next) {
           return;
         }
         updateCourseDb(student);
-        res.json({
-          status: 'success'
-        });
       });
-    } else{
-      res.json({
-        status: 'failed'
-      });
+      res.json({ status: 'success' });
+    } else {
+      res.json({ status: 'failed' });
     }
   });
 });

@@ -1,19 +1,19 @@
 12.6
 杨景
-    1.微信端可处理消息 bind, unbind, lesson, schedule, library seat
-	2.绑定的时候，用学号没有错，用用户名则会出错
-	3.目前课程文件，课程作业api还没有完成
+        1.微信端可处理消息 bind, unbind, lesson, schedule, library seat
+        2.绑定的时候，用学号没有错，用用户名则会出错
+        3.目前课程文件，课程作业api还没有完成
 
 12.5 张诗文
-菜单构造和响应
-首先改settings(当然大家都知道）
-菜单响应的实现都在handler目录下，
-各位如果要修改菜单，请按照以下步骤：
+        菜单构造和响应
+        首先改settings(当然大家都知道）
+        菜单响应的实现都在handler目录下，
+        各位如果要修改菜单，请按照以下步骤：
 
-菜单的结构在menu_template.js中，注意微信最多只能有三个主菜单（我才知道）
-三个菜单的handler对应着lesson_handler,conversation_handler,schedule_handler,请各位实现每个handler中的第二个函数即可（当然如果想改名
-字的话请不要忘了在main_handler中修改相应的名字，至于修改哪里大家应该一眼就能看出）
-而accesstoken checkrequest menucontrol三个js不需要改动
+        菜单的结构在menu_template.js中，注意微信最多只能有三个主菜单（我才知道）
+        三个菜单的handler对应着lesson_handler,conversation_handler,schedule_handler,请各位实现每个handler中的第二个函数即可（当然如果想改名
+        字的话请不要忘了在main_handler中修改相应的名字，至于修改哪里大家应该一眼就能看出）
+        而accesstoken checkrequest menucontrol三个js不需要改动
 
 12.3
 周焕祥

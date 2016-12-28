@@ -4,7 +4,7 @@ var checker = require("./checkRequest");
 var request = require('request');
 var utf8 = require('utf8');
 //var basicInfo = require("../weixin_basic/settings.js");
-var menutmp=require("./menu_template");
+var menutmp=require("./menu_control");
 
 exports.checkListLibrarySeat = function (msg) {
     if (msg.Content === 'library seat' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['library_seat'])
@@ -26,7 +26,6 @@ exports.handleListLibrarySeat = function (req, res) {
         }, function (error, response, body) {
             if(response.statusCode === 200) {
                 var seats = JSON.parse(body);
-                //console.log(seats);
                 var replyText = "";
                 for(var i = 0; i < seats.areas.length; i++){
                     replyText += "区域 | " + (seats.areas)[i].name + "\n";
