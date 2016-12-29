@@ -82,7 +82,6 @@ var wrapper = {
   urlCourseNewNotices: urlCourseNewNotices,
   urlCourseNewDocuments: urlCourseNewDocuments,
   urlCourseNewAssignments: urlCourseNewAssignments
-
 };
 
 module.exports = wrapper;

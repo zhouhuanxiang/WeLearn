@@ -231,10 +231,29 @@ function remove(notices, len, res, type){
     var i, j;
     switch (type){
         case 0:
+            if(len === 0){
+                var no = {};
+                no.notices = [];
+                res.render('student/course', {
+                    title: '未读公告',
+                    notices: no
+                });
+            }
+
             for(i = 0; i < len; i++){
+                /*
                 if((notices.notices)[i].state != "unread"){
+                    if(i === len - 1){
+                        var no = {};
+                        no.notices = [];
+                        res.render('student/course', {
+                            title: '未读公告',
+                            notices: no
+                        });
+                    }
                     continue;
                 }
+                */
                 //处理时间
                 msesInt = parseInt((notices.notices)[i].publishtime);
                 (notices.notices)[i].publishtime = sd.format(new Date(msesInt), 'YYYY-MM-DD');
@@ -261,10 +280,30 @@ function remove(notices, len, res, type){
             }
             break;
         case 1:
+            if(len === 0){
+                var no = {};
+                no.documents = [];
+                res.render('student/course', {
+                    title: '新文件',
+                    documents: no
+                });
+            }
+
             for(i = 0; i < len; i++){
-                if((notices.notices)[i].state != "new"){
+                /*
+                if((notices.documents)[i].state != "new"){
+
+                    if(i === len - 1){
+                        var no = {};
+                        no.documents = [];
+                        res.render('student/course', {
+                            title: '新文件',
+                            documents: no
+                        });
+                    }
+
                     continue;
-                }
+                }*/
                 //处理时间
                 msesInt = parseInt((notices.documents)[i].updatingtime);
                 (notices.documents)[i].updatingtime = sd.format(new Date(msesInt), 'YYYY-MM-DD');
@@ -295,10 +334,29 @@ function remove(notices, len, res, type){
             }
             break;
         default:
+            if(len === 0){
+                var no = {};
+                no.assignments = [];
+                res.render('student/course', {
+                    title: '未交作业',
+                    assignments: no
+                });
+            }
+
             for(i = 0; i < len; i++){
-                if((notices.notices)[i].state != "尚未提交"){
+                /*
+                if((notices.assignments)[i].state != "尚未提交"){
+                    if(i === len - 1){
+                        var no = {};
+                        no.assignments = [];
+                        res.render('student/course', {
+                            title: '未交作业',
+                            assignments: no
+                        });
+                    }
                     continue;
                 }
+                */
                 //处理时间
                 msesInt = parseInt((notices.assignments)[i].duedate);
                 (notices.assignments)[i].duedate = sd.format(new Date(msesInt), 'YYYY-MM-DD');

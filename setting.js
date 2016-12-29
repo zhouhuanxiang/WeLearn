@@ -1,7 +1,7 @@
-var siteDomain = 'http://59.66.138.21';
-var token = 'ThisIsAWeChatTokenWhichCanBeARandomString';
-var appid = 'wx8d7a006090c3ae66';
-var appSecret = '85b8c974f08b5e62e38a8d8beec962bf';
+var siteDomain = 'http://183.173.34.155';
+var token = 'RYhopG1zq6oan1toNtiHfcq96KHinZ90gpuKt8pEx3mEQPmz7T';
+var appid = 'wxf0cb75c245008b64';
+var appSecret = '91e15fb902a7081ca1a2002b1fe71da9';
 
 /**
  * token

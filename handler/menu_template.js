@@ -13,7 +13,8 @@ var WEIXIN_EVENT_KEYS = {
     'course_schedule':"COURSE_SCHEDULE",
     'account_bind':"ACCOUNT_BIND",
     'account_unbind':'ACCOUNT_UNBIND',
-    'library_seat': 'LIBRARY_SEAT'
+    'library_seat': 'LIBRARY_SEAT',
+    'inform': 'INFORM'
 };
 
 exports.WEIXIN_EVENT_KEYS = WEIXIN_EVENT_KEYS;
@@ -59,6 +60,12 @@ var WEIXIN_COSTUM_MENU_TEMPLATE = {
                     "key": WEIXIN_EVENT_KEYS['course_info'],
                     "sub_button": []
                 },
+                {
+                    "type": "click",
+                    "name": "提醒功能设置",
+                    "key": WEIXIN_EVENT_KEYS['inform'],
+                    "sub_button": []
+                }
             ]
         }
     ]
