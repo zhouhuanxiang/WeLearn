@@ -96,15 +96,10 @@ router.post('/', urlencodedParser, function (req, res, next) {
         next(errr);
         return;
       }
-      /*
-        TODO 下面是为了调试，部署时删除
-       */
-      //var openid = setting.yourOpenid;
-      //console.log(doc);
       textMessage(doc.openid, msg);
-      res.json({
-        status: 'msgSend'
-      });
+    });
+    res.json({
+      status: 'msgSend'
     });
   });
 });

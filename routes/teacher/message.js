@@ -75,9 +75,9 @@ router.post('/', urlencodedParser, function (req, res, next) {
       return;
     }
     textMessage(message.student, message);
-    res.json({
-      status: 'msgSend'
-    });
+  });
+  res.json({
+    status: 'msgSend'
   });
 });
 

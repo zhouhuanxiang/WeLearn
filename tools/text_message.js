@@ -33,8 +33,7 @@ var textMessage = function (openid, message) {
   var now = new Date();
   if (message.toTeacher){
     Course.findOne({coursename: message.course}, function (err, doc){
-      //console.log(doc.teacher);
-      console.log(url);
+      if (!doc) return;
       var teacher = doc.teacher;
       for(var i = 0; i < teacher.length; i++){
         if(!Stl.hasOwnProperty(teacher[i].openid))
@@ -51,7 +50,6 @@ var textMessage = function (openid, message) {
         }
       }
     });
-    
   }else{
     if(!Stl.hasOwnProperty(message.student))
           Stl[message.student] = 1;

@@ -101,11 +101,11 @@ module.exports = app;
 // var dataInsert = require('./data_insert');
 // dataInsert();
 
-//数据库操作
-// var Student = require('./Models/Student');
-// var Course = require('./Models/Course');
-// var Message = require('./Models/Message');
-// var Notice = require('./Models/Notice');
+// 数据库操作
+var Student = require('./Models/Student');
+var Course = require('./Models/Course');
+var Message = require('./Models/Message');
+var Notice = require('./Models/Notice');
 // Student.remove({}, function (err, doc) {});
 // Course.remove({}, function (err, doc) {});
 // Message.remove({}, function (err, doc) {});
