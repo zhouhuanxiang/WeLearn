@@ -4,7 +4,7 @@ var checker = require("./checkRequest");
 var request = require('request');
 var utf8 = require('utf8');
 //var basicInfo = require("../weixin_basic/settings.js");
-var menutmp=require("./menu_control");
+var menutmp=require("./../tools/menu_control");
 
 exports.checkListLibrarySeat = function (msg) {
     if (msg.Content === 'library seat' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['library_seat'])

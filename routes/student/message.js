@@ -52,7 +52,7 @@ var bodyParser = require('body-parser');
 var Student = require('../../Models/Student');
 var Course = require('../../Models/Course');
 var Message = require('../../Models/Message');
-var textMessage = require('../../handler/text_message');
+var textMessage = require('../../tools/text_message');
 var setting = require('../../setting');
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 

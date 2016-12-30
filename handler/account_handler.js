@@ -6,10 +6,9 @@ var utf8 = require('utf8');
 var request = require('request');
 var checker = require("./checkRequest");
 var schedule = require("node-schedule");
-var noticeMessage = require('./notice_message');
-var inform = require('./inform.js');
+var inform = require('./../tools/inform.js');
 //var basicInfo = require("../weixin_basic/settings.js");
-var menutmp=require("./menu_template");
+var menutmp=require("./../tools/menu_control");
 
 var i = 0, courseName;
 var setTime = false;    //是否开始定时判定是否绑定

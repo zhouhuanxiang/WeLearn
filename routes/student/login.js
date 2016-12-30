@@ -143,10 +143,6 @@ router.post('/', urlencodedParser, function (req, res, next) {
         no_notice: [],
         no_hwk: []
       };
-      //TODO
-      //if (student.openid === 'o3HdVwWHa0uJNuNLQ7u_1Tf0VEng')
-      //  student.position = 'teacher';
-      //
       var studentObj = new Student(student);
       studentObj.save(function (err) {
         if (err){
@@ -155,10 +151,9 @@ router.post('/', urlencodedParser, function (req, res, next) {
         }
         updateCourseDb(student);
       });
-      // res.render('student/login', {
-      //   status: 'success's
-      // });
-      res.redirect(wrapper.urlLessonInfo());
+      res.render('student/login', {
+        status: 'success'
+      });
     } else {
       res.render('student/login', {
         status: 'failed'

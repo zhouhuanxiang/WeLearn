@@ -3,7 +3,7 @@ var wrapper = require('../wrapper');
 var setting  =require('../setting');
 var Student = require('../Models/Student');
 var Course = require('../Models/Course');
-var oauth = require('./oauth_handler');
+var oauth = require('./../handler/oauth_handler');
 
 var Stl = new Object(); 
 
