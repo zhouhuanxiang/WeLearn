@@ -1,5 +1,5 @@
 var WechatAPI = require('wechat-api');
-var wrapper = require('../wrapper');
+var wrapper = require('./wrapper');
 var setting  =require('../setting');
 var Course = require('../Models/Course');
 

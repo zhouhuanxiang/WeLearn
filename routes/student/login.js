@@ -31,7 +31,7 @@
  *
  */
 
-var wrapper = require('../../wrapper');
+var wrapper = require('../../tools/wrapper');
 var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');

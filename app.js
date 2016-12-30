@@ -98,7 +98,7 @@ module.exports = app;
 
 
 
-// var dataInsert = require('./data_insert');
+// var dataInsert = require('./tools/data_insert');
 // dataInsert();
 
 // 数据库操作

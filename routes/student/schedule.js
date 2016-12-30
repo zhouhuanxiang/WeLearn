@@ -36,6 +36,9 @@ router.get('/', urlencodedParser, function (req, res, next) {
             apisecret: "camustest"
         };
 
+        if(!doc){
+
+        }
         var username = doc.studentnumber;
         request({
             method: 'POST',

@@ -1,4 +1,4 @@
-var wrapper = require('../wrapper');
+var wrapper = require('../tools/wrapper');
 var Student = require('../Models/Student');
 var checker = require("./checkRequest");
 //var basicInfo = require("../weixin_basic/settings.js");

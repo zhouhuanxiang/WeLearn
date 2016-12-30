@@ -1,4 +1,4 @@
-var wrapper = require('../wrapper');
+var wrapper = require('../tools/wrapper');
 var utf8 = require('utf8');
 var Student = require('../Models/Student');
 var setting = require('../setting');

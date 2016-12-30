@@ -2,9 +2,9 @@
  * 清空数据库中所有的数据并且插入一些数据
  */
 
-var Student = require('./Models/Student');
-var Course = require('./Models/Course');
-var setting = require('./setting');
+var Student = require('./../Models/Student');
+var Course = require('./../Models/Course');
+var setting = require('./../setting');
 
 module.exports = function () {
   Student.remove({}, function (err, doc) {});

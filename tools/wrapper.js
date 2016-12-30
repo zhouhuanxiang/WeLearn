@@ -1,5 +1,5 @@
-var settings = require('./setting');
-var oauth = require('./handler/oauth_handler');
+var settings = require('./../setting');
+var oauth = require('./../handler/oauth_handler');
 
 var getUrl = function (path) {
   return settings.siteDomain + '/' + path;
