@@ -26,6 +26,7 @@
     "serve-favicon": "~2.3.0",
     "should": "~",
     "silly-datetime": "^0.1.2",
+    "socket.io": "^1.7.2",
     "supertest": "~2.0.1",
     "uft8": "~2.1.2",
     "wechat": "~2.0.3",

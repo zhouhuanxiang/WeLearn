@@ -1,6 +1,21 @@
 var WechatAPI = require('wechat-api');
 var wrapper = require('../wrapper');
 var setting  =require('../setting');
+var Student = require('../Models/Student');
+var Course = require('../Models/Course');
+var oauth = require('./oauth_handler');
+
+var Stl = new Object(); 
+
+function checkTime(time1, time2){
+  var tm = time2 - time1;
+  if(tm > 1200000 || tm < -1200000){//10分钟
+  //if(tm > 60000 || tm < -60000){
+    return true;
+  }else{
+    return false;
+  }
+}
 
 var textMessage = function (openid, message) {
   var url;
@@ -10,25 +25,46 @@ var textMessage = function (openid, message) {
       'value': message.msgHead,
       color: '#771523'
     },
-    'msgBody':{
-      'value': message.msgBody,
+    'course':{
+      'value': message.course,
       color: '#771523'
     }
   };
+  var now = new Date();
   if (message.toTeacher){
-    url = wrapper.urlTeacherMessage()+'/'+message.course+'/'+message.student+'?openid='+openid;
-    api.sendTemplate(openid, setting.teacherTextTemplateID, url, msgData, function (err) {
-      if (err){
-        console.log(err);
+    Course.findOne({coursename: message.course}, function (err, doc){
+      //console.log(doc.teacher);
+      console.log(url);
+      var teacher = doc.teacher;
+      for(var i = 0; i < teacher.length; i++){
+        if(!Stl.hasOwnProperty(teacher[i].openid))
+          Stl[teacher[i].openid] = 1;
+        var t = checkTime(Stl[teacher[i].openid], now.getTime());
+        if (t){
+          url = wrapper.urlTeacherMessage() + '?course=' + message.course + '&studentid=' + message.student + '&openid=' + teacher[i].openid;
+          api.sendTemplate(teacher[i].openid, setting.teacherTextTemplateID, oauth.getAuthorizeURL(url), msgData, function (err) {
+            if (err){
+              console.log(err);
+            }
+          });
+          Stl[teacher[i].openid] = now.getTime();
+        }
       }
     });
+    
   }else{
-    url = wrapper.urlStudentMessage()+'/msg_list/'+message.course+'?openid='+openid;
-    api.sendTemplate(openid, setting.studentTextTemplateID, url, msgData, function (err) {
-      if (err){
-        console.log(err);
-      }
-    });
+    if(!Stl.hasOwnProperty(message.student))
+          Stl[message.student] = 1;
+    var tt = checkTime(Stl[message.student], now.getTime());
+    if (tt){
+      url = wrapper.urlMessage() + '?openid=' + message.student + '&course=' + message.course;
+      api.sendTemplate(openid, setting.studentTextTemplateID, oauth.getAuthorizeURL(url), msgData, function (err) {
+        if (err){
+          console.log(err);
+        }
+      });
+      Stl[message.student] = now.getTime();
+    }
   }
 };
 

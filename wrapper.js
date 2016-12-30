@@ -12,19 +12,30 @@ var urlStudentLogin = function () {
 var urlLessonInfo = function () {
   return oauth.getAuthorizeURL(getUrl('student/course'));
   //return getUrl('student/course?openid=o3HdVwQhhR9vV2MhK0zS6WruOLmE');
+
 };
 
 var urlStudentMessage = function () {
   return oauth.getAuthorizeURL(getUrl('student/message'));
 };
 
+var urlStudentMessage1 = function() {
+  return getUrl('student/message');
+};
+
+var urlMessage = function () {
+  return getUrl('message');
+
+};
+
 var urlTeacherMessage = function () {
-  return oauth.getAuthorizeURL(getUrl('teacher/message'));
+  return getUrl('teacher/message');
 };
 
 var urlScheduleInfo = function(){
   return oauth.getAuthorizeURL(getUrl('student/schedule'));
   //return getUrl('student/schedule?openid=o3HdVwQhhR9vV2MhK0zS6WruOLmE');
+
 };
 
 var urlLibrarySeatInfo = function () {
@@ -54,6 +65,7 @@ var urlCourseNewDocuments = function (courseid) {
 
 var urlCourseNewAssignments = function (courseid) {
   return oauth.getAuthorizeURL(getUrl('student/course/' + courseid + '/assignments'));
+
 };
 
 var wrapper = {
@@ -65,6 +77,7 @@ var wrapper = {
   urlTeacherMessage: urlTeacherMessage,
   urlStudentNotice: urlStudentNotice,
   urlTeacherNotice: urlTeacherNotice,
+  urlMessage: urlMessage,
   urlRemindSettings: urlRemindSettings,
   urlCourseNewNotices: urlCourseNewNotices,
   urlCourseNewDocuments: urlCourseNewDocuments,
