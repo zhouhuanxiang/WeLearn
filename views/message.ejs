@@ -1,165 +1,177 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>私信老师</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <!-- 最新 Bootstrap 核心 CSS 文件 -->
-  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <title>私信老师</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
 
-  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-  <script src="/js/bootstrap.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <div class="row">
-    <div id="banner" class="widget-content">
-      <img src="/img/tsinghua.png" class="img-thumbnail">
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/tsinghua.png" class="img-thumbnail">
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div id="banner" class="widget-content">
-      <img src="/img/line.png" class="img-thumbnail">
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/line.png" class="img-thumbnail">
+        </div>
     </div>
-  </div>
-    <ul class="widget-content">
-    <div id="title" class="widget-title"></div>
-    <hr>
-    <div class="mainbody" id="mainbody" class="widget-middle">
+        <ul class="widget-content">
+        <div id="title" class="widget-title"></div>
+        <hr>
+        <div class="mainbody" id="mainbody" class="widget-middle">
+        </div>
+        </ul>
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/line.png" class="img-thumbnail">
+        </div>
     </div>
-    </ul>
-  <div class="row">
-    <div id="banner" class="widget-content">
-      <img src="/img/line.png" class="img-thumbnail">
+
+    <div class="page-footer">
+        <p>版权所有 © WeLearn</p>
     </div>
-  </div>
+    <script src="/3rd/jquery.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="/js/base.js"></script>
+    <script>
 
-  <div class="page-footer">
-    <p>版权所有 © WeLearn</p>
-  </div>
-  <script src="/3rd/jquery.js"></script>
-  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script src="/js/base.js"></script>
-  <script>
+    var userName = urlParam.openid;
+    //var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://101.5.210.250:3000');
 
-  Date.prototype.Format = function (fmt) {
-    var o = {
-      "M+": this.getMonth() + 1, //月份 
-      "d+": this.getDate(), //日 
-      "h+": this.getHours(), //小时 
-      "m+": this.getMinutes(), //分 
-      "s+": this.getSeconds(), //秒 
-      "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-      "S": this.getMilliseconds() //毫秒 
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-  };
-
-  function clearPage(){
-    $('#title').html('');
-    $('#mainbody').html('');
-  };
-
-  function postMsg(){
-    var url = '/student/message';
-    var message = $('#msgBody').val();
-    //console.log(message);
-    //console.log(urlParam.course);
-    $.post(url, {course: urlParam.course,
-      msgHead: '',
-      msgBody: message
-    });
-  };
-
-  function getHistory(){
-    var url = '/student/message/msg_list/' + urlParam.course;
-    $.get(url, {openid: urlParam.openid}, function (data){
-      var name = data.realname;
-      var msg = data.messages;
-
-      clearPage();
-      $('#title').html('<h3>'+urlParam.course+"课程私信"+'</h3>');
-      $('#mainbody').append('<div id="msgBox" class="widget-text">');
-      $('#msgBox').append('<div id="loadMsg" style="color: #6495ED"align="center">点击加载更多消息</div>');
-      var l;
-      var i = msg.length - 1;
-      for(l = 0; i >= 0 && l < 10; i--, l++){
-        var temp = msg[i].date.split('.')[0].split('T');
-        var date = temp[0] + ' ' + temp[1];
-        if (msg[i].toTeacher == true){
-          $('#loadMsg').after('<table class="table table-striped"><td><p>Me:       ' + date + '<br>' + msg[i].msgBody + '</p></td></table>');
-        }
-        else{
-          $('#loadMsg').after('<table class="table table-striped"><td><p>Teacher:  ' + date + '<br>' + msg[i].msgBody+'</p></td></table>');
-        }
-      }
-      if(i == -1){
-        $('#loadMsg').html('没有啦！')
-      }
-      $('#msgBox').append('</div>');
-
-      $('#mainbody').append('<textarea id="msgBody" style="resize:none;width:80%;height:27px;"></textarea><button id="send">确定</button>');
-
-      var socket = io.connect('http://59.66.138.24:4000');
-
-      socket.on('connect', function(){
+    socket.on('connect', function(){
         socket.emit('join', {openid: urlParam.openid, course: urlParam.course});
+        //console.log('join ' + urlParam.openid + urlParam.course);
         
-      });
+    });
 
-      socket.on('msg', function(user, msg){
-        $('#msgBody').before('<table class="table table-striped"><td><p>Teacher:' + msg + '</p></td></table>');
+    socket.on('msg', function(user, msg){
+//        console.log(user);
+//        console.log(msg);
+        $('#msgBody').before('<p>'+msg+'</p>');
         $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
-      });
+    });
 
-      $('#loadMsg').click(function(){
-        for(l = 0; i >= 0 && l < 10;l++, i--){
-          var temp = msg[i].date.split('.')[0].split('T');
-          var date = temp[0] + ' ' + temp[1];
-          if (msg[i].toTeacher == true){
-            $('#loadMsg').after('<table class="table table-striped"><td><p>Me:       '+date+'<br>'+msg[i].msgBody+'</p></td></table>');
-          }
-          else{
-            $('#loadMsg').after('<table class="table table-striped"><td><p>Teacher:  '+ name + ': ' +date+'<br>'+msg[i].msgBody+'</p></td></table>');
-          }     
-        }
-        if(i == -1){
-          $('#loadMsg').html('没有啦！');
-        }
-      });
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份 
+            "d+": this.getDate(), //日 
+            "h+": this.getHours(), //小时 
+            "m+": this.getMinutes(), //分 
+            "s+": this.getSeconds(), //秒 
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+            "S": this.getMilliseconds() //毫秒 
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
 
-      $('#msgBody').keydown(function(e){
-        if (e.which === 13){//Enter
-          e.preventDefault();
-          var _msg = $('#msgBody').val();
-          if(_msg){
-            postMsg();
-             var date = new Date().Format("yyyy-MM-dd hh:mm:ss");
-            _msg = date + '<br>' + _msg;
-            socket.send(_msg);
-            $('#msgBody').before('<table class="table table-striped"><td><p>Me: ' +_msg + '</p></td></table>');
-            $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
-          }
-          $('#msgBody').val('');
-        }
-      });
+    function clearPage(){
+        $('#title').html('');
+        $('#mainbody').html('');
+    };
 
-      $('#send').click(function(){
-        var _msg = $('#msgBody').val();
-        if(_msg){
-          postMsg();
-          var date = new Date().Format("yyyy-MM-dd hh:mm:ss");
-          _msg = date + '<br>' + _msg;
-          socket.send(_msg);
-          $('#msgBody').before('<table class="table table-striped"><td><p>Me: ' +_msg + '</p></td></table>');
-          $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
-        }
-        $('#msgBody').val('');
-      });
-    });        
-  };
-  getHistory();
-  </script>
+    function postMsg(){
+        var url = '/student/message';
+        var message = $('#msgBody').val();
+        //console.log(message);
+        //console.log(urlParam.course);
+        $.post(url, {course: urlParam.course,
+            msgHead: '',
+            msgBody: message
+        });
+    };
+
+    function getHistory(){
+        //console.log(urlParam.course);
+        //console.log('http://59.66.138.43/student/message/msg_list/'+urlParam.course+'?'+urlParam.openid);
+        var url = '/student/message/msg_list/' + urlParam.course;
+        //console.log(url);
+        $.get(url, {openid: urlParam.openid}, function (data){
+            var name = data.realname;
+            var msg = data.messages;
+            //console.log(data);
+            //console.log(msg);
+            clearPage();
+            $('#title').html('<h3>'+urlParam.course+"课程私信"+'</h3>');
+            $('#mainbody').append('<div id="msgBox" class="widget-text">');
+            $('#msgBox').append('<div id="loadMsg" style="color: #6495ED"align="center">点击加载更多消息</div>');
+            var l;
+            for(i = msg.length - 1, l = 0; i >= 0 && l < 10; i--, l++){
+                var temp = msg[i].date.split('.')[0].split('T');
+                var date = temp[0] + ' ' + temp[1];
+                if (msg[i].toTeacher == true){
+                    $('#loadMsg').after('<p>Me:       ' + date + '<br>' + msg[i].msgBody + '</p>');
+                }
+                else{
+                    $('#loadMsg').after('<p>Teacher:  ' + date + '<br>' + msg[i].msgBody+'</p>');
+                }
+                if(i == 0){
+                    $('#loadMsg').html('没有啦！')
+                }
+            }
+            $('#msgBox').append('</div>');
+            //console.log('his');
+
+            $('#mainbody').append('<textarea id="msgBody" style="resize:none;width:80%;height:27px;"></textarea><button id="send">确定</button>');
+            //console.log('show');
+            $('#loadMsg').click(function(){
+                l = 0;
+                for(; i >= 0 && l < 10;l++, i--){
+                    var temp = msg[i].date.split('.')[0].split('T');
+                    var date = temp[0] + ' ' + temp[1];
+                    if (msg[i].toTeacher == true){
+                        $('#msgBox').after('<p>Me:       '+date+'<br>'+msg[i].msgBody+'</p>');
+                    }
+                    else{
+                        $('#msgBox').after('<p>Teacher:  '+ name + ': ' +date+'<br>'+msg[i].msgBody+'</p>');
+                    }
+                    if(i == 0){
+                        $('#loadMsg').html('没有啦！');
+                    }
+                }
+            });
+
+            $('#msgBody').keydown(function(e){
+                if (e.which === 13){//Enter
+                    e.preventDefault();
+                    var _msg = $('#msgBody').val();
+                    //console.log(_msg);
+                    if(_msg){
+                        postMsg();
+                       var date = new Date().Format("yyyy-MM-dd hh:mm:ss");
+                        _msg = date + '<br>' + _msg;
+                        socket.send(_msg);
+                        $('#msgBody').before('<p>Me: ' +_msg + '</p>');
+                        $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
+                    }
+                    $('#msgBody').val('');
+                }
+            });
+
+            $('#send').click(function(){
+                var _msg = $('#msgBody').val();
+                //console.log(_msg);
+                if(_msg){
+                    postMsg();
+                    var date = new Date().Format("yyyy-MM-dd hh:mm:ss");
+                    _msg = date + '<br>' + _msg;
+                    socket.send(_msg);
+                    $('#msgBody').before('<p>Me: ' +_msg + '</p>');
+                    $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
+                }
+                $('#msgBody').val('');
+            });
+        });        
+    };
+    getHistory();
+    </script>
 
 </body>

@@ -1,220 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>回复私信</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-  <script src="/js/bootstrap.min.js"></script>
+    <title>私信老师</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <div class="row">
-    <div id="banner" class="widget-content">
-      <img src="/img/tsinghua.png" class="img-thumbnail">
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/tsinghua.png" class="img-thumbnail">
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div id="banner" class="widget-content">
-      <img src="/img/line.png" class="img-thumbnail">
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/line.png" class="img-thumbnail">
+        </div>
     </div>
-  </div>
-    <ul class="widget-content">
-    <div id="title" class="widget-title"></div>
-    <hr>
-    <div class="mainbody" id="mainbody" class="widget-middle">
+        
+        <div id="title" class="widget-title"></div>
+        <hr>
+        <div class="mainbody" id="mainbody" class="widget-middle">
+        </div>
+        
+    <div class="row">
+        <div id="banner" class="widget-content">
+            <img src="/img/line.png" class="img-thumbnail">
+        </div>
     </div>
-    </ul>
-  <div class="row">
-    <div id="banner" class="widget-content">
-      <img src="/img/line.png" class="img-thumbnail">
-    </div>
-  </div>
 
-  <div class="page-footer">
-    <p>版权所有 © WeLearn</p>
-  </div>
-  <script src="/3rd/jquery.js"></script>
-  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script src="/js/base.js"></script>
-  <script>
-  function clearPage(){
-    $('header').html('');
-    $('#mainbody').html('');
-  };
-
-  Date.prototype.Format = function (fmt) {
-    var o = {
-      "M+": this.getMonth() + 1, //月份 
-      "d+": this.getDate(), //日 
-      "h+": this.getHours(), //小时 
-      "m+": this.getMinutes(), //分 
-      "s+": this.getSeconds(), //秒 
-      "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-      "S": this.getMilliseconds() //毫秒 
+    <div class="page-footer">
+        <p>版权所有 © WeLearn</p>
+    </div>
+    <script src="/3rd/jquery.js"></script>
+    <script src="/3rd/swig.js"></script>
+    <script src="/js/base.js"></script>
+    <script>
+    var msg = {};
+    var status = 0;
+    var courseName;
+    function clearPage(){
+        $('#title').html('');
+        $('#mainbody').html('');
     };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-  };
-  
-  function postMsg(){
-    var url = '/teacher/message';
-    var message = $('#msgBody').val();
-    $.post(url, {course: urlParam.course,
-      msgBody: message,
-      openid: urlParam.openid,
-      student: urlParam.studentid
-    }, function(result){
 
-    });
-  };
-
-  function getHistory(){
-    var url = '/teacher/message/' + urlParam.course + '/' + urlParam.studentid;
-    $.get(url, {}, function (data){
-      var msg = data.messages;
-      var name = data.student;
-      clearPage();
-      $('#title').html('<h3>'+urlParam.course+"课程私信"+'</h3>');
-      $('#mainbody').append('<div id="msgBox" class="widget-text">');
-      $('#msgBox').append('<div id="loadMsg" style="color: #6495ED"align="center">点击加载更多消息</div>');
-      var l;
-      var i = msg.length - 1;
-      for( l = 0; i >= 0 && l < 10; i--, l++){
-        var temp = msg[i].date.split('.')[0].split('T');
-        var date = temp[0] + ' ' + temp[1];
-        if (msg[i].toTeacher == false){
-          $('#loadMsg').after('<table class="table table-striped"><td><p>Me:       ' + date + '<br>' + msg[i].msgBody + '</p></td></table>');
-        }
-        else{
-          $('#loadMsg').after('<table class="table table-striped"><td><p>'+ name + ':    ' + date + '<br>' + msg[i].msgBody+'</p></td></table>');
-        }
-
-      }
-      if(i == -1){
-        $('#loadMsg').html('没有啦！')
-      }
-      $('#msgBox').append('</div>');
-
-      $('#mainbody').append('<textarea id="msgBody" style="resize:none;width:80%;height:27px;"></textarea><button id="send">确定</button>');
-
-      var socket = io.connect('http://59.66.138.24:4000');
-
-      socket.on('connect', function(){
-        socket.emit('join', {openid: urlParam.studentid, course: urlParam.course});
-      });
-
-      socket.on('msg', function(user, msg){
-        $('#msgBody').before('<table class="table table-striped"><td><p>' + name + msg + '</p></td></table>');
-        $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
-      });
-
-      $('#loadMsg').click(function(){
-        l = 0;
-        for(; i >= 0 && l < 10;l++, i--){
-          var temp = msg[i].date.split('.')[0].split('T');
-          var date = temp[0] + ' ' + temp[1];
-          if (msg[i].toTeacher == false){
-            $('#loadMsg').after('<table class="table table-striped"><td><p>Me:       '+date+'<br>'+msg[i].msgBody+'</p></td></table>');
-          }
-          else{
-            $('#loadMsg').after('<table class="table table-striped"><td><p>'+ name + ':    ' +date+'<br>'+msg[i].msgBody+'</p></td></table>');
-          }
-        }
-        if(i == -1){
-          $('#loadMsg').html('没有啦！');
-        }
-      });
-
-      $('#msgBody').keydown(function(e){
-        if (e.which === 13){//Enter
-          e.preventDefault();
-          var _msg = $('#msgBody').val();
-          if(_msg){
-            postMsg();
-             var date = new Date().Format("yyyy-MM-dd hh:mm:ss");
-            _msg = date + '<br>' + _msg;
-            socket.send(_msg);
-            $('#msgBody').before('<table class="table table-striped"><td><p>Me: ' +_msg + '</p></td></table>');
-            $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
-          }
-          $('#msgBody').val('');
-        }
-      });
-
-      $('#send').click(function(){
-        var _msg = $('#msgBody').val();
-        if(_msg){
-          postMsg();
-          var date = new Date().Format("yyyy-MM-dd hh:mm:ss");
-          _msg = date + '<br>' + _msg;
-          socket.send(_msg);
-          $('#msgBody').before('<table class="table table-striped"><td><p>Me: ' +_msg + '</p></td></table>');
-          $('#msgBox').scrollTop($('#msgBox')[0].scrollHeight);
-        }
-        $('#msgBody').val('');
-      });
-    });        
-  };
-  getHistory();
-  </script>
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-  <title>私信老师</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-  <script src="/js/bootstrap.min.js"></script>
-</head>
-<body>
-  <div class="row">
-    <div id="banner" class="widget-content">
-      <img src="/img/tsinghua.png" class="img-thumbnail">
-    </div>
-  </div>
-  <div class="row">
-    <div id="banner" class="widget-content">
-      <img src="/img/line.png" class="img-thumbnail">
-    </div>
-  </div>
-    
-    <div id="title" class="widget-title"></div>
-    <hr>
-    <div class="mainbody" id="mainbody" class="widget-middle">
-    </div>
-    
-  <div class="row">
-    <div id="banner" class="widget-content">
-      <img src="/img/line.png" class="img-thumbnail">
-    </div>
-  </div>
-
-  <div class="page-footer">
-    <p>版权所有 © WeLearn</p>
-  </div>
-  <script src="/3rd/jquery.js"></script>
-  <script src="/3rd/swig.js"></script>
-  <script src="/js/base.js"></script>
-  <script>
-  var msg = {};
-  var status = 0;
-  var courseName;
-  function clearPage(){
-    $('#title').html('');
-    $('#mainbody').html('');
-  };
-
-  function showChoose(){
-    $('#title').append('<h3>选择要私信的课程</h3>')
-    $('#mainbody').append('<select name="courseName" id="select" style="width=70%;"><% for (var i = 0; i < courses.length; i++) { %><option value="<%= courses[i] %>"><%= courses[i] %></option><% } %></select><button style="margin-right:30px;" onclick="clickt();">确定</button>');
-  };
-  function clickt(){
-    courseName = $('select').val();
-    var url = '/message?openid=' + urlParam.openid + '&course=' + courseName;
-    window.location.href = url;
-  };
-  showChoose();
-  </script>
+    function showChoose(){
+        $('#title').append('<h3>选择要私信的课程</h3>')
+        $('#mainbody').append('<select name="courseName" id="select" style="width=70%;"><% for (var i = 0; i < courses.length; i++) { %><option value="<%= courses[i] %>"><%= courses[i] %></option><% } %></select><button style="margin-right:30px;" onclick="clickt();">确定</button>');
+    };
+    function clickt(){
+        courseName = $('select').val();
+        //console.log(courseName);
+        //console.log('http://59.66.138.50/student/message/msg_list/'+courseName+'?'+urlParam.openid);
+        var url = '/message?openid=' + urlParam.openid + '&course=' + courseName;
+        //console.log(url);
+        window.location.href = url;
+    };
+    showChoose();
+    </script>
 </body>
 </html>
