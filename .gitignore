@@ -24,7 +24,6 @@ $RECYCLE.BIN/
 # =========================
 
 # node_modules
-node_modules/
 
 routes/coverage/
 routes/public/photos/
@@ -59,4 +58,3 @@ routes/coverage/*
 handler/coverage/*
 
 public/photos/*
-

@@ -27,7 +27,7 @@ var message = require('./routes/message');
 var getName = require('./routes/name');
 
 var app = express();
-// app.listen(80);
+app.listen(3000);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -129,4 +129,3 @@ Notice.remove({}, function (err, doc) {});
 //设置 menu
 // var menu_control = require('./handler/menu_control');
 // menu_control.update_menu();
-

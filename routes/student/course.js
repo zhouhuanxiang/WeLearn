@@ -72,6 +72,7 @@ router.get('/', urlencodedParser, function (req, res, next) {
           courses: []
         }
       });
+      return;
     }
     var requestData = {
       apiKey: "camustest",
@@ -349,4 +350,3 @@ router.post('/assignments/redirect',urlencodedParser,function (req, res){
 });
 
 module.exports = router;
-

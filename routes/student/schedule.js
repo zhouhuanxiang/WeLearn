@@ -43,6 +43,7 @@ router.get('/', urlencodedParser, function (req, res, next) {
         week:week,
         day:day
       });
+      return;
     }
     var username = doc.studentnumber;
     request({
