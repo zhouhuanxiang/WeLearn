@@ -41,8 +41,8 @@ io.on('connection', function(socket){
 
 router.get('/', function (req, res, next){
 	var roomID = req.session.openid + req.session.course;
-	console.log(req.session.openid);
-	console.log(req.session.course);
+	// console.log(req.session.openid);
+	// console.log(req.session.course);
 	res.render('message', {
 		course: req.session.course,
 		roomID: roomID

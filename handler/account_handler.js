@@ -171,8 +171,8 @@ exports.handleUnBindAccount = function (req, res) {
     //将定时提醒取消 并且恢复一些初始值
 
     if(reminderSet){
-        reminder.cancel();
-        reminderSet = false;
+      reminder.cancel();
+      reminderSet = false;
     }
 
     bind = false;
@@ -185,8 +185,8 @@ exports.handleUnBindAccount = function (req, res) {
     var openid = student.openid;
 
     var requestData = {
-        apiKey: "camustest",
-        apisecret: "camustest"
+      apiKey: "camustest",
+      apisecret: "camustest"
     };
 
     var username = student.username;
@@ -224,46 +224,46 @@ exports.handleUnBindAccount = function (req, res) {
 };
 
 var deadlineInform = function(studentnumber, courseid, coursename, requestData, timestamp){
-    var message;
-    request({
-        method: 'POST',
-        url: 'http://se.zhuangty.com:8000/learnhelper/' + studentnumber + '/courses/' + courseid + '/assignments',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(requestData)
-    }, function (error, response, body) {
-        if (response.statusCode === 200) {
-            var assignments = JSON.parse(body);
-            for(var num = 0; num < assignments.assignments.length; num++){
-                if((assignments.assignments)[num].state === "尚未提交"){
-                    var interv = (parseInt((assignments.assignments)[num].duedate) - parseInt(timestamp)) / 1000 / 60 / 60 / 24;
-                    var len = deadline_have_informed.length;
-                    if(len === 0){
-                        if(parseInt(interv) <= 1){
-                            deadline_have_informed.push({assid: (assignments.assignments)[num].assignmentid, date: (assignments.assignments)[num].duedate});
-                            message = "SOS! " + coursename + " 作业: " + (assignments.assignments)[num].title + "dealine只剩下1天左右";
-                            inform.deadlineInform(message);
-                        }
-                    }
-                    else{
-                        for(i = 0; i < len; i++){
-                            if(deadline_have_informed[i].assid === (assignments.assignments)[num].assignmentid){
-                                break;
-                            }
-                            if(i === len - 1){
-                                if(parseInt(interv) <= 1){
-                                    deadline_have_informed.push({assid: (assignments.assignments)[num].assignmentid, date: (assignments.assignments)[num].duedate});
-                                    message = "SOS! " + coursename + "作业: " + (assignments.assignments)[num].title + "dealine只剩下1天左右";
-                                    inform.deadlineInform(message);
-                                }
-                            }
-                        }
-                    }
-
-                }
+  var message;
+  request({
+    method: 'POST',
+    url: 'http://se.zhuangty.com:8000/learnhelper/' + studentnumber + '/courses/' + courseid + '/assignments',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(requestData)
+  }, function (error, response, body) {
+    if (response.statusCode === 200) {
+      var assignments = JSON.parse(body);
+      for(var num = 0; num < assignments.assignments.length; num++){
+        if((assignments.assignments)[num].state === "尚未提交"){
+          var interv = (parseInt((assignments.assignments)[num].duedate) - parseInt(timestamp)) / 1000 / 60 / 60 / 24;
+          var len = deadline_have_informed.length;
+          if(len === 0){
+            if(parseInt(interv) <= 1){
+              deadline_have_informed.push({assid: (assignments.assignments)[num].assignmentid, date: (assignments.assignments)[num].duedate});
+              message = "SOS! " + coursename + " 作业: " + (assignments.assignments)[num].title + "dealine只剩下1天左右";
+              inform.deadlineInform(message);
             }
+          }
+          else{
+            for(i = 0; i < len; i++){
+              if(deadline_have_informed[i].assid === (assignments.assignments)[num].assignmentid){
+                break;
+              }
+              if(i === len - 1){
+                if(parseInt(interv) <= 1){
+                  deadline_have_informed.push({assid: (assignments.assignments)[num].assignmentid, date: (assignments.assignments)[num].duedate});
+                  message = "SOS! " + coursename + "作业: " + (assignments.assignments)[num].title + "dealine只剩下1天左右";
+                  inform.deadlineInform(message);
+                }
+              }
+            }
+          }
 
         }
-    });
+      }
+
+    }
+  });
 };
 
 
@@ -277,7 +277,7 @@ exports.updateCourseDb = function (student) {
     body: JSON.stringify(requestData)
   }, function (error, response, body) {
     var courses = JSON.parse(body).courses;
-    console.log(body);
+    //console.log(body);
     var courseNames = [];
     for (var i = 0; i < courses.length; i++){
       courseNames.push(courses[i].coursename);

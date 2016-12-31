@@ -1,4 +1,4 @@
-var siteDomain = 'http://101.5.209.55';
+var siteDomain = 'http://183.173.50.32';
 var token = 'RYhopG1zq6oan1toNtiHfcq96KHinZ90gpuKt8pEx3mEQPmz7T';
 var appid = 'wx09a561e87eba34ed';
 var appSecret = '3ab9db2f6a5a10f1c30b252faa5fb9c3';

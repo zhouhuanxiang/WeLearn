@@ -22,7 +22,6 @@ var studentLesson = require('./routes/student/course');
 var studentMessage = require('./routes/student/message');
 var teacherMessage = require('./routes/teacher/message');
 var studentNotice = require('./routes/student/notice');
-var remindSettings = require('./routes/student/remindSettings');
 var teacherNotice = require('./routes/teacher/notice');
 var message = require('./routes/message');
 var getName = require('./routes/name');
@@ -38,7 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.query());
 app.use(session({
-  maxAge: 1800000,
+  maxAge: 18000000000,
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
@@ -54,8 +53,8 @@ app.use(function (req, res, next) {
     if (code){
       oauth.client.getAccessToken(code, function (err, result) {
         req.session.openid = result.data.openid;
-        console.log('---New Guest---');
-        console.log(req.session.openid);
+        // console.log('---New Guest---');
+        // console.log(req.session.openid);
         next();
       });
     }else{
@@ -74,7 +73,6 @@ app.use('/student/schedule', studentSchedule);
 app.use('/student/message', studentMessage);
 app.use('/teacher/message', teacherMessage);
 app.use('/student/notice', studentNotice);
-app.use('/student/remindSettings', remindSettings);
 app.use('/teacher/notice', teacherNotice);
 
 app.use(function(req, res, next) {
@@ -106,10 +104,10 @@ var Student = require('./Models/Student');
 var Course = require('./Models/Course');
 var Message = require('./Models/Message');
 var Notice = require('./Models/Notice');
-// Student.remove({}, function (err, doc) {});
-// Course.remove({}, function (err, doc) {});
-// Message.remove({}, function (err, doc) {});
-// Notice.remove({}, function (err, doc) {});
+Student.remove({}, function (err, doc) {});
+Course.remove({}, function (err, doc) {});
+Message.remove({}, function (err, doc) {});
+Notice.remove({}, function (err, doc) {});
 
 // Student.find({}, function (err, doc) {
 //   console.log('---Student---');
