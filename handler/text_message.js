@@ -10,7 +10,6 @@ var Stl = new Object();
 function checkTime(time1, time2){
   var tm = time2 - time1;
   if(tm > 1200000 || tm < -1200000){//10分钟
-  //if(tm > 60000 || tm < -60000){
     return true;
   }else{
     return false;
@@ -33,8 +32,6 @@ var textMessage = function (openid, message) {
   var now = new Date();
   if (message.toTeacher){
     Course.findOne({coursename: message.course}, function (err, doc){
-      //console.log(doc.teacher);
-      console.log(url);
       var teacher = doc.teacher;
       for(var i = 0; i < teacher.length; i++){
         if(!Stl.hasOwnProperty(teacher[i].openid))
@@ -44,7 +41,7 @@ var textMessage = function (openid, message) {
           url = wrapper.urlTeacherMessage() + '?course=' + message.course + '&studentid=' + message.student + '&openid=' + teacher[i].openid;
           api.sendTemplate(teacher[i].openid, setting.teacherTextTemplateID, oauth.getAuthorizeURL(url), msgData, function (err) {
             if (err){
-              console.log(err);
+
             }
           });
           Stl[teacher[i].openid] = now.getTime();
@@ -60,7 +57,7 @@ var textMessage = function (openid, message) {
       url = wrapper.urlMessage() + '?openid=' + message.student + '&course=' + message.course;
       api.sendTemplate(openid, setting.studentTextTemplateID, oauth.getAuthorizeURL(url), msgData, function (err) {
         if (err){
-          console.log(err);
+
         }
       });
       Stl[message.student] = now.getTime();

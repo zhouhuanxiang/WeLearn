@@ -4,9 +4,9 @@ var menutmp = require("./menu_template");
 var checker = require("./checkRequest");
 
 exports.checkRemindSettings = function (msg){
-    if (msg.Content === 'rs'){
+    if (msg.Content === 'rs' || checker.checkMenuClick(msg)==menutmp.WEIXIN_EVENT_KEYS['inform'])
         return true;
-    }
+
     return false;
 };
 
@@ -21,7 +21,7 @@ exports.handleRemindSettings = function (req, res){
                 {
                     title: '提醒功能设置',
                     description:'点击即可对提醒功能进行设置',
-                    url: wrapper.urlRemindSettings() + '?openid=' + req.weixin.FromUserName
+                    url: wrapper.urlRemindSettings()
                 }]);
         }
     });
